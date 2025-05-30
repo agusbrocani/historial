@@ -27,8 +27,11 @@
 }
 
 .iconoEstado {
-  font-size: 14px;
+  /* sólo margen: el resto lo maneja el prop styles */
+  margin: 0 4px;
   color: #0078d4;
+  display: inline-block;    /* necesario para que transform funcione */
+  transform: scaleX(-1);    /* voltea horizontalmente */
 }
 
 .fila {
@@ -41,8 +44,8 @@
 }
 
 .iconoFecha {
-  font-size: 16px;
-  color: #605e5c;
+  /* si quieres ajustarlo distinto al default de Calendar, pon aquí sólo el margen */
+  margin-right: 8px;
 }
 
 .usuarioManual {
@@ -56,7 +59,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #d13438; // rojo SharePoint
+  background-color: #d13438;
   color: white;
   display: flex;
   align-items: center;
@@ -89,4 +92,22 @@
 
 .etiqueta {
   min-width: 60px;
+}
+
+.historialItem {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  /* borde fino en azul */
+  border: 1px solid #0078d4;
+  /* banda más ancha a la izquierda */
+  border-left: 4px solid #0078d4;
+
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  word-break: break-word;
+  width: 100%;
 }

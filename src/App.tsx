@@ -22,7 +22,7 @@ const App: React.FC = () => {
       estadoPosterior: 'Archivado',
       usuario: 'admin.system',
       fecha: '2025-05-30',
-      observacion: 'Fin del ciclo de vida',
+      observacion: 'Fin del ciclo de vida AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA',
     }
   ];
 

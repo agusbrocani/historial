@@ -79,13 +79,11 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
 
   const handleDismiss = () => {
     onDismiss();
-    // Forzamos el foco en un elemento seguro al cerrar el panel
     fallbackFocusRef.current?.focus();
   };
 
   return (
     <>
-      {/* Elemento invisible que puede recibir foco */}
       <div tabIndex={-1} ref={fallbackFocusRef} />
 
       <Panel
@@ -96,7 +94,7 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
         type={PanelType.smallFixedNear}
         styles={{
           main: {
-            maxWidth: 'min(100vw, 520px)',
+            maxWidth: 'min(100vw, 320px)',
             width: 'auto',
             paddingRight: 16,
           },
@@ -108,7 +106,11 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
               <div className={styles.filaEstado}>
                 <span className={styles.etiqueta}><strong>Estado:</strong></span>
                 <span>{item.estadoAnterior}</span>
-                <Icon iconName="TransitionPop" className={styles.iconoEstado} />
+                <Icon
+                  iconName="SkypeArrow"
+                  className={styles.iconoEstado}
+                  aria-label="flecha derecha"
+                />
                 <span>{item.estadoPosterior}</span>
               </div>
 

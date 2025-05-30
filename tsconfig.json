@@ -1,16 +1,12 @@
 {
-    "compilerOptions": {
-    "target": "ES6",
-    "module": "ESNext",
-    "jsx": "react",
-    "strict": true,
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "jsx": "react-jsx",              // para React 17+ con "automatic"
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true
-    }
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
 }
