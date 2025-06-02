@@ -1,26 +1,44 @@
-import { Panel } from '@fluentui/react';
+import { useState } from 'react';
+import {
+    Panel,
+    PanelType,
+    Spinner, 
+    SpinnerSize
+} from '@fluentui/react';
 import styles from './PanelHistorial.module.scss';
+import CardPanelHistorial from '../CardPanelHistorial/CardPanelHistorial';
 
-type PanelHistorialProps<T> = {
-    items: T[]
-    textoEncabezadoHistorial: string
-    isPanelOpen: boolean
-    setIsPanelOpen: React.Dispatch<React.SetStateAction<boolean>>
+import { IHistorialItem } from '../../HistorialPanel';
+
+type PanelHistorialProps<T extends IHistorialItem> = {
+    items: T[];
+    textoEncabezadoHistorial: string;
+    isPanelOpen: boolean;
+    setIsPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
     onClose?: () => void;
 };
 
-function PanelHistorial<T>({
+function PanelHistorial<T extends IHistorialItem> ({
     items,
     textoEncabezadoHistorial,
     isPanelOpen,
     setIsPanelOpen,
-    onClose
+    onClose,
 }: PanelHistorialProps<T>) {
-    console.log(items);
     const handleDismiss = () => {
         setIsPanelOpen(false);
         onClose?.();
     };
+    const [isLoading, setIsLoading] = useState(true);
+
+    const spinner =       
+        <div className={styles.spinnerContainer}>
+            <Spinner 
+                label="Espere por favor..." 
+                size={SpinnerSize.large}
+                styles={{ label: { color: '#0078d4' } }}
+            />
+        </div>;
 
     return (
         <Panel
@@ -29,9 +47,26 @@ function PanelHistorial<T>({
             isOpen={isPanelOpen}
             onDismiss={handleDismiss}
             isLightDismiss={true}
+            type={PanelType.customNear}
+              styles={{
+                main: {
+                    width: '340px',
+                    left: 0,
+                    right: 'unset',
+                },
+                content: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexGrow: 1,
+                },
+                scrollableContent: {
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                },
+            }}
         >
-            {/* Renderizar los datos del historial */}
-            <p>Contenido del historial</p>
+            {0 === items.length ? spinner : <CardPanelHistorial items={items}/>}
         </Panel>
     );
 }

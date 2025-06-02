@@ -3,7 +3,7 @@
 // import { DefaultButton } from '@fluentui/react';
 // import styles from './HistorialPanel.module.scss';
 
-// export interface IItem {
+// export interface IHistorialItem {
 //   estadoAnterior: string;
 //   estadoPosterior: string;
 //   usuario: string;
@@ -14,7 +14,7 @@
 // interface HistorialPanelProps {
 //   isOpen: boolean;
 //   onDismiss: () => void;
-//   items: IItem[];
+//   items: IHistorialItem[];
 // }
 
 // export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismiss, items }) => {
@@ -60,7 +60,7 @@ import * as React from 'react';
 import { Panel, PanelType, Icon } from '@fluentui/react';
 import styles from './HistorialPanel.module.scss';
 
-export interface IItem {
+export interface IHistorialItem {
   estadoAnterior: string;
   estadoPosterior: string;
   usuario: string;
@@ -71,7 +71,7 @@ export interface IItem {
 interface HistorialPanelProps {
   isOpen: boolean;
   onDismiss: () => void;
-  items: IItem[];
+  items: IHistorialItem[];
 }
 
 export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismiss, items }) => {

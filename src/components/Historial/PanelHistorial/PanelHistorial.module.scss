@@ -1,0 +1,16 @@
+:global(.ms-Panel-scrollableContent)::-webkit-scrollbar {
+  width: 12px; // aumentá este valor a gusto
+}
+
+:global(.ms-Panel-scrollableContent)::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); // estilo básico
+  border-radius: 6px;
+}
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 300px;
+}

@@ -2,12 +2,14 @@ import { useState } from 'react';
 import {
     TooltipHost,
     IconButton,
-    IButtonStyles,
+    IButtonStyles
 } from '@fluentui/react';
 import PanelHistorial from '../PanelHistorial/PanelHistorial';
 import styles from './Historial.module.scss';
 
-type HistorialProps<T> = {
+import { IHistorialItem } from '../../HistorialPanel';
+
+type HistorialProps<T extends IHistorialItem> = {
     items: T[];
     textoEncabezadoHistorial: string;
     leyendaToolTip?: string;
@@ -15,7 +17,7 @@ type HistorialProps<T> = {
     onClose?: () => void;
 };
 
-function Historial<T>({
+function Historial<T extends IHistorialItem> ({
     items,
     textoEncabezadoHistorial,
     leyendaToolTip,
