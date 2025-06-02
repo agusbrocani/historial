@@ -1,4 +1,5 @@
 import { Panel } from '@fluentui/react';
+import styles from './PanelHistorial.module.scss';
 
 type PanelHistorialProps<T> = {
     items: T[]
@@ -8,12 +9,12 @@ type PanelHistorialProps<T> = {
     onClose?: () => void;
 };
 
-function PanelHistorial<T>({ 
-    items, 
-    textoEncabezadoHistorial, 
-    isPanelOpen, 
-    setIsPanelOpen, 
-    onClose 
+function PanelHistorial<T>({
+    items,
+    textoEncabezadoHistorial,
+    isPanelOpen,
+    setIsPanelOpen,
+    onClose
 }: PanelHistorialProps<T>) {
     console.log(items);
     const handleDismiss = () => {

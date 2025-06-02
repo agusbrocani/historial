@@ -4,7 +4,7 @@ import {
     IconButton,
     IButtonStyles,
 } from '@fluentui/react';
-import PanelHistorial from './PanelHistorial';
+import PanelHistorial from '../PanelHistorial/PanelHistorial';
 import styles from './Historial.module.scss';
 
 type HistorialProps<T> = {
@@ -15,12 +15,12 @@ type HistorialProps<T> = {
     onClose?: () => void;
 };
 
-function Historial<T>({ 
-    items, 
-    textoEncabezadoHistorial, 
-    leyendaToolTip, 
-    estilosBoton, 
-    onClose 
+function Historial<T>({
+    items,
+    textoEncabezadoHistorial,
+    leyendaToolTip,
+    estilosBoton,
+    onClose
 }: HistorialProps<T>) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DefaultButton } from '@fluentui/react';
 import { HistorialPanel, IItem } from './components/HistorialPanel';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-import Historial from './components/Historial/Historial'
+import Historial from './components/Historial/Historial/Historial'
 
 initializeIcons();
 
