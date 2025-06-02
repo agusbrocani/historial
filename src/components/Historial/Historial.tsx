@@ -15,7 +15,13 @@ type HistorialProps<T> = {
     onClose?: () => void;
 };
 
-function Historial<T>({ items, textoEncabezadoHistorial, leyendaToolTip, estilosBoton, onClose }: HistorialProps<T>) {
+function Historial<T>({ 
+    items, 
+    textoEncabezadoHistorial, 
+    leyendaToolTip, 
+    estilosBoton, 
+    onClose 
+}: HistorialProps<T>) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 
     const leyendaDefaultToolTip = 'Historial';

@@ -8,7 +8,13 @@ type PanelHistorialProps<T> = {
     onClose?: () => void;
 };
 
-function PanelHistorial<T>({ items, textoEncabezadoHistorial, isPanelOpen, setIsPanelOpen, onClose }: PanelHistorialProps<T>) {
+function PanelHistorial<T>({ 
+    items, 
+    textoEncabezadoHistorial, 
+    isPanelOpen, 
+    setIsPanelOpen, 
+    onClose 
+}: PanelHistorialProps<T>) {
     console.log(items);
     const handleDismiss = () => {
         setIsPanelOpen(false);
@@ -23,8 +29,8 @@ function PanelHistorial<T>({ items, textoEncabezadoHistorial, isPanelOpen, setIs
             onDismiss={handleDismiss}
             isLightDismiss={true}
         >
-            {/* Acá podés renderizar los datos del historial */}
-            <p>Aquí iría tu contenido del historial...</p>
+            {/* Renderizar los datos del historial */}
+            <p>Contenido del historial</p>
         </Panel>
     );
 }
