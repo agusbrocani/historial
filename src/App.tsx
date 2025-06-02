@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DefaultButton } from '@fluentui/react';
 import { HistorialPanel, IItem } from './components/HistorialPanel';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
+import Historial from './components/Historial/Historial'
 
 initializeIcons();
 
@@ -28,12 +29,29 @@ const App: React.FC = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <DefaultButton text="Ver Historial" onClick={() => setIsPanelOpen(true)} />
+      {/* <DefaultButton text="Ver Historial" onClick={() => isPanelOpen ? setIsPanelOpen(false) : setIsPanelOpen(true)} />
       <HistorialPanel
         isOpen={isPanelOpen}
-        onDismiss={() => setIsPanelOpen(false)}
+        onDismiss={() => isPanelOpen ? setIsPanelOpen(false) : setIsPanelOpen(true)}
         items={items}
+      /> */}
+
+      <Historial
+        items={items}
+        textoEncabezadoHistorial={'Historial de cambios'}
+        // leyendaToolTip='Historial'
+        // estilosBoton={{
+        //   root: {
+        //     color: '#7D50A5',
+        //     width: 30,
+        //     height: 30,
+        //     border: '1px solid #7D50A5',
+        //     borderRadius: 6,
+        //   }
+        // }}
+        onClose={() => console.log('Cerré la ventana lateral.')}
       />
+
     </div>
   );
 };
