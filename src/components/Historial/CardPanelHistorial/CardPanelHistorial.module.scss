@@ -1,8 +1,113 @@
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+//   padding: 8px;
+
+//   max-height: 85vh;
+//   overflow-y: auto;
+//   position: relative;
+// }
+
+// .card {
+//   background-color: #f9f9f9;
+//   border-left: 3px solid #0078d4;
+//   padding: 12px 16px;
+//   border-radius: 8px;
+//   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+// }
+
+// .estados {
+//   font-size: 14px;
+//   display: flex;
+//   align-items: center;
+//   gap: 6px;
+//   font-weight: bold;
+// }
+
+// .iconoEstado {
+//   color: #0078d4;
+//   font-size: 14px;
+// }
+
+// .infoGrid {
+//   display: grid;
+//   grid-template-columns: auto 1fr;
+//   grid-template-rows: auto auto;
+//   column-gap: 8px;
+//   row-gap: 6px;
+//   align-items: center;
+//   margin-top: 8px;
+
+//   > * {
+//     min-width: 0;
+//   }
+// }
+
+// .iconoCalendario {
+//   font-size: 24px;
+//   width: 28px;
+//   height: 28px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .avatar {
+//   background-color: #c4314b;
+//   color: white;
+//   border-radius: 50%;
+//   width: 28px;
+//   height: 28px;
+//   font-size: 12px;
+//   font-weight: bold;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .texto {
+//   font-size: 13px;
+//   color: #333;
+//   display: block;
+//   width: 100%;
+//   min-width: 0;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+// }
+
+// .negrita {
+//   font-weight: bold;
+// }
+
+// .observacion {
+//   margin: 8px 0;
+//   font-size: 14px;
+//   color: #000;
+// }
+
+// .indice {
+//   font-style: italic;
+//   font-size: 12px;
+//   color: #444;
+//   display: block;
+//   width: 100%;
+//   min-width: 0;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+// }
+
 .container {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 8px;
+
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
 }
 
 .card {
@@ -18,10 +123,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-
-  strong {
-    margin-right: 4px;
-  }
+  font-weight: bold;
 }
 
 .iconoEstado {
@@ -37,6 +139,10 @@
   row-gap: 6px;
   align-items: center;
   margin-top: 8px;
+
+  > * {
+    min-width: 0;
+  }
 }
 
 .iconoCalendario {
@@ -64,17 +170,63 @@
 .texto {
   font-size: 13px;
   color: #333;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
+.negrita {
+  font-weight: bold;
+}
+
+/* --- Truncado a 3 líneas con ellipsis --- */
 .observacion {
-  margin: 8px 0;
+  margin: 8px 0 6px 0;       /* <-- 8px arriba para separar del grid, 6px abajo para “Cambio” */
   font-size: 14px;
   color: #000;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;             /* Propiedad estándar para compatibilidad */
+  -webkit-line-clamp: 3;     /* limitar a 3 líneas */
+  overflow: hidden;          /* ocultar lo que sobrepase */
+  text-overflow: ellipsis;
+  white-space: normal;       /* permitir multilínea */
+}
+
+/* --- Observación en modo “expandido” (sin truncar) --- */
+.observacionExpanded {
+  margin: 8px 0 6px 0;       /* <-- mismo espacio arriba (8px) que en .observacion */
+  font-size: 14px;
+  color: #000;
+  white-space: normal;
+  overflow: visible;
+}
+
+/* --- Botón “Ver más / Ver menos” --- */
+.verMasBtn {
+  background: none;
+  border: none;
+  color: #0078d4;
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 2px;           /* pequeño espacio entre párrafo y botón */
+  margin-bottom: 6px;        /* 6px entre botón y “Cambio X de Y” */
+  padding: 0;
 }
 
 .indice {
   font-style: italic;
   font-size: 12px;
   color: #444;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
+

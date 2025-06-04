@@ -65,6 +65,7 @@ export interface IHistorialItem {
   estadoPosterior: string;
   usuario: string;
   fecha: string;
+  hora: string;
   observacion: string;
 }
 

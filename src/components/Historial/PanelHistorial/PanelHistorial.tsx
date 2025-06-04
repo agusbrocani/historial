@@ -49,6 +49,9 @@ function PanelHistorial<T extends IHistorialItem> ({
             isLightDismiss={true}
             type={PanelType.customNear}
               styles={{
+                // commands: {
+                //     paddingTop: 0,
+                // },
                 main: {
                     width: '340px',
                     left: 0,
