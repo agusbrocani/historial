@@ -89,8 +89,8 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
       <Panel
         isOpen={isOpen}
         onDismiss={handleDismiss}
-        headerText="Historial de Cambios"
-        closeButtonAriaLabel="Cerrar"
+        headerText='Historial de Cambios'
+        closeButtonAriaLabel='Cerrar'
         type={PanelType.smallFixedNear}
         styles={{
           main: {
@@ -107,15 +107,15 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
                 <span className={styles.etiqueta}><strong>Estado:</strong></span>
                 <span>{item.estadoAnterior}</span>
                 <Icon
-                  iconName="SkypeArrow"
+                  iconName='SkypeArrow'
                   className={styles.iconoEstado}
-                  aria-label="flecha derecha"
+                  aria-label='flecha derecha'
                 />
                 <span>{item.estadoPosterior}</span>
               </div>
 
               <div className={styles.fila}>
-                <Icon iconName="Calendar" className={styles.iconoFecha} />
+                <Icon iconName='Calendar' className={styles.iconoFecha} />
                 <span>{item.fecha}</span>
               </div>
 

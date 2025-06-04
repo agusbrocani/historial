@@ -34,7 +34,7 @@ function PanelHistorial<T extends IHistorialItem> ({
     const spinner =       
         <div className={styles.spinnerContainer}>
             <Spinner 
-                label="Espere por favor..." 
+                label='Espere por favor...' 
                 size={SpinnerSize.large}
                 styles={{ label: { color: '#0078d4' } }}
             />
