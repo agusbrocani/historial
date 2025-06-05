@@ -37,6 +37,7 @@ function CardItem<T extends IHistorialItem>({
     const ro = new ResizeObserver(() => {
       checkOverflow();
     });
+
     if (observacionRef.current) {
       ro.observe(observacionRef.current);
     }
@@ -57,29 +58,41 @@ function CardItem<T extends IHistorialItem>({
     setExpanded(value);
   };
 
+  const partes = item.usuario?.split('.') ?? [];
+  const iniciales = ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
+
+  const fechaHoraTexto = (item.fecha && item.hora)
+    ? `${item.fecha} a las ${item.hora} hs.`
+    : 'Fecha no disponible';
+
+  const estadoAnterior = item.estadoAnterior || 'Sin estado';
+  const estadoPosterior = item.estadoPosterior || 'Sin estado';
+  const usuarioTexto = item.usuario || 'Usuario no identificado';
+  const observacionTexto = item.observacion || 'Sin observaciones';
+
   return (
     <div className={styles.card} ref={cardRef}>
       <div className={styles.estados}>
-        <span>{item.estadoAnterior}</span>
-        <Icon iconName="Forward" className={styles.iconoEstado} />
-        <span>{item.estadoPosterior}</span>
+        <span>{estadoAnterior}</span>
+        <Icon iconName='Forward' className={styles.iconoEstado} />
+        <span>{estadoPosterior}</span>
       </div>
 
       <div className={styles.infoGrid}>
         <div className={styles.iconoCalendario}>
-          <Icon iconName="Calendar" />
+          <Icon iconName='Calendar' />
         </div>
-        <span className={styles.texto}>{`${item.fecha} a las ${item.hora} hs.`}</span>
+        <span className={styles.texto}>{fechaHoraTexto}</span>
 
         <div className={styles.avatar}>
-          {(item.usuario[0] + item.usuario.split('.')[1]?.[0] || '').toUpperCase()}
+          {iniciales}
         </div>
         <TooltipHost
-          content={item.usuario}
+          content={usuarioTexto}
           calloutProps={{ gapSpace: 0 }}
           styles={{ root: { display: 'inline-block' } }}
         >
-          <span className={styles.texto}>{item.usuario}</span>
+          <span className={styles.texto}>{usuarioTexto}</span>
         </TooltipHost>
       </div>
 
@@ -89,7 +102,7 @@ function CardItem<T extends IHistorialItem>({
           className={expanded ? styles.observacionExpanded : styles.observacion}
           style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
         >
-          {item.observacion}
+          {observacionTexto}
         </p>
         {!expanded && shouldShowButton && (
           <button className={styles.verMasBtn} onClick={() => toggleExpand(true)}>

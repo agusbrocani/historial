@@ -28,9 +28,17 @@ const App: React.FC = () => {
       observacion: 'Fin del ciclo de vida AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA',
     },
     {
+      estadoAnterior: null,
+      estadoPosterior: null,
+      usuario: null,
+      fecha: null,
+      hora: null,
+      observacion: null,
+    },
+    {
       estadoAnterior: 'Borrador',
       estadoPosterior: 'Publicado',
-      usuario: 'agustin.brocani@outlook.com',
+      usuario: 'ab',
       fecha: '29-05-2025',
       hora: '14:30',
       observacion: 'Se aprobó el cambio',
@@ -38,7 +46,7 @@ const App: React.FC = () => {
     {
       estadoAnterior: 'Publicado',
       estadoPosterior: 'Archivado',
-      usuario: 'admin.system',
+      usuario: '',
       fecha: '30-05-2025',
       hora: '14:30',
       observacion: 'Fin del ciclo de vida AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA',
@@ -46,7 +54,7 @@ const App: React.FC = () => {
     {
       estadoAnterior: 'Borrador',
       estadoPosterior: 'Publicado',
-      usuario: 'agustin.brocani@outlook.com',
+      usuario: null,
       fecha: '29-05-2025',
       hora: '14:30',
       observacion: 'Se aprobó el cambio',
@@ -1337,7 +1345,7 @@ const App: React.FC = () => {
       usuario: 'admin.system',
       fecha: '30-05-2025',
       hora: '14:30',
-      observacion: '[U]Fin del ciclo de vida AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA',
+      observacion: '[U]Fin del ciclo de vida AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA ',
     },
   ];
 

@@ -32,6 +32,12 @@ function PanelHistorial<T extends IHistorialItem>({
     Math.min(batchSize, items.length)
   );
 
+  useEffect(() => {
+    if (isPanelOpen) {
+      setLoadedCount(Math.min(batchSize, items.length));
+    }
+  }, [isPanelOpen, items.length]);
+
   const visibleItems = items.slice(0, loadedCount);
 
   const handleDismiss = () => {
@@ -49,7 +55,6 @@ function PanelHistorial<T extends IHistorialItem>({
     (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          console.log("🔥 VISTA:", entry.target);
           observer.unobserve(entry.target);
           if (loadedCount < items.length) {
             const nextCount = Math.min(loadedCount + batchSize, items.length);
@@ -61,28 +66,31 @@ function PanelHistorial<T extends IHistorialItem>({
     [batchSize, items.length, loadedCount]
   );
 
-  // Capturar el contenedor real del scroll del panel (Fluent UI)
   useEffect(() => {
-    const id = setInterval(() => {
-      const real = document.querySelector('.ms-Panel-main .ms-Panel-scrollableContent') as HTMLDivElement | null;
-      if (real) {
-        console.log("🎯 Contenedor real detectado");
-        scrollableContentRef.current = real;
-        clearInterval(id);
-      }
-    }, 50);
+    if (!isPanelOpen) return;
 
-    return () => clearInterval(id);
+    const observer = new MutationObserver(() => {
+      const real = document.querySelector(
+        '.ms-Panel-main .ms-Panel-scrollableContent'
+      ) as HTMLDivElement | null;
+      if (real) {
+        scrollableContentRef.current = real;
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
   }, [isPanelOpen]);
 
-  // Inicializar IntersectionObserver luego de que el DOM esté completamente montado
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       const node = lastCardRef.current;
       const rootNode = scrollableContentRef.current;
-
-      console.log("👁 Observando nodo:", node);
-      console.log("📦 Scroll root:", rootNode);
 
       if (!node || !rootNode || loadedCount >= items.length) return;
 
@@ -93,41 +101,33 @@ function PanelHistorial<T extends IHistorialItem>({
       });
 
       observer.observe(node);
-    }, 100); // Espera breve para garantizar que el DOM esté montado
+
+      return () => observer.disconnect();
+    }, 50);
 
     return () => clearTimeout(timeoutId);
-  }, [handleIntersect, visibleItems, loadedCount]);
+  }, [handleIntersect, loadedCount, visibleItems]);
 
   return (
     <Panel
+      className={styles.historialPanel}
       headerText={textoEncabezadoHistorial}
-      closeButtonAriaLabel="Cerrar"
+      closeButtonAriaLabel='Cerrar'
       isOpen={isPanelOpen}
       onDismiss={handleDismiss}
       isLightDismiss={true}
       type={PanelType.customNear}
       styles={{
-        main: {
-          width: '340px',
-          left: 0,
-          right: 'unset',
-        },
-        content: {
-          display: 'flex',
-          flexDirection: 'column',
-          flexGrow: 1,
-        },
-        scrollableContent: {
-          flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        },
+        main: { width: '440px', left: 0, right: 'unset' },
+        content: { display: 'flex', flexDirection: 'column', flexGrow: 1, paddingRight: 0 },
+        scrollableContent: { flexGrow: 1, display: 'flex', flexDirection: 'column' },
+        closeButton: { paddingRight: 0, paddingLeft: 0, marginRight: 0 }
       }}
     >
       {items.length === 0 ? (
         <div className={styles.spinnerContainer}>
           <Spinner
-            label="Espere por favor..."
+            label='Espere por favor...'
             size={SpinnerSize.large}
             styles={{ label: { color: '#0078d4' } }}
           />

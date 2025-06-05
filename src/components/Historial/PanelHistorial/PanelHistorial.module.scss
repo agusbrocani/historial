@@ -1,28 +1,53 @@
-:global(.ms-Panel)::-webkit-scrollbar {
-  width: 16px;
+.historialPanel :global(*::-webkit-scrollbar) {
+  width: 14px;
 }
 
-:global(.ms-Panel)::-webkit-scrollbar-track {
+.historialPanel :global(*::-webkit-scrollbar-track) {
   background: transparent;
 }
 
-:global(.ms-Panel)::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  min-height: 40px;
-  border: 4px solid transparent;
+.historialPanel :global(*::-webkit-scrollbar-thumb) {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 3px solid transparent;
   background-clip: content-box;
+  min-height: 30px;
 }
 
-:global(.ms-Panel) {
+.historialPanel :global(*::-webkit-scrollbar-thumb:hover) {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.historialPanel :global(*) {
   scrollbar-width: auto;
-  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
-.spinnerContainer {
+.historialPanel :global(.ms-Panel-scrollableContent) {
+  padding-inline-end: 18px;
+  flex: 1;
+  overflow-y: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  min-height: 300px;
+  flex-direction: column;
+}
+
+/* Asegura comportamiento correcto del panel y navegación */
+.historialPanel :global(.ms-Panel-main),
+.historialPanel :global(.ms-Panel-navigation) {
+  box-sizing: border-box;
+}
+
+/* Encabezado con línea divisoria, sin espacio extra */
+.historialPanel :global(.ms-Panel-navigation) {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.historialPanel :global(.ms-Panel-navigation)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px; /* desplazado visualmente para no ocupar espacio */
+  height: 1px;
+  background-color: #e1e1e1;
 }

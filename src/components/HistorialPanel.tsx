@@ -22,8 +22,8 @@
 //     <Panel
 //       isOpen={isOpen}
 //       onDismiss={onDismiss}
-//       headerText="Historial de Cambios"
-//       closeButtonAriaLabel="Cerrar"
+//       headerText='Historial de Cambios'
+//       closeButtonAriaLabel='Cerrar'
 //       type={PanelType.smallFixedNear} // PanelType.smallFixedFar => por defecto a la derecha
 //     >
 //       {/* {items.map((item, index) => (

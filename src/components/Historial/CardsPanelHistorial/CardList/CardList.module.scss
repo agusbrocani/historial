@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 8px;
 
-  max-height: 90vh; // ESTA LINEA ES NECESARIA PARA EL PAGINADO
+  padding-inline: 16px;
+  padding-block: 8px;
+
+  max-height: 90vh;
   overflow-y: auto;
   position: relative;
 }
