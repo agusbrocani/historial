@@ -105,7 +105,7 @@
   gap: 16px;
   padding: 8px;
 
-  max-height: 85vh;
+  max-height: 90vh; // ESTA LINEA ES NECESARIA PARA EL PAGINADO
   overflow-y: auto;
   position: relative;
 }
@@ -229,4 +229,3 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
