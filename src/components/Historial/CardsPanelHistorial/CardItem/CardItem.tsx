@@ -1,105 +1,26 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { Icon, TooltipHost } from '@fluentui/react';
-import styles from './CardPanelHistorial.module.scss';
-
-import { IHistorialItem } from '../../HistorialPanel';
-
-type CardPanelHistorialProps<T extends IHistorialItem> = {
-  items: T[];                               // Lista completa de items (p. ej. 166)
-  batchSize?: number;                       // Tamaño del lote (por defecto 50)
-  onLoadMore?: (nextBatchStart: number) => void; // Callback opcional cuando se carga otro lote
-};
-
-function CardPanelHistorial<T extends IHistorialItem>({
-  items,
-  batchSize = 50,
-  onLoadMore,
-}: CardPanelHistorialProps<T>) {
-  const [loadedCount, setLoadedCount] = useState(() =>
-    Math.min(batchSize, items.length)
-  );
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const lastCardRef = useRef<HTMLDivElement | null>(null);
-
-  const visibleItems = items.slice(0, loadedCount);
-
-  const handleIntersect: IntersectionObserverCallback = useCallback(
-    (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          observer.unobserve(entry.target);
-          if (loadedCount < items.length) {
-            const nextCount = Math.min(loadedCount + batchSize, items.length);
-            setLoadedCount(nextCount);
-            if (onLoadMore) {
-              onLoadMore(loadedCount);
-            }
-          }
-        }
-      });
-    },
-    [batchSize, items.length, loadedCount, onLoadMore]
-  );
-
-  useEffect(() => {
-    const node = lastCardRef.current;
-    const rootNode = containerRef.current;
-
-    if (!node || !rootNode || loadedCount >= items.length) {
-      return;
-    }
-
-    const options: IntersectionObserverInit = {
-      root: rootNode,
-      rootMargin: '0px',
-      threshold: 0.01,
-    };
-
-    const observer = new IntersectionObserver(handleIntersect, options);
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [handleIntersect, loadedCount, items.length]);
-
-  return (
-    <div className={styles.container} ref={containerRef}>
-      {visibleItems.map((item, index) => {
-        const globalIndex = index;
-        const isLast = index === visibleItems.length - 1;
-
-        return (
-          <div key={globalIndex} ref={isLast ? lastCardRef : null}>
-            <CardHistorialItem
-              item={item}
-              index={globalIndex}
-              total={items.length}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+import styles from './CardItem.module.scss';
+import { IHistorialItem } from '../../../HistorialPanel';
 
 type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
   index: number;
   total: number;
+  onCollapseRequest?: (ref: HTMLDivElement | null) => void;
 };
 
-function CardHistorialItem<T extends IHistorialItem>({
+function CardItem<T extends IHistorialItem>({
   item,
   index,
   total,
+  onCollapseRequest,
 }: CardHistorialItemProps<T>) {
   const [expanded, setExpanded] = useState(false);
   const [shouldShowButton, setShouldShowButton] = useState(false);
   const observacionRef = useRef<HTMLParagraphElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const hasInteracted = useRef(false); // <- nuevo
+  const hasInteracted = useRef(false);
 
   const checkOverflow = useCallback(() => {
     const el = observacionRef.current;
@@ -126,10 +47,10 @@ function CardHistorialItem<T extends IHistorialItem>({
   }, [checkOverflow, item.observacion]);
 
   useEffect(() => {
-    if (!expanded && hasInteracted.current && cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!expanded && hasInteracted.current) {
+      onCollapseRequest?.(cardRef.current);
     }
-  }, [expanded]);
+  }, [expanded, onCollapseRequest]);
 
   const toggleExpand = (value: boolean) => {
     hasInteracted.current = true;
@@ -193,4 +114,4 @@ function CardHistorialItem<T extends IHistorialItem>({
   );
 }
 
-export default CardPanelHistorial;
+export default CardItem;
