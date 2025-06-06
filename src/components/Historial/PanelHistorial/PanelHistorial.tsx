@@ -119,8 +119,20 @@ function PanelHistorial<T extends IHistorialItem>({
       type={PanelType.customNear}
       styles={{
         main: { width: '440px', left: 0, right: 'unset' },
-        content: { display: 'flex', flexDirection: 'column', flexGrow: 1, paddingRight: 0 },
-        scrollableContent: { flexGrow: 1, display: 'flex', flexDirection: 'column' },
+        content: {
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1,
+          paddingRight: 0,
+          overflow: 'hidden'
+        },
+        scrollableContent: {
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: 'auto',
+          paddingRight: 18
+        },
         closeButton: { paddingRight: 0, paddingLeft: 0, marginRight: 0 }
       }}
     >

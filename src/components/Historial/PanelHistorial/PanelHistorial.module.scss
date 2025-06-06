@@ -25,7 +25,6 @@
 .historialPanel :global(.ms-Panel-scrollableContent) {
   padding-inline-end: 18px;
   flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
