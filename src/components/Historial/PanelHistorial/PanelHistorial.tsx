@@ -540,7 +540,7 @@ function PanelHistorial<T extends IHistorialItem>({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: 3
+                paddingBottom: 3
               },
             }}
           />
