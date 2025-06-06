@@ -25,6 +25,7 @@ function Historial<T extends IHistorialItem> ({
     onClose
 }: HistorialProps<T>) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const leyendaDefaultToolTip = 'Historial';
     const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
@@ -47,6 +48,8 @@ function Historial<T extends IHistorialItem> ({
             </TooltipHost>
             {isPanelOpen && <PanelHistorial
                 items={items}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
                 textoEncabezadoHistorial={textoEncabezadoHistorial}
                 isPanelOpen={isPanelOpen}
                 setIsPanelOpen={setIsPanelOpen}
