@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DefaultButton } from '@fluentui/react';
 import { HistorialPanel, IHistorialItem } from './components/HistorialPanel';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-import Historial from './components/Historial/Historial/Historial'
+import Historial from './components/Historial/Historial'
 
 initializeIcons();
 
@@ -1360,17 +1360,19 @@ const App: React.FC = () => {
 
       <Historial
         items={items}
+        colorGeneral='#0078d4'
+        colorAvatar='#c4314b'
         textoEncabezadoHistorial={'Historial de cambios'}
         // leyendaToolTip='Historial'
-        estilosBoton={{
-          root: {
-            color: '#7D50A5',
-            width: 30,
-            height: 30,
-            border: '1px solid #7D50A5',
-            borderRadius: 6,
-          }
-        }}
+        // estilosBoton={{
+        //   root: {
+        //     color: '#0078d4',
+        //     width: 30,
+        //     height: 30,
+        //     border: '1px solid #0078d4',
+        //     borderRadius: 6,
+        //   }
+        // }}
         onClose={() => console.log('Cerré la ventana lateral.')}
       />
 

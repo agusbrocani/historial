@@ -5,6 +5,8 @@ import { RefObject } from 'react';
 
 type CardListProps<T extends IHistorialItem> = {
   items: T[];
+  colorGeneral: string;
+  colorAvatar: string;
   totalItems: number;
   onCollapseRequest?: (ref: HTMLDivElement | null) => void;
   lastCardRef: RefObject<HTMLDivElement>;
@@ -12,6 +14,8 @@ type CardListProps<T extends IHistorialItem> = {
 
 function CardList<T extends IHistorialItem>({
   items,
+  colorGeneral,
+  colorAvatar,
   totalItems,
   onCollapseRequest,
   lastCardRef,
@@ -25,6 +29,8 @@ function CardList<T extends IHistorialItem>({
           <div key={index} ref={isLast ? lastCardRef : null}>
             <CardItem
               item={item}
+              colorGeneral={colorGeneral}
+              colorAvatar={colorAvatar}
               index={index}
               total={totalItems}
               onCollapseRequest={onCollapseRequest}

@@ -7,6 +7,8 @@ type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
   index: number;
   total: number;
+  colorGeneral: string;
+  colorAvatar: string;
   onCollapseRequest?: (ref: HTMLDivElement | null) => void;
 };
 
@@ -14,6 +16,8 @@ function CardItem<T extends IHistorialItem>({
   item,
   index,
   total,
+  colorGeneral,
+  colorAvatar,
   onCollapseRequest,
 }: CardHistorialItemProps<T>) {
   const [expanded, setExpanded] = useState(false);
@@ -71,10 +75,10 @@ function CardItem<T extends IHistorialItem>({
   const observacionTexto = item.observacion || 'Sin observaciones';
 
   return (
-    <div className={styles.card} ref={cardRef}>
+    <div className={styles.card} ref={cardRef} style={{ borderLeftColor: `${colorGeneral}` }}>
       <div className={styles.estados}>
         <span>{estadoAnterior}</span>
-        <Icon iconName='Forward' className={styles.iconoEstado} />
+        <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }}/>
         <span>{estadoPosterior}</span>
       </div>
 
@@ -84,7 +88,7 @@ function CardItem<T extends IHistorialItem>({
         </div>
         <span className={styles.texto}>{fechaHoraTexto}</span>
 
-        <div className={styles.avatar}>
+        <div className={styles.avatar} style={{ backgroundColor: colorAvatar }}>
           {iniciales}
         </div>
         <TooltipHost
@@ -105,12 +109,12 @@ function CardItem<T extends IHistorialItem>({
           {observacionTexto}
         </p>
         {!expanded && shouldShowButton && (
-          <button className={styles.verMasBtn} onClick={() => toggleExpand(true)}>
+          <button className={styles.verBtn} style={{ color: `${colorGeneral}` }} onClick={() => toggleExpand(true)}>
             Ver más
           </button>
         )}
         {expanded && (
-          <button className={styles.verMasBtn} onClick={() => toggleExpand(false)}>
+          <button className={styles.verBtn} style={{ color: `${colorGeneral}` }} onClick={() => toggleExpand(false)}>
             Ver menos
           </button>
         )}

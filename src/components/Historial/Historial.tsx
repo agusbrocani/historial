@@ -4,22 +4,24 @@ import {
     IconButton,
     IButtonStyles
 } from '@fluentui/react';
-import PanelHistorial from '../PanelHistorial/PanelHistorial';
-import styles from './Historial.module.scss';
-
-import { IHistorialItem } from '../../HistorialPanel';
+import PanelHistorial from './PanelHistorial/PanelHistorial';
+import { IHistorialItem } from '../HistorialPanel';
 
 type HistorialProps<T extends IHistorialItem> = {
     items: T[];
     textoEncabezadoHistorial: string;
+    colorGeneral: string;
+    colorAvatar?: string;
     leyendaToolTip?: string;
     estilosBoton?: IButtonStyles;
     onClose?: () => void;
 };
 
-function Historial<T extends IHistorialItem> ({
+function Historial<T extends IHistorialItem>({
     items,
     textoEncabezadoHistorial,
+    colorGeneral,
+    colorAvatar,
     leyendaToolTip,
     estilosBoton,
     onClose
@@ -29,17 +31,30 @@ function Historial<T extends IHistorialItem> ({
 
     const leyendaDefaultToolTip = 'Historial';
     const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
-
-    const iconButton =
+    const colorGeneralFinal: string = colorGeneral ? colorGeneral : '#000000';
+    const colorAvatarFinal: string = colorAvatar ?? colorGeneralFinal;
+    const iconButton = (
         <IconButton
             iconProps={{ iconName: 'History' }}
-            className={!estilosBoton ? styles.botonHistorialDefault : undefined}
-            styles={estilosBoton}
+            styles={
+                estilosBoton
+                    ? estilosBoton
+                    : {
+                        root: {
+                            color: `${colorGeneralFinal}`,
+                            width: '30px',
+                            height: '30px',
+                            border: `1px solid ${colorGeneralFinal}`,
+                            borderRadius: '6px',
+                        },
+                    }
+            }
             onClick={() => {
                 (document.activeElement as HTMLElement)?.blur();
                 setIsPanelOpen(true);
             }}
-        />;
+        />
+    );
 
     return (
         <>
@@ -48,6 +63,8 @@ function Historial<T extends IHistorialItem> ({
             </TooltipHost>
             {isPanelOpen && <PanelHistorial
                 items={items}
+                colorGeneral={colorGeneralFinal}
+                colorAvatar={colorAvatarFinal}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 textoEncabezadoHistorial={textoEncabezadoHistorial}
