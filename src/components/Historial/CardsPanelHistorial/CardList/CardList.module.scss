@@ -2,11 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-
   padding-inline: 16px;
-  padding-block: 16px;
-
+  padding-block: 0 16px;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
 }

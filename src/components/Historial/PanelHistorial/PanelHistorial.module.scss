@@ -1,4 +1,72 @@
+// .historialPanel {
+//   :global(*::-webkit-scrollbar) {
+//     width: 14px;
+//   }
+//   :global(*::-webkit-scrollbar-track) {
+//     background: transparent;
+//   }
+//   :global(*::-webkit-scrollbar-thumb) {
+//     background-color: rgba(0, 0, 0, 0.25);
+//     border-radius: 8px;
+//     border: 3px solid transparent;
+//     background-clip: content-box;
+//     min-height: 30px;
+//   }
+//   :global(*::-webkit-scrollbar-thumb:hover) {
+//     background-color: rgba(0, 0, 0, 0.4);
+//   }
+//   :global(*) {
+//     scrollbar-width: auto;
+//   }
+//   :global(.ms-Panel-scrollableContent) {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//   }
+//   :global(.ms-Panel-main),
+//   :global(.ms-Panel-navigation) {
+//     box-sizing: border-box;
+//   }
+//   :global(.ms-Panel-navigation) {
+//     position: relative;
+//     flex-shrink: 0;
+//   }
+//   :global(.ms-Panel-navigation)::after {
+//     content: '';
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     bottom: -1px;
+//     height: 1px;
+//     background-color: #e1e1e1;
+//   }
+//   :global(.ms-Panel-commands) {
+//     padding-top: 0;
+//     padding-bottom: 0;
+//   }
+// }
+
+// .miEncabezadoPersonalizado {
+//   display: flex;
+//   align-items: center;
+//   padding: 14px 18px;
+// }
+
+// .tituloEncabezado {
+//   font-size: 18px;
+//   font-weight: 600;
+//   color: #ffffff;
+//   margin: 0;
+// }
+
+// .spinnerContainer {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 .historialPanel {
+  /* Scrollbar personalizado */
   :global(*::-webkit-scrollbar) {
     width: 14px;
   }
@@ -18,11 +86,30 @@
   :global(*) {
     scrollbar-width: auto;
   }
+
+  /* ------------------------------------------------------------
+     Espacio entre el encabezado (azul) y el contenido desplazable
+     ------------------------------------------------------------ */
+  :global(.ms-Panel-content) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;    /* recorta todo lo que quede fuera */
+    padding-top: 16px;   /* separación arriba del contenido */
+  }
+
+  /* ------------------------------------------------------------
+     Contenedor de contenido con scroll interno
+     ------------------------------------------------------------ */
   :global(.ms-Panel-scrollableContent) {
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;    /* scroll vertical activo */
+    overflow-x: hidden;  /* oculta cualquier exceso horizontal */
   }
+
+  /* panel main y navegación */
   :global(.ms-Panel-main),
   :global(.ms-Panel-navigation) {
     box-sizing: border-box;
@@ -40,6 +127,8 @@
     height: 1px;
     background-color: #e1e1e1;
   }
+
+  /* comandos (sin padding extra) */
   :global(.ms-Panel-commands) {
     padding-top: 0;
     padding-bottom: 0;
