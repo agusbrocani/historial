@@ -61,8 +61,9 @@ import { Panel, PanelType, Icon } from '@fluentui/react';
 import styles from './HistorialPanel.module.scss';
 
 export interface IHistorialItem {
-  estadoAnterior: string;
-  estadoPosterior: string;
+  estadoUnico?: string;
+  estadoAnterior?: string;
+  estadoPosterior?: string;
   usuario: string;
   fecha: string;
   hora: string;

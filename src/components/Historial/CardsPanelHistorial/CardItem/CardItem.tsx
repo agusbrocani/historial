@@ -69,17 +69,37 @@ function CardItem<T extends IHistorialItem>({
     ? `${item.fecha} a las ${item.hora} hs.`
     : 'Fecha no disponible';
 
-  const estadoAnterior = item.estadoAnterior || 'Sin estado';
-  const estadoPosterior = item.estadoPosterior || 'Sin estado';
+  const estadoUnico = item.estadoUnico || 'Sin estado unico';
+  const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
+  const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
+
+  const conEstadoUnico =
+    <>
+      <span>{estadoUnico}</span>
+    </>
+
+  const conEstadoAnteriorPosterior =
+    <>
+      <span>{estadoAnterior}</span>
+      <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }} />
+      <span>{estadoPosterior}</span>
+    </>
+
+  const estadoDefinido =
+    item.estadoUnico && item.estadoAnterior && item.estadoPosterior 
+      ? 'Exceso de estados'
+      : !item.estadoUnico && !item.estadoAnterior && item.estadoPosterior 
+        ? 'Sin estado'
+        : item.estadoUnico 
+          ? conEstadoUnico 
+          : conEstadoAnteriorPosterior;
   const usuarioTexto = item.usuario || 'Usuario no identificado';
   const observacionTexto = item.observacion || 'Sin observaciones';
 
   return (
     <div className={styles.card} ref={cardRef} style={{ borderLeftColor: `${colorGeneral}` }}>
       <div className={styles.estados}>
-        <span>{estadoAnterior}</span>
-        <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }}/>
-        <span>{estadoPosterior}</span>
+        {estadoDefinido}
       </div>
 
       <div className={styles.infoGrid}>
