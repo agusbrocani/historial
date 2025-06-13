@@ -1,3 +1,28 @@
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+//   padding-inline: 16px;
+//   padding-block: 0 16px;
+//   max-height: 90vh;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+//   position: relative;
+// }
+/* ------------------------------------------------------------
+   Animación de aparición (fade-in) para cada batch
+   ------------------------------------------------------------ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -8,4 +33,9 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+}
+
+/* Aplica la animación a cada hijo cuando entra */
+.container > * {
+  animation: fadeIn 0.3s ease both;
 }
