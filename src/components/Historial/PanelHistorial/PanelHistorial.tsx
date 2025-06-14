@@ -13,6 +13,7 @@ import { IHistorialItem } from '../../HistorialPanel';
 
 type PanelHistorialProps<T extends IHistorialItem> = {
   items: T[];
+  batchSize: number;
   colorGeneral: string;
   colorAvatar: string;
   isLoading: boolean;
@@ -25,6 +26,7 @@ type PanelHistorialProps<T extends IHistorialItem> = {
 
 function PanelHistorial<T extends IHistorialItem>({
   items,
+  batchSize,
   colorGeneral,
   colorAvatar,
   isLoading,
@@ -37,7 +39,6 @@ function PanelHistorial<T extends IHistorialItem>({
   const scrollableContentRef = useRef<HTMLDivElement | null>(null);
   const lastCardRef = useRef<HTMLDivElement | null>(null);
 
-  const batchSize = 10;
   const [loadedCount, setLoadedCount] = useState(0);
 
   // visibleItems: items visibles segun el paginado por batchSize

@@ -9,6 +9,7 @@ import { IHistorialItem } from '../HistorialPanel';
 
 type HistorialProps<T extends IHistorialItem> = {
   items: T[];
+  batchSize: number;
   textoEncabezadoHistorial: string;
   colorGeneral: string;
   colorAvatar?: string;
@@ -19,6 +20,7 @@ type HistorialProps<T extends IHistorialItem> = {
 
 function Historial<T extends IHistorialItem>({
   items,
+  batchSize,
   textoEncabezadoHistorial,
   colorGeneral,
   colorAvatar,
@@ -86,6 +88,9 @@ function Historial<T extends IHistorialItem>({
       }}
     />
   );
+  
+  const cargaMinima = 10;
+  const batchSizeFinal = Math.max(batchSize, cargaMinima);
 
   return (
     <>
@@ -95,6 +100,7 @@ function Historial<T extends IHistorialItem>({
       {isPanelOpen && (
         <PanelHistorial
           items={items}
+          batchSize={batchSizeFinal}
           colorGeneral={colorGeneralFinal}
           colorAvatar={colorAvatarFinal}
           isLoading={isLoading}

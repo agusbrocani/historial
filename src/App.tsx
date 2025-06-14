@@ -46401,6 +46401,7 @@ const items: IHistorialItem[] = [
         // items={itemsReducido}
         // items={[]}
         items={delayedItems}
+        batchSize={4}
         colorGeneral='violet'
         colorAvatar='#c4314b'
         textoEncabezadoHistorial={'Historial de cambios'}
