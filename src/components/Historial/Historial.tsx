@@ -37,7 +37,7 @@ function Historial<T extends IHistorialItem>({
   const leyendaDefaultToolTip = 'Historial';
   const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
   const colorGeneralFinal = colorGeneral?.trim() ? colorGeneral : '#000000';
-  const colorAvatarFinal = colorAvatar ?? colorGeneralFinal;
+  const colorAvatarFinal = colorAvatar?.trim() ? colorAvatar : colorGeneralFinal;
 
   // Al abrir el panel, mostrar spinner y comenzar timeout
   useEffect(() => {

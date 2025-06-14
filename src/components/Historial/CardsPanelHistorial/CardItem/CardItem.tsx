@@ -119,6 +119,7 @@ function CardItem<T extends IHistorialItem>({
 
       <div className={styles.infoGrid}>
         <div className={styles.iconoCalendario}>
+          {/* <Icon iconName='Calendar' style={{ color: colorGeneral }} /> */}
           <Icon iconName='Calendar' />
         </div>
         <span className={styles.texto}>{fechaHoraTexto}</span>
