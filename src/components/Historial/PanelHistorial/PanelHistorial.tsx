@@ -142,23 +142,18 @@ function PanelHistorial<T extends IHistorialItem>({
                 color: '#ffffff',
                 marginRight: 10,
                 lineHeight: '32px',
-                width:  32,
+                width: 32,
                 height: 32,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                paddingBottom: 3
+                paddingBottom: 3,
               },
             }}
           />
-          <span className={styles.tituloEncabezado}>
-            {textoEncabezadoHistorial}
-          </span>
+          <span className={styles.tituloEncabezado}>{textoEncabezadoHistorial}</span>
           <IconButton
-            iconProps={{
-              iconName: 'Cancel',
-              styles: { root: { color: '#ffffff', fontSize: 18 } },
-            }}
+            iconProps={{ iconName: 'Cancel', styles: { root: { color: '#ffffff', fontSize: 18 } } }}
             ariaLabel='Cerrar'
             onClick={handleDismiss}
             styles={{
@@ -215,14 +210,24 @@ function PanelHistorial<T extends IHistorialItem>({
           />
         </div>
       ) : (
-        <CardList
-          items={visibleItems}
-          colorGeneral={colorGeneral}
-          colorAvatar={colorAvatar}
-          totalItems={items.length}
-          onCollapseRequest={handleCollapseRequest}
-          lastCardRef={lastCardRef}
-        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: 0,
+            flex: '1 1 auto',
+          }}
+        >
+          <div style={{ height: 16, flexShrink: 0 }} />
+          <CardList
+            items={visibleItems}
+            colorGeneral={colorGeneral}
+            colorAvatar={colorAvatar}
+            totalItems={items.length}
+            onCollapseRequest={handleCollapseRequest}
+            lastCardRef={lastCardRef}
+          />
+        </div>
       )}
     </Panel>
   );
