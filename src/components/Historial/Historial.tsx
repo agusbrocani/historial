@@ -1,79 +1,112 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
-    TooltipHost,
-    IconButton,
-    IButtonStyles
+  TooltipHost,
+  IconButton,
+  IButtonStyles
 } from '@fluentui/react';
 import PanelHistorial from './PanelHistorial/PanelHistorial';
 import { IHistorialItem } from '../HistorialPanel';
 
 type HistorialProps<T extends IHistorialItem> = {
-    items: T[];
-    textoEncabezadoHistorial: string;
-    colorGeneral: string;
-    colorAvatar?: string;
-    leyendaToolTip?: string;
-    estilosBoton?: IButtonStyles;
-    onClose?: () => void;
+  items: T[];
+  textoEncabezadoHistorial: string;
+  colorGeneral: string;
+  colorAvatar?: string;
+  leyendaToolTip?: string;
+  estilosBoton?: IButtonStyles;
+  onClose?: () => void;
 };
 
 function Historial<T extends IHistorialItem>({
-    items,
-    textoEncabezadoHistorial,
-    colorGeneral,
-    colorAvatar,
-    leyendaToolTip,
-    estilosBoton,
-    onClose
+  items,
+  textoEncabezadoHistorial,
+  colorGeneral,
+  colorAvatar,
+  leyendaToolTip,
+  estilosBoton,
+  onClose
 }: HistorialProps<T>) {
-    const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [timeoutExceeded, setTimeoutExceeded] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const leyendaDefaultToolTip = 'Historial';
-    const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
-    const colorGeneralFinal: string = colorGeneral ? colorGeneral : '#000000';
-    const colorAvatarFinal: string = colorAvatar ?? colorGeneralFinal;
-    const iconButton = (
-        <IconButton
-            iconProps={{ iconName: 'History' }}
-            styles={
-                estilosBoton
-                    ? estilosBoton
-                    : {
-                        root: {
-                            color: `${colorGeneralFinal}`,
-                            width: '30px',
-                            height: '30px',
-                            border: `1px solid ${colorGeneralFinal}`,
-                            borderRadius: '6px',
-                        },
-                    }
-            }
-            onClick={() => {
-                (document.activeElement as HTMLElement)?.blur();
-                setIsPanelOpen(true);
-            }}
+  const leyendaDefaultToolTip = 'Historial';
+  const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
+  const colorGeneralFinal = colorGeneral ?? '#000000';
+  const colorAvatarFinal = colorAvatar ?? colorGeneralFinal;
+
+  // Al abrir el panel, mostrar spinner y comenzar timeout
+  useEffect(() => {
+    if (isPanelOpen) {
+      setIsLoading(true);
+      setTimeoutExceeded(false);
+
+      timeoutRef.current = setTimeout(() => {
+        setTimeoutExceeded(true);
+        setIsLoading(false);
+      }, 15000); // 15 segundos máximo
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [isPanelOpen]);
+
+  // Si llegan los items antes del timeout, limpiar y mostrar
+  useEffect(() => {
+    if (items.length > 0) {
+      setIsLoading(false);
+      setTimeoutExceeded(false);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    }
+  }, [items]);
+
+  const iconButton = (
+    <IconButton
+      iconProps={{ iconName: 'History' }}
+      styles={
+        estilosBoton ?? {
+          root: {
+            color: colorGeneralFinal,
+            width: 30,
+            height: 30,
+            border: `1px solid ${colorGeneralFinal}`,
+            borderRadius: 6,
+          },
+        }
+      }
+      onClick={() => {
+        (document.activeElement as HTMLElement)?.blur();
+        setIsPanelOpen(true);
+      }}
+    />
+  );
+
+  return (
+    <>
+      <TooltipHost content={leyenda}>
+        {iconButton}
+      </TooltipHost>
+      {isPanelOpen && (
+        <PanelHistorial
+          items={items}
+          colorGeneral={colorGeneralFinal}
+          colorAvatar={colorAvatarFinal}
+          isLoading={isLoading}
+          textoEncabezadoHistorial={textoEncabezadoHistorial}
+          isPanelOpen={isPanelOpen}
+          setIsPanelOpen={setIsPanelOpen}
+          onClose={onClose}
+          timeoutExceeded={timeoutExceeded}
         />
-    );
-
-    return (
-        <>
-            <TooltipHost content={leyenda}>
-                {iconButton}
-            </TooltipHost>
-            {isPanelOpen && <PanelHistorial
-                items={items}
-                colorGeneral={colorGeneralFinal}
-                colorAvatar={colorAvatarFinal}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                textoEncabezadoHistorial={textoEncabezadoHistorial}
-                isPanelOpen={isPanelOpen}
-                setIsPanelOpen={setIsPanelOpen}
-                onClose={onClose}
-            />}
-        </>
-    );
+      )}
+    </>
+  );
 }
 
 export default Historial;

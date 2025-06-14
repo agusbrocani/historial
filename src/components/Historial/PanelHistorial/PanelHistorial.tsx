@@ -16,11 +16,11 @@ type PanelHistorialProps<T extends IHistorialItem> = {
   colorGeneral: string;
   colorAvatar: string;
   isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   textoEncabezadoHistorial: string;
   isPanelOpen: boolean;
   setIsPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onClose?: () => void;
+  timeoutExceeded?: boolean;
 };
 
 function PanelHistorial<T extends IHistorialItem>({
@@ -28,24 +28,17 @@ function PanelHistorial<T extends IHistorialItem>({
   colorGeneral,
   colorAvatar,
   isLoading,
-  setIsLoading,
   textoEncabezadoHistorial,
   isPanelOpen,
   setIsPanelOpen,
   onClose,
+  timeoutExceeded = false,
 }: PanelHistorialProps<T>) {
   const scrollableContentRef = useRef<HTMLDivElement | null>(null);
   const lastCardRef = useRef<HTMLDivElement | null>(null);
 
   const batchSize = 10;
-  const initialLoadedCount = Math.min(batchSize, items.length);
-  const [loadedCount, setLoadedCount] = useState(initialLoadedCount);
-
-  useEffect(() => {
-    if (isPanelOpen) {
-      setLoadedCount(Math.min(batchSize, items.length));
-    }
-  }, [isPanelOpen, items.length]);
+  const [loadedCount, setLoadedCount] = useState(0);
 
   // visibleItems: items visibles segun el paginado por batchSize
   const visibleItems = items.slice(0, loadedCount);
@@ -119,10 +112,10 @@ function PanelHistorial<T extends IHistorialItem>({
   }, [handleIntersect, loadedCount, visibleItems]);
 
   useEffect(() => {
-    if (0 !== items.length) {
-      setIsLoading(false);
+    if (isPanelOpen) {
+      setLoadedCount(Math.min(batchSize, items.length));
     }
-  }, [items.length]);
+  }, [isPanelOpen, items.length]);
 
   return (
     <Panel
@@ -210,6 +203,12 @@ function PanelHistorial<T extends IHistorialItem>({
             size={SpinnerSize.large}
             styles={{ label: { color: colorGeneral } }}
           />
+        </div>
+      ) : timeoutExceeded ? (
+        <div className={styles.spinnerContainer}>
+          <span style={{ color: colorGeneral }}>
+            No se pudo obtener el historial.
+          </span>
         </div>
       ) : (
         <div

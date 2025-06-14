@@ -46387,6 +46387,7 @@ const items: IHistorialItem[] = [
       <Historial
         // items={items}
         items={itemsReducido}
+        // items={[]}
         colorGeneral='#0078d4'
         colorAvatar='#c4314b'
         textoEncabezadoHistorial={'Historial de cambios'}
