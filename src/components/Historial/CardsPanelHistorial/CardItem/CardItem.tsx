@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, memo } from 'react';
 import { Icon, TooltipHost } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
@@ -33,6 +33,7 @@ function CardItem<T extends IHistorialItem>({
       return;
     }
 
+    // Evaluao overflow visual con margen de error de 1px
     const isOverflowing = el.scrollHeight - el.clientHeight > 1;
     setShouldShowButton(isOverflowing);
   }, []);
@@ -65,27 +66,35 @@ function CardItem<T extends IHistorialItem>({
   };
 
   const partes = item.usuario?.split('.') ?? [];
-  const iniciales = ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
+  const iniciales =
+    ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
 
-  const fechaHoraTexto = (item.fecha && item.hora)
-    ? `${item.fecha} a las ${item.hora} hs.`
-    : 'Fecha no disponible';
+  const fechaHoraTexto =
+    item.fecha && item.hora
+      ? `${item.fecha} a las ${item.hora} hs.`
+      : 'Fecha no disponible';
 
   const estadoUnico = item.estadoUnico || 'Sin estado unico';
   const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
   const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
 
-  const conEstadoUnico =
+  const conEstadoUnico = (
     <>
       <span>{estadoUnico}</span>
-    </>;
+    </>
+  );
 
-  const conEstadoAnteriorPosterior =
+  const conEstadoAnteriorPosterior = (
     <>
       <span>{estadoAnterior}</span>
-      <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }} />
+      <Icon
+        iconName='Forward'
+        className={styles.iconoEstado}
+        style={{ color: `${colorGeneral}` }}
+      />
       <span>{estadoPosterior}</span>
-    </>;
+    </>
+  );
 
   const estadoDefinido =
     item.estadoUnico && item.estadoAnterior && item.estadoPosterior
@@ -98,12 +107,15 @@ function CardItem<T extends IHistorialItem>({
 
   const usuarioTexto = item.usuario || 'Usuario no identificado';
   const observacionTexto = item.observacion || 'Sin observaciones';
+  const observacionId = `obs-${index}`;
 
   return (
-    <div className={styles.card} ref={cardRef} style={{ borderLeftColor: `${colorGeneral}` }}>
-      <div className={styles.estados}>
-        {estadoDefinido}
-      </div>
+    <div
+      className={styles.card}
+      ref={cardRef}
+      style={{ borderLeftColor: `${colorGeneral}` }}
+    >
+      <div className={styles.estados}>{estadoDefinido}</div>
 
       <div className={styles.infoGrid}>
         <div className={styles.iconoCalendario}>
@@ -125,6 +137,7 @@ function CardItem<T extends IHistorialItem>({
 
       <div>
         <p
+          id={observacionId}
           ref={observacionRef}
           className={expanded ? styles.observacionExpanded : styles.observacion}
           style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
@@ -132,12 +145,26 @@ function CardItem<T extends IHistorialItem>({
           {observacionTexto}
         </p>
         {!expanded && shouldShowButton && (
-          <button className={styles.verBtn} style={{ color: `${colorGeneral}` }} onClick={() => toggleExpand(true)}>
+          <button
+            className={styles.verBtn}
+            style={{ color: `${colorGeneral}` }}
+            onClick={() => toggleExpand(true)}
+            role='button'
+            aria-expanded={false}
+            aria-controls={observacionId}
+          >
             Ver más
           </button>
         )}
         {expanded && (
-          <button className={styles.verBtn} style={{ color: `${colorGeneral}` }} onClick={() => toggleExpand(false)}>
+          <button
+            className={styles.verBtn}
+            style={{ color: `${colorGeneral}` }}
+            onClick={() => toggleExpand(false)}
+            role='button'
+            aria-expanded={true}
+            aria-controls={observacionId}
+          >
             Ver menos
           </button>
         )}
@@ -154,4 +181,4 @@ function CardItem<T extends IHistorialItem>({
   );
 }
 
-export default CardItem;
+export default memo(CardItem);

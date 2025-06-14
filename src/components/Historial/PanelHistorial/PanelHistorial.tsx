@@ -38,9 +38,8 @@ function PanelHistorial<T extends IHistorialItem>({
   const lastCardRef = useRef<HTMLDivElement | null>(null);
 
   const batchSize = 10;
-  const [loadedCount, setLoadedCount] = useState(() =>
-    Math.min(batchSize, items.length)
-  );
+  const initialLoadedCount = Math.min(batchSize, items.length);
+  const [loadedCount, setLoadedCount] = useState(initialLoadedCount);
 
   useEffect(() => {
     if (isPanelOpen) {
@@ -76,42 +75,45 @@ function PanelHistorial<T extends IHistorialItem>({
     [batchSize, items.length, loadedCount]
   );
 
-  // Reemplazamos MutationObserver por polling con setInterval, mismo comportamiento
+  // Espera activa hasta que scrollableContent esté disponible usando observer como fallback
   useEffect(() => {
     if (!isPanelOpen) return;
 
-    const interval = setInterval(() => {
-      const real = document.querySelector(
+    const observer = new MutationObserver(() => {
+      const scrollContainer = document.querySelector(
         '.ms-Panel-main .ms-Panel-scrollableContent'
       ) as HTMLDivElement | null;
-      if (real) {
-        scrollableContentRef.current = real;
-        clearInterval(interval);
-      }
-    }, 50);
 
-    return () => clearInterval(interval);
+      if (scrollContainer) {
+        scrollableContentRef.current = scrollContainer;
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
   }, [isPanelOpen]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      const node = lastCardRef.current;
-      const rootNode = scrollableContentRef.current;
+    if (!scrollableContentRef.current) return;
+    const node = lastCardRef.current;
+    const rootNode = scrollableContentRef.current;
 
-      if (!node || !rootNode || loadedCount >= items.length) return;
+    if (!node || !rootNode || loadedCount >= items.length) return;
 
-      const observer = new IntersectionObserver(handleIntersect, {
-        root: rootNode,
-        rootMargin: '0px',
-        threshold: 0.01,
-      });
+    const observer = new IntersectionObserver(handleIntersect, {
+      root: rootNode,
+      rootMargin: '0px',
+      threshold: 0.01,
+    });
 
-      observer.observe(node);
+    observer.observe(node);
 
-      return () => observer.disconnect();
-    }, 50);
-
-    return () => clearTimeout(timeoutId);
+    return () => observer.disconnect();
   }, [handleIntersect, loadedCount, visibleItems]);
 
   useEffect(() => {
@@ -129,7 +131,10 @@ function PanelHistorial<T extends IHistorialItem>({
       type={PanelType.customNear}
       hasCloseButton={false}
       onRenderNavigation={() => (
-        <div className={styles.miEncabezadoPersonalizado} style={{ backgroundColor: colorGeneral }}>
+        <div
+          className={styles.miEncabezadoPersonalizado}
+          style={{ backgroundColor: colorGeneral }}
+        >
           <Icon
             iconName='Clock'
             styles={{
@@ -147,9 +152,14 @@ function PanelHistorial<T extends IHistorialItem>({
               },
             }}
           />
-          <span className={styles.tituloEncabezado}>{textoEncabezadoHistorial}</span>
+          <span className={styles.tituloEncabezado}>
+            {textoEncabezadoHistorial}
+          </span>
           <IconButton
-            iconProps={{ iconName: 'Cancel', styles: { root: { color: '#ffffff', fontSize: 18 } } }}
+            iconProps={{
+              iconName: 'Cancel',
+              styles: { root: { color: '#ffffff', fontSize: 18 } },
+            }}
             ariaLabel='Cerrar'
             onClick={handleDismiss}
             styles={{
@@ -161,12 +171,8 @@ function PanelHistorial<T extends IHistorialItem>({
               rootHovered: {
                 backgroundColor: '#ffffff',
               },
-              icon: {
-                fontSize: 18,
-              },
-              iconHovered: {
-                color: colorGeneral,
-              },
+              icon: { fontSize: 18 },
+              iconHovered: { color: colorGeneral },
             }}
           />
         </div>
@@ -192,9 +198,7 @@ function PanelHistorial<T extends IHistorialItem>({
           flexDirection: 'column',
           overflowY: 'auto',
         },
-        closeButton: {
-          display: 'none',
-        },
+        closeButton: { display: 'none' },
       }}
     >
       {isLoading ? (
