@@ -23,8 +23,8 @@ const tooltipCalloutProps: ICalloutProps = {
       border: '1px solid #e0e0e0',
       background: '#fff',
       padding: 8,
-    }
-  }
+    },
+  },
 };
 
 function CardItem<T extends IHistorialItem>({
@@ -71,34 +71,53 @@ function CardItem<T extends IHistorialItem>({
   }, []);
 
   useEffect(() => {
-    checkOverflow();
+    let mounted = true;
     const ro = new ResizeObserver(() => {
-      checkOverflow();
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          if (mounted) checkOverflow();
+        }, 0);
+      });
     });
     if (observacionRef.current) {
       ro.observe(observacionRef.current);
     }
     return () => {
+      mounted = false;
       ro.disconnect();
     };
   }, [checkOverflow, item.observacion]);
 
   useEffect(() => {
-    checkUsuarioOverflow();
+    let mounted = true;
     const ro = new ResizeObserver(() => {
-      requestAnimationFrame(() => checkUsuarioOverflow());
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          if (mounted) checkUsuarioOverflow();
+        }, 0);
+      });
     });
     if (usuarioRef.current) ro.observe(usuarioRef.current);
-    return () => ro.disconnect();
+    return () => {
+      mounted = false;
+      ro.disconnect();
+    };
   }, [checkUsuarioOverflow, item.usuario]);
 
   useEffect(() => {
-    checkIndiceOverflow();
+    let mounted = true;
     const ro = new ResizeObserver(() => {
-      requestAnimationFrame(() => checkIndiceOverflow());
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          if (mounted) checkIndiceOverflow();
+        }, 0);
+      });
     });
     if (indiceRef.current) ro.observe(indiceRef.current);
-    return () => ro.disconnect();
+    return () => {
+      mounted = false;
+      ro.disconnect();
+    };
   }, [checkIndiceOverflow, index, total]);
 
   useEffect(() => {
@@ -153,6 +172,7 @@ function CardItem<T extends IHistorialItem>({
   const usuarioTexto = item.usuario || 'Usuario no identificado';
   const observacionTexto = item.observacion || 'Sin observaciones';
   const observacionId = `obs-${index}`;
+  const textoIndice = `Cambio ${index + 1} de ${total}`;
 
   return (
     <div
@@ -226,17 +246,17 @@ function CardItem<T extends IHistorialItem>({
 
       {isIndiceTruncado ? (
         <TooltipHost
-          content={`Cambio ${index + 1} de ${total}`}
+          content={textoIndice}
           calloutProps={tooltipCalloutProps}
           styles={{ root: { display: 'block', width: '100%' } }}
         >
           <span ref={indiceRef} className={styles.indice}>
-            {`Cambio ${index + 1} de ${total}`}
+            {textoIndice}
           </span>
         </TooltipHost>
       ) : (
         <span ref={indiceRef} className={styles.indice}>
-          {`Cambio ${index + 1} de ${total}`}
+          {textoIndice}
         </span>
       )}
     </div>

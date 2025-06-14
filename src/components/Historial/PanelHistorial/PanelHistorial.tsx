@@ -203,12 +203,12 @@ function PanelHistorial<T extends IHistorialItem>({
             label='Cargando historial...'
             size={SpinnerSize.large}
             styles={{
-                label: {
-                  color: colorGeneral,
-                },
-                circle: {
-                  borderTopColor: colorGeneral,
-                },
+              label: {
+                color: colorGeneral,
+              },
+              circle: {
+                borderTopColor: colorGeneral,
+              },
             }}
           />
         </div>
