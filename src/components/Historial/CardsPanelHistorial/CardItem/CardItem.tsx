@@ -32,7 +32,9 @@ function CardItem<T extends IHistorialItem>({
       setShouldShowButton(false);
       return;
     }
-    setShouldShowButton(el.scrollHeight > el.clientHeight + 1);
+
+    const isOverflowing = el.scrollHeight - el.clientHeight > 1;
+    setShouldShowButton(isOverflowing);
   }, []);
 
   useEffect(() => {
@@ -76,23 +78,24 @@ function CardItem<T extends IHistorialItem>({
   const conEstadoUnico =
     <>
       <span>{estadoUnico}</span>
-    </>
+    </>;
 
   const conEstadoAnteriorPosterior =
     <>
       <span>{estadoAnterior}</span>
       <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }} />
       <span>{estadoPosterior}</span>
-    </>
+    </>;
 
   const estadoDefinido =
-    item.estadoUnico && item.estadoAnterior && item.estadoPosterior 
+    item.estadoUnico && item.estadoAnterior && item.estadoPosterior
       ? 'Exceso de estados'
-      : !item.estadoUnico && !item.estadoAnterior && item.estadoPosterior 
+      : !item.estadoUnico && !item.estadoAnterior && item.estadoPosterior
         ? 'Sin estado'
-        : item.estadoUnico 
-          ? conEstadoUnico 
+        : item.estadoUnico
+          ? conEstadoUnico
           : conEstadoAnteriorPosterior;
+
   const usuarioTexto = item.usuario || 'Usuario no identificado';
   const observacionTexto = item.observacion || 'Sin observaciones';
 

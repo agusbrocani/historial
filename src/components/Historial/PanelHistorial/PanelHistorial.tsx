@@ -76,25 +76,21 @@ function PanelHistorial<T extends IHistorialItem>({
     [batchSize, items.length, loadedCount]
   );
 
+  // Reemplazamos MutationObserver por polling con setInterval, mismo comportamiento
   useEffect(() => {
     if (!isPanelOpen) return;
 
-    const observer = new MutationObserver(() => {
+    const interval = setInterval(() => {
       const real = document.querySelector(
         '.ms-Panel-main .ms-Panel-scrollableContent'
       ) as HTMLDivElement | null;
       if (real) {
         scrollableContentRef.current = real;
-        observer.disconnect();
+        clearInterval(interval);
       }
-    });
+    }, 50);
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-
-    return () => observer.disconnect();
+    return () => clearInterval(interval);
   }, [isPanelOpen]);
 
   useEffect(() => {
