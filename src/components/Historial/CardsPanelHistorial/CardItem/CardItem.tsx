@@ -1,194 +1,5 @@
-// import { useRef, useEffect, useCallback, useState, memo } from 'react';
-// import { Icon, TooltipHost } from '@fluentui/react';
-// import styles from './CardItem.module.scss';
-// import { IHistorialItem } from '../../../HistorialPanel';
-
-// type CardHistorialItemProps<T extends IHistorialItem> = {
-//   item: T;
-//   index: number;
-//   total: number;
-//   colorGeneral: string;
-//   colorAvatar: string;
-//   onCollapseRequest?: (ref: HTMLDivElement | null) => void;
-// };
-
-// function CardItem<T extends IHistorialItem>({
-//   item,
-//   index,
-//   total,
-//   colorGeneral,
-//   colorAvatar,
-//   onCollapseRequest,
-// }: CardHistorialItemProps<T>) {
-//   const [expanded, setExpanded] = useState(false);
-//   const [shouldShowButton, setShouldShowButton] = useState(false);
-//   const observacionRef = useRef<HTMLParagraphElement | null>(null);
-//   const cardRef = useRef<HTMLDivElement | null>(null);
-//   const hasInteracted = useRef(false);
-
-//   const checkOverflow = useCallback(() => {
-//     const el = observacionRef.current;
-//     if (!el) {
-//       setShouldShowButton(false);
-//       return;
-//     }
-
-//     // Evaluao overflow visual con margen de error de 1px
-//     const isOverflowing = el.scrollHeight - el.clientHeight > 1;
-//     setShouldShowButton(isOverflowing);
-//   }, []);
-
-//   useEffect(() => {
-//     checkOverflow();
-
-//     const ro = new ResizeObserver(() => {
-//       checkOverflow();
-//     });
-
-//     if (observacionRef.current) {
-//       ro.observe(observacionRef.current);
-//     }
-
-//     return () => {
-//       ro.disconnect();
-//     };
-//   }, [checkOverflow, item.observacion]);
-
-//   useEffect(() => {
-//     if (!expanded && hasInteracted.current) {
-//       onCollapseRequest?.(cardRef.current);
-//     }
-//   }, [expanded, onCollapseRequest]);
-
-//   const toggleExpand = (value: boolean) => {
-//     hasInteracted.current = true;
-//     setExpanded(value);
-//   };
-
-//   const partes = item.usuario?.split('.') ?? [];
-//   const iniciales =
-//     ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
-
-//   const fechaHoraTexto =
-//     item.fecha && item.hora
-//       ? `${item.fecha} a las ${item.hora} hs.`
-//       : 'Fecha no disponible';
-
-//   const estadoUnico = item.estadoUnico || 'Sin estado unico';
-//   const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
-//   const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
-
-//   const conEstadoUnico = (
-//     <>
-//       <span>{estadoUnico}</span>
-//     </>
-//   );
-
-//   const conEstadoAnteriorPosterior = (
-//     <>
-//       <span>{estadoAnterior}</span>
-//       <Icon
-//         iconName='Forward'
-//         className={styles.iconoEstado}
-//         style={{ color: `${colorGeneral}` }}
-//       />
-//       <span>{estadoPosterior}</span>
-//     </>
-//   );
-
-//   const estadoDefinido = (() => {
-//     if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior)
-//       return 'Exceso de estados';
-//     else if (!item.estadoUnico && !item.estadoAnterior && item.estadoPosterior)
-//       return 'Sin estado';
-//     else if (item.estadoUnico)
-//       return conEstadoUnico;
-//     else
-//       return conEstadoAnteriorPosterior;
-//   })();
-
-//   const usuarioTexto = item.usuario || 'Usuario no identificado';
-//   const observacionTexto = item.observacion || 'Sin observaciones';
-//   const observacionId = `obs-${index}`;
-
-//   return (
-//     <div
-//       className={styles.card}
-//       ref={cardRef}
-//       style={{ borderLeftColor: `${colorGeneral}` }}
-//     >
-//       <div className={styles.estados}>{estadoDefinido}</div>
-
-//       <div className={styles.infoGrid}>
-//         <div className={styles.iconoCalendario}>
-//           {/* <Icon iconName='Calendar' style={{ color: colorGeneral }} /> */}
-//           <Icon iconName='Calendar' />
-//         </div>
-//         <span className={styles.texto}>{fechaHoraTexto}</span>
-
-//         <div className={styles.avatar} style={{ backgroundColor: colorAvatar }}>
-//           {iniciales}
-//         </div>
-//         <TooltipHost
-//           content={usuarioTexto}
-//           calloutProps={{ gapSpace: 0 }}
-//           styles={{ root: { display: 'inline-block' } }}
-//         >
-//           <span className={styles.texto}>{usuarioTexto}</span>
-//         </TooltipHost>
-//       </div>
-
-//       <div>
-//         <p
-//           id={observacionId}
-//           ref={observacionRef}
-//           className={expanded ? styles.observacionExpanded : styles.observacion}
-//           style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
-//         >
-//           {observacionTexto}
-//         </p>
-//         {!expanded && shouldShowButton && (
-//           <button
-//             className={styles.verBtn}
-//             style={{ color: `${colorGeneral}` }}
-//             onClick={() => toggleExpand(true)}
-//             role='button'
-//             aria-expanded={false}
-//             aria-controls={observacionId}
-//           >
-//             Ver más
-//           </button>
-//         )}
-//         {expanded && (
-//           <button
-//             className={styles.verBtn}
-//             style={{ color: `${colorGeneral}` }}
-//             onClick={() => toggleExpand(false)}
-//             role='button'
-//             aria-expanded={true}
-//             aria-controls={observacionId}
-//           >
-//             Ver menos
-//           </button>
-//         )}
-//       </div>
-
-//       <TooltipHost
-//         content={`Cambio ${index + 1} de ${total}`}
-//         calloutProps={{ gapSpace: 0 }}
-//         styles={{ root: { display: 'block', width: '100%' } }}
-//       >
-//         <span className={styles.indice}>{`Cambio ${index + 1} de ${total}`}</span>
-//       </TooltipHost>
-//     </div>
-//   );
-// }
-
-// export default memo(CardItem);
-
-
 import { useRef, useEffect, useCallback, useState, memo } from 'react';
-import { Icon, TooltipHost } from '@fluentui/react';
+import { Icon, TooltipHost, ICalloutProps } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
 
@@ -201,6 +12,20 @@ type CardHistorialItemProps<T extends IHistorialItem> = {
   onCollapseRequest?: (ref: HTMLDivElement | null) => void;
 };
 
+const tooltipCalloutProps: ICalloutProps = {
+  gapSpace: 4,
+  directionalHint: 0,
+  isBeakVisible: true,
+  styles: {
+    root: {
+      padding: 8,
+      borderRadius: 4,
+      backgroundColor: '#f9f9f9',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+    }
+  }
+};
+
 function CardItem<T extends IHistorialItem>({
   item,
   index,
@@ -211,7 +36,12 @@ function CardItem<T extends IHistorialItem>({
 }: CardHistorialItemProps<T>) {
   const [expanded, setExpanded] = useState(false);
   const [shouldShowButton, setShouldShowButton] = useState(false);
+  const [isUsuarioTruncado, setIsUsuarioTruncado] = useState(false);
+  const [isIndiceTruncado, setIsIndiceTruncado] = useState(false);
+
   const observacionRef = useRef<HTMLParagraphElement | null>(null);
+  const usuarioRef = useRef<HTMLSpanElement | null>(null);
+  const indiceRef = useRef<HTMLSpanElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
 
@@ -225,18 +55,40 @@ function CardItem<T extends IHistorialItem>({
     setShouldShowButton(isOverflowing);
   }, []);
 
+  const checkUsuarioOverflow = useCallback(() => {
+    const el = usuarioRef.current;
+    if (!el) return;
+    const isTruncated = el.scrollWidth > el.clientWidth + 1;
+    setIsUsuarioTruncado(isTruncated);
+  }, []);
+
+  const checkIndiceOverflow = useCallback(() => {
+    const el = indiceRef.current;
+    if (!el) return;
+    const isTruncated = el.scrollWidth > el.clientWidth + 1;
+    setIsIndiceTruncado(isTruncated);
+  }, []);
+
   useEffect(() => {
     checkOverflow();
-    const ro = new ResizeObserver(() => {
-      checkOverflow();
-    });
-    if (observacionRef.current) {
-      ro.observe(observacionRef.current);
-    }
-    return () => {
-      ro.disconnect();
-    };
+    const ro = new ResizeObserver(checkOverflow);
+    if (observacionRef.current) ro.observe(observacionRef.current);
+    return () => ro.disconnect();
   }, [checkOverflow, item.observacion]);
+
+  useEffect(() => {
+    checkUsuarioOverflow();
+    const ro = new ResizeObserver(checkUsuarioOverflow);
+    if (usuarioRef.current) ro.observe(usuarioRef.current);
+    return () => ro.disconnect();
+  }, [checkUsuarioOverflow, item.usuario]);
+
+  useEffect(() => {
+    checkIndiceOverflow();
+    const ro = new ResizeObserver(checkIndiceOverflow);
+    if (indiceRef.current) ro.observe(indiceRef.current);
+    return () => ro.disconnect();
+  }, [checkIndiceOverflow, index, total]);
 
   useEffect(() => {
     if (!expanded && hasInteracted.current) {
@@ -262,11 +114,7 @@ function CardItem<T extends IHistorialItem>({
   const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
   const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
 
-  const conEstadoUnico = (
-    <>
-      <span>{estadoUnico}</span>
-    </>
-  );
+  const conEstadoUnico = <span>{estadoUnico}</span>;
 
   const conEstadoAnteriorPosterior = (
     <>
@@ -312,13 +160,22 @@ function CardItem<T extends IHistorialItem>({
         <div className={styles.avatar} style={{ backgroundColor: colorAvatar }}>
           {iniciales}
         </div>
-        <TooltipHost
-          content={usuarioTexto}
-          calloutProps={{ gapSpace: 0 }}
-          styles={{ root: { display: 'inline-block' } }}
-        >
-          <span className={styles.texto}>{usuarioTexto}</span>
-        </TooltipHost>
+
+        {isUsuarioTruncado ? (
+          <TooltipHost
+            content={usuarioTexto}
+            calloutProps={tooltipCalloutProps}
+            styles={{ root: { display: 'inline-block', maxWidth: '100%' } }}
+          >
+            <span ref={usuarioRef} className={styles.texto}>
+              {usuarioTexto}
+            </span>
+          </TooltipHost>
+        ) : (
+          <span ref={usuarioRef} className={styles.texto}>
+            {usuarioTexto}
+          </span>
+        )}
       </div>
 
       <div>
@@ -356,13 +213,21 @@ function CardItem<T extends IHistorialItem>({
         )}
       </div>
 
-      <TooltipHost
-        content={`Cambio ${index + 1} de ${total}`}
-        calloutProps={{ gapSpace: 0 }}
-        styles={{ root: { display: 'block', width: '100%' } }}
-      >
-        <span className={styles.indice}>{`Cambio ${index + 1} de ${total}`}</span>
-      </TooltipHost>
+      {isIndiceTruncado ? (
+        <TooltipHost
+          content={`Cambio ${index + 1} de ${total}`}
+          calloutProps={tooltipCalloutProps}
+          styles={{ root: { display: 'block', width: '100%' } }}
+        >
+          <span ref={indiceRef} className={styles.indice}>
+            {`Cambio ${index + 1} de ${total}`}
+          </span>
+        </TooltipHost>
+      ) : (
+        <span ref={indiceRef} className={styles.indice}>
+          {`Cambio ${index + 1} de ${total}`}
+        </span>
+      )}
     </div>
   );
 }
