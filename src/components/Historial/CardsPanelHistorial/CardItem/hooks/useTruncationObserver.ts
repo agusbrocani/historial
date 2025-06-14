@@ -1,4 +1,4 @@
-import { useEffect, useState, RefObject } from 'react';
+import { useEffect, useState, RefObject, useRef } from 'react';
 
 type RefMap = {
   [key: string]: RefObject<HTMLElement>;
@@ -13,29 +13,33 @@ export function useTruncationObserver(refs: RefMap): { [key: string]: boolean } 
     return initial;
   });
 
+  const mountedRef = useRef(true);
   useEffect(() => {
-    let mounted = true;
-
+    mountedRef.current = true;
     const observer = new ResizeObserver(() => {
       requestAnimationFrame(() => {
-        setTimeout(() => {
-          if (!mounted) return;
-          const updated: Record<string, boolean> = {};
+        const updated: Record<string, boolean> = {};
+        let hasChanges = false;
 
-          for (const key in refs) {
-            const el = refs[key].current;
-            if (el) {
-              try {
-                updated[key] = Math.floor(el.scrollWidth) > Math.floor(el.clientWidth);
-              } catch (error) {
-                console.warn(`Error al evaluar truncamiento de ${key}:`, error);
-                updated[key] = false;
+        for (const key in refs) {
+          const el = refs[key].current;
+          if (el) {
+            try {
+              const isTruncated = Math.floor(el.scrollWidth) > Math.floor(el.clientWidth);
+              updated[key] = isTruncated;
+              if (states[key] !== isTruncated) {
+                hasChanges = true;
               }
+            } catch (error) {
+              console.warn(`Error al evaluar truncamiento de ${key}:`, error);
+              updated[key] = false;
             }
           }
+        }
 
-          setStates((prev) => ({ ...prev, ...updated }));
-        }, 0);
+        if (hasChanges && mountedRef.current) {
+          setStates(prev => ({ ...prev, ...updated }));
+        }
       });
     });
 
@@ -45,10 +49,10 @@ export function useTruncationObserver(refs: RefMap): { [key: string]: boolean } 
     }
 
     return () => {
-      mounted = false;
+      mountedRef.current = false;
       observer.disconnect();
     };
-  }, [Object.values(refs)]);
+  }, [Object.values(refs).join('')]);
 
   return states;
 }

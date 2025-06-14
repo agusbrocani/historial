@@ -74,19 +74,15 @@ function CardItem<T extends IHistorialItem>({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
 
-  const { usuario, indice } = useTruncationObserver({
-    usuario: usuarioRef,
-    indice: indiceRef,
-  });
+  const { usuario, indice } = useTruncationObserver({ usuario: usuarioRef, indice: indiceRef });
 
   useEffect(() => {
     let mounted = true;
-
     const observer = new ResizeObserver(() => {
       requestAnimationFrame(() => {
         setTimeout(() => {
+          if (!mounted) return;
           try {
-            if (!mounted) return;
             const el = observacionRef.current;
             if (el) {
               const isOverflowing = el.scrollHeight - el.clientHeight > 1;
@@ -119,41 +115,26 @@ function CardItem<T extends IHistorialItem>({
   };
 
   const partes = item.usuario?.split('.') ?? [];
-  const iniciales =
-    ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
-
-  const fechaHoraTexto =
-    item.fecha && item.hora
-      ? `${item.fecha} a las ${item.hora} hs.`
-      : 'Fecha no disponible';
-
+  const iniciales = ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
+  const fechaHoraTexto = item.fecha && item.hora ? `${item.fecha} a las ${item.hora} hs.` : 'Fecha no disponible';
   const estadoUnico = item.estadoUnico || 'Sin estado unico';
   const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
   const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
 
   const conEstadoUnico = <span>{estadoUnico}</span>;
-
   const conEstadoAnteriorPosterior = (
     <>
       <span>{estadoAnterior}</span>
-      <Icon
-        iconName='Forward'
-        className={styles.iconoEstado}
-        style={{ color: `${colorGeneral}` }}
-      />
+      <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }} />
       <span>{estadoPosterior}</span>
     </>
   );
 
   const estadoDefinido = (() => {
-    if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior)
-      return 'Exceso de estados';
-    else if (!item.estadoUnico && !item.estadoAnterior && item.estadoPosterior)
-      return 'Sin estado';
-    else if (item.estadoUnico)
-      return conEstadoUnico;
-    else
-      return conEstadoAnteriorPosterior;
+    if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior) return 'Exceso de estados';
+    else if (!item.estadoUnico && !item.estadoAnterior && item.estadoPosterior) return 'Sin estado';
+    else if (item.estadoUnico) return conEstadoUnico;
+    else return conEstadoAnteriorPosterior;
   })();
 
   const usuarioTexto = item.usuario || 'Usuario no identificado';
@@ -162,11 +143,7 @@ function CardItem<T extends IHistorialItem>({
   const textoIndice = `Cambio ${index + 1} de ${total}`;
 
   return (
-    <div
-      className={styles.card}
-      ref={cardRef}
-      style={{ borderLeftColor: `${colorGeneral}` }}
-    >
+    <div className={styles.card} ref={cardRef} style={{ borderLeftColor: `${colorGeneral}` }}>
       <div className={styles.estados}>{estadoDefinido}</div>
 
       <div className={styles.infoGrid}>
@@ -174,7 +151,6 @@ function CardItem<T extends IHistorialItem>({
           <Icon iconName='Calendar' />
         </div>
         <span className={styles.textoMultilinea}>{fechaHoraTexto}</span>
-
         <div className={styles.avatar} style={{ backgroundColor: colorAvatar }}>
           {iniciales}
         </div>
