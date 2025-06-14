@@ -46,106 +46,51 @@ function CardItem<T extends IHistorialItem>({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
 
-  const checkOverflow = useCallback(() => {
-    try {
-      const el = observacionRef.current;
-      if (!el) {
-        setShouldShowButton(false);
-        return;
-      }
-      const isOverflowing = el.scrollHeight - el.clientHeight > 1;
-      setShouldShowButton(isOverflowing);
-    } catch (error) {
-      console.warn('Error en checkOverflow:', error);
-      setShouldShowButton(false);
-    }
-  }, []);
-
-  const checkUsuarioOverflow = useCallback(() => {
-    try {
-      const el = usuarioRef.current;
-      if (!el) return;
-      const isTruncated = el.scrollWidth > el.clientWidth + 1;
-      setIsUsuarioTruncado(isTruncated);
-    } catch (error) {
-      console.warn('Error en checkUsuarioOverflow:', error);
-      setIsUsuarioTruncado(false);
-    }
-  }, []);
-
-  const checkIndiceOverflow = useCallback(() => {
-    try {
-      const el = indiceRef.current;
-      if (!el) return;
-      const isTruncated = el.scrollWidth > el.clientWidth + 1;
-      setIsIndiceTruncado(isTruncated);
-    } catch (error) {
-      console.warn('Error en checkIndiceOverflow:', error);
-      setIsIndiceTruncado(false);
-    }
-  }, []);
-
   useEffect(() => {
     let mounted = true;
-    const ro = new ResizeObserver(() => {
+
+    const observer = new ResizeObserver(() => {
       requestAnimationFrame(() => {
         setTimeout(() => {
           try {
-            if (mounted) checkOverflow();
+            if (!mounted) return;
+
+            const obs = observacionRef.current;
+            if (obs) {
+              const isOverflowing = obs.scrollHeight - obs.clientHeight > 1;
+              setShouldShowButton(isOverflowing);
+            }
+
+            const usr = usuarioRef.current;
+            if (usr) {
+              const isTruncated = usr.scrollWidth > usr.clientWidth + 1;
+              setIsUsuarioTruncado(isTruncated);
+            }
+
+            const ind = indiceRef.current;
+            if (ind) {
+              const isTruncated = ind.scrollWidth > ind.clientWidth + 1;
+              setIsIndiceTruncado(isTruncated);
+            }
           } catch (error) {
-            console.warn('Error en ResizeObserver (checkOverflow):', error);
+            console.warn('Error en ResizeObserver:', error);
+            setShouldShowButton(false);
+            setIsUsuarioTruncado(false);
+            setIsIndiceTruncado(false);
           }
         }, 0);
       });
     });
-    if (observacionRef.current) {
-      ro.observe(observacionRef.current);
-    }
-    return () => {
-      mounted = false;
-      ro.disconnect();
-    };
-  }, [checkOverflow, item.observacion]);
 
-  useEffect(() => {
-    let mounted = true;
-    const ro = new ResizeObserver(() => {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          try {
-            if (mounted) checkUsuarioOverflow();
-          } catch (error) {
-            console.warn('Error en ResizeObserver (checkUsuarioOverflow):', error);
-          }
-        }, 0);
-      });
-    });
-    if (usuarioRef.current) ro.observe(usuarioRef.current);
-    return () => {
-      mounted = false;
-      ro.disconnect();
-    };
-  }, [checkUsuarioOverflow, item.usuario]);
+    if (observacionRef.current) observer.observe(observacionRef.current);
+    if (usuarioRef.current) observer.observe(usuarioRef.current);
+    if (indiceRef.current) observer.observe(indiceRef.current);
 
-  useEffect(() => {
-    let mounted = true;
-    const ro = new ResizeObserver(() => {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          try {
-            if (mounted) checkIndiceOverflow();
-          } catch (error) {
-            console.warn('Error en ResizeObserver (checkIndiceOverflow):', error);
-          }
-        }, 0);
-      });
-    });
-    if (indiceRef.current) ro.observe(indiceRef.current);
     return () => {
       mounted = false;
-      ro.disconnect();
+      observer.disconnect();
     };
-  }, [checkIndiceOverflow, index, total]);
+  }, [item.usuario, item.observacion, index, total]);
 
   useEffect(() => {
     if (!expanded && hasInteracted.current) {
