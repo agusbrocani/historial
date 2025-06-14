@@ -47,27 +47,42 @@ function CardItem<T extends IHistorialItem>({
   const hasInteracted = useRef(false);
 
   const checkOverflow = useCallback(() => {
-    const el = observacionRef.current;
-    if (!el) {
+    try {
+      const el = observacionRef.current;
+      if (!el) {
+        setShouldShowButton(false);
+        return;
+      }
+      const isOverflowing = el.scrollHeight - el.clientHeight > 1;
+      setShouldShowButton(isOverflowing);
+    } catch (error) {
+      console.warn('Error en checkOverflow:', error);
       setShouldShowButton(false);
-      return;
     }
-    const isOverflowing = el.scrollHeight - el.clientHeight > 1;
-    setShouldShowButton(isOverflowing);
   }, []);
 
   const checkUsuarioOverflow = useCallback(() => {
-    const el = usuarioRef.current;
-    if (!el) return;
-    const isTruncated = el.scrollWidth > el.clientWidth + 1;
-    setIsUsuarioTruncado(isTruncated);
+    try {
+      const el = usuarioRef.current;
+      if (!el) return;
+      const isTruncated = el.scrollWidth > el.clientWidth + 1;
+      setIsUsuarioTruncado(isTruncated);
+    } catch (error) {
+      console.warn('Error en checkUsuarioOverflow:', error);
+      setIsUsuarioTruncado(false);
+    }
   }, []);
 
   const checkIndiceOverflow = useCallback(() => {
-    const el = indiceRef.current;
-    if (!el) return;
-    const isTruncated = el.scrollWidth > el.clientWidth + 1;
-    setIsIndiceTruncado(isTruncated);
+    try {
+      const el = indiceRef.current;
+      if (!el) return;
+      const isTruncated = el.scrollWidth > el.clientWidth + 1;
+      setIsIndiceTruncado(isTruncated);
+    } catch (error) {
+      console.warn('Error en checkIndiceOverflow:', error);
+      setIsIndiceTruncado(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -75,7 +90,11 @@ function CardItem<T extends IHistorialItem>({
     const ro = new ResizeObserver(() => {
       requestAnimationFrame(() => {
         setTimeout(() => {
-          if (mounted) checkOverflow();
+          try {
+            if (mounted) checkOverflow();
+          } catch (error) {
+            console.warn('Error en ResizeObserver (checkOverflow):', error);
+          }
         }, 0);
       });
     });
@@ -93,7 +112,11 @@ function CardItem<T extends IHistorialItem>({
     const ro = new ResizeObserver(() => {
       requestAnimationFrame(() => {
         setTimeout(() => {
-          if (mounted) checkUsuarioOverflow();
+          try {
+            if (mounted) checkUsuarioOverflow();
+          } catch (error) {
+            console.warn('Error en ResizeObserver (checkUsuarioOverflow):', error);
+          }
         }, 0);
       });
     });
@@ -109,7 +132,11 @@ function CardItem<T extends IHistorialItem>({
     const ro = new ResizeObserver(() => {
       requestAnimationFrame(() => {
         setTimeout(() => {
-          if (mounted) checkIndiceOverflow();
+          try {
+            if (mounted) checkIndiceOverflow();
+          } catch (error) {
+            console.warn('Error en ResizeObserver (checkIndiceOverflow):', error);
+          }
         }, 0);
       });
     });
