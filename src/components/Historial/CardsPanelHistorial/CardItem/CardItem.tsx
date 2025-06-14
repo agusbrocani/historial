@@ -13,15 +13,16 @@ type CardHistorialItemProps<T extends IHistorialItem> = {
 };
 
 const tooltipCalloutProps: ICalloutProps = {
-  gapSpace: 4,
+  gapSpace: 8,
   directionalHint: 0,
-  isBeakVisible: true,
+  isBeakVisible: false,
   styles: {
     root: {
+      borderRadius: 8,
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
+      border: '1px solid #e0e0e0',
+      background: '#fff',
       padding: 8,
-      borderRadius: 4,
-      backgroundColor: '#f9f9f9',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
     }
   }
 };

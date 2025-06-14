@@ -46390,7 +46390,7 @@ const items: IHistorialItem[] = [
   useEffect(() => {
     const timer = setTimeout(() => {
       setDelayedItems(itemsReducido);
-    }, 3000); // 3 segundos de delay
+    }, 1000); // 1 segundo de delay
 
     return () => clearTimeout(timer);
   }, []);
@@ -46410,9 +46410,9 @@ const items: IHistorialItem[] = [
         // items={[]}
         items={delayedItems}
         // batchSize={-10}
-        colorGeneral='blue'
-        // colorAvatar='#c4314b'
-        colorAvatar='blue'
+        colorGeneral='#0078d4'
+        colorAvatar='#c4314b'
+        // colorAvatar='blue'
         textoEncabezadoHistorial={'Historial de cambios'}
         leyendaToolTip='Historial'
         // estilosBoton={{
