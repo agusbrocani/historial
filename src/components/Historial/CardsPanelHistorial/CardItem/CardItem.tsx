@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, memo } from 'react';
 import { Icon, TooltipHost, ICalloutProps } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
+import { useTruncationObserver } from './hooks/useTruncationObserver';
 
 type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
@@ -27,20 +28,24 @@ const tooltipCalloutProps: ICalloutProps = {
   },
 };
 
-type TooltipSpanProps = {
+const TooltipSpan = ({
+  refEl,
+  content,
+  isTruncated,
+  className,
+  block = false,
+}: {
   refEl: React.RefObject<HTMLElement>;
   content: string;
   isTruncated: boolean;
   className: string;
   block?: boolean;
-};
-
-const TooltipSpan = ({ refEl, content, isTruncated, className, block = false }: TooltipSpanProps) =>
+}) =>
   isTruncated ? (
     <TooltipHost
       content={content}
       calloutProps={tooltipCalloutProps}
-      styles={{ root: { display: block ? 'block' : 'inline-block', maxWidth: '100%', width: block ? '100%' : 'auto' } }}
+      styles={{ root: { display: block ? 'block' : 'inline-block', maxWidth: '100%' } }}
     >
       <span ref={refEl} className={className}>
         {content}
@@ -62,14 +67,17 @@ function CardItem<T extends IHistorialItem>({
 }: CardHistorialItemProps<T>) {
   const [expanded, setExpanded] = useState(false);
   const [shouldShowButton, setShouldShowButton] = useState(false);
-  const [isUsuarioTruncado, setIsUsuarioTruncado] = useState(false);
-  const [isIndiceTruncado, setIsIndiceTruncado] = useState(false);
 
   const observacionRef = useRef<HTMLParagraphElement | null>(null);
   const usuarioRef = useRef<HTMLSpanElement | null>(null);
   const indiceRef = useRef<HTMLSpanElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
+
+  const { usuario, indice } = useTruncationObserver({
+    usuario: usuarioRef,
+    indice: indiceRef,
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -79,43 +87,25 @@ function CardItem<T extends IHistorialItem>({
         setTimeout(() => {
           try {
             if (!mounted) return;
-
-            const obs = observacionRef.current;
-            if (obs) {
-              const isOverflowing = obs.scrollHeight - obs.clientHeight > 1;
+            const el = observacionRef.current;
+            if (el) {
+              const isOverflowing = el.scrollHeight - el.clientHeight > 1;
               setShouldShowButton(isOverflowing);
             }
-
-            const usr = usuarioRef.current;
-            if (usr) {
-              const isTruncated = Math.floor(usr.scrollWidth) > Math.floor(usr.clientWidth);
-              setIsUsuarioTruncado(isTruncated);
-            }
-
-            const ind = indiceRef.current;
-            if (ind) {
-              const isTruncated = Math.floor(ind.scrollWidth) > Math.floor(ind.clientWidth);
-              setIsIndiceTruncado(isTruncated);
-            }
           } catch (error) {
-            console.warn('Error en ResizeObserver:', error);
+            console.warn('Error en ResizeObserver (observacion):', error);
             setShouldShowButton(false);
-            setIsUsuarioTruncado(false);
-            setIsIndiceTruncado(false);
           }
         }, 0);
       });
     });
 
     if (observacionRef.current) observer.observe(observacionRef.current);
-    if (usuarioRef.current) observer.observe(usuarioRef.current);
-    if (indiceRef.current) observer.observe(indiceRef.current);
-
     return () => {
       mounted = false;
       observer.disconnect();
     };
-  }, [item.usuario, item.observacion]);
+  }, [item.observacion]);
 
   useEffect(() => {
     if (!expanded && hasInteracted.current) {
@@ -192,7 +182,7 @@ function CardItem<T extends IHistorialItem>({
         <TooltipSpan
           refEl={usuarioRef}
           content={usuarioTexto}
-          isTruncated={isUsuarioTruncado}
+          isTruncated={usuario}
           className={styles.texto}
         />
       </div>
@@ -233,7 +223,7 @@ function CardItem<T extends IHistorialItem>({
       <TooltipSpan
         refEl={indiceRef}
         content={textoIndice}
-        isTruncated={isIndiceTruncado}
+        isTruncated={indice}
         className={styles.indice}
         block
       />
