@@ -84,14 +84,18 @@ function CardItem<T extends IHistorialItem>({
 
   useEffect(() => {
     checkUsuarioOverflow();
-    const ro = new ResizeObserver(checkUsuarioOverflow);
+    const ro = new ResizeObserver(() => {
+      requestAnimationFrame(() => checkUsuarioOverflow());
+    });
     if (usuarioRef.current) ro.observe(usuarioRef.current);
     return () => ro.disconnect();
   }, [checkUsuarioOverflow, item.usuario]);
 
   useEffect(() => {
     checkIndiceOverflow();
-    const ro = new ResizeObserver(checkIndiceOverflow);
+    const ro = new ResizeObserver(() => {
+      requestAnimationFrame(() => checkIndiceOverflow());
+    });
     if (indiceRef.current) ro.observe(indiceRef.current);
     return () => ro.disconnect();
   }, [checkIndiceOverflow, index, total]);
