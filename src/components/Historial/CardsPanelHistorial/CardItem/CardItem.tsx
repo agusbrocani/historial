@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, memo } from 'react';
 import { Icon, TooltipHost, ICalloutProps } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
-import { useTruncationObserver } from './hooks/useTruncationObserver';
+import { useTruncationObserver } from '../hooks/useTruncationObserver';
 
 type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
@@ -74,7 +74,8 @@ function CardItem<T extends IHistorialItem>({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
 
-  const { usuario, indice } = useTruncationObserver({ usuario: usuarioRef, indice: indiceRef });
+  // Nuevo hook desacoplado: devuelve [usuarioTrunc, indiceTrunc]
+  const [usuarioTrunc, indiceTrunc] = useTruncationObserver([usuarioRef, indiceRef]);
 
   useEffect(() => {
     let mounted = true;
@@ -89,7 +90,6 @@ function CardItem<T extends IHistorialItem>({
               setShouldShowButton(isOverflowing);
             }
           } catch (error) {
-            console.warn('Error en ResizeObserver (observacion):', error);
             setShouldShowButton(false);
           }
         }, 0);
@@ -158,7 +158,7 @@ function CardItem<T extends IHistorialItem>({
         <TooltipSpan
           refEl={usuarioRef}
           content={usuarioTexto}
-          isTruncated={usuario}
+          isTruncated={usuarioTrunc}
           className={styles.texto}
         />
       </div>
@@ -199,7 +199,7 @@ function CardItem<T extends IHistorialItem>({
       <TooltipSpan
         refEl={indiceRef}
         content={textoIndice}
-        isTruncated={indice}
+        isTruncated={indiceTrunc}
         className={styles.indice}
         block
       />

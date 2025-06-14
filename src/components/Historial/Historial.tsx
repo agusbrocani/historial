@@ -6,12 +6,13 @@ import {
 } from '@fluentui/react';
 import PanelHistorial from './PanelHistorial/PanelHistorial';
 import { IHistorialItem } from '../HistorialPanel';
+import stylesVars from './_variables.module.scss';
 
 type HistorialProps<T extends IHistorialItem> = {
   items: T[];
   batchSize?: number;
   textoEncabezadoHistorial: string;
-  colorGeneral: string;
+  colorGeneral?: string;
   colorAvatar?: string;
   leyendaToolTip?: string;
   estilosBoton?: IButtonStyles;
@@ -36,36 +37,28 @@ function Historial<T extends IHistorialItem>({
 
   const leyendaDefaultToolTip = 'Historial';
   const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
-  const colorGeneralFinal = colorGeneral?.trim() ? colorGeneral : '#000000';
-  const colorAvatarFinal = colorAvatar?.trim() ? colorAvatar : colorGeneralFinal;
+  const colorGeneralFinal = colorGeneral?.trim() ? colorGeneral : stylesVars.colorGeneral;
+  const colorAvatarFinal = colorAvatar?.trim() ? colorAvatar : stylesVars.colorAvatar;
 
-  // Al abrir el panel, mostrar spinner y comenzar timeout
   useEffect(() => {
     if (isPanelOpen) {
       setIsLoading(true);
       setTimeoutExceeded(false);
-
       timeoutRef.current = setTimeout(() => {
         setTimeoutExceeded(true);
         setIsLoading(false);
-      }, 15000); // 15 segundos máximo
+      }, 15000);
     }
-
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [isPanelOpen]);
 
-  // Si llegan los items con el panel abierto, ocultar spinner y cancelar timeout
   useEffect(() => {
     if (isPanelOpen && items.length > 0) {
       setIsLoading(false);
       setTimeoutExceeded(false);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     }
   }, [items, isPanelOpen]);
 
@@ -83,6 +76,7 @@ function Historial<T extends IHistorialItem>({
           },
         }
       }
+      aria-label={leyenda}
       onClick={() => {
         (document.activeElement as HTMLElement)?.blur();
         setIsPanelOpen(true);
@@ -91,8 +85,8 @@ function Historial<T extends IHistorialItem>({
   );
 
   const batchSizeFinal = Number.isFinite(batchSize)
-  ? Math.max(batchSize, BATCH_SIZE_MINIMO)
-  : BATCH_SIZE_MINIMO;
+    ? Math.max(batchSize, BATCH_SIZE_MINIMO)
+    : BATCH_SIZE_MINIMO;
 
   return (
     <>
