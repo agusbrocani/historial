@@ -71,9 +71,15 @@ function CardItem<T extends IHistorialItem>({
 
   useEffect(() => {
     checkOverflow();
-    const ro = new ResizeObserver(checkOverflow);
-    if (observacionRef.current) ro.observe(observacionRef.current);
-    return () => ro.disconnect();
+    const ro = new ResizeObserver(() => {
+      checkOverflow();
+    });
+    if (observacionRef.current) {
+      ro.observe(observacionRef.current);
+    }
+    return () => {
+      ro.disconnect();
+    };
   }, [checkOverflow, item.observacion]);
 
   useEffect(() => {
