@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { Icon, TooltipHost } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
