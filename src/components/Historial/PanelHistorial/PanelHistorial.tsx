@@ -199,16 +199,26 @@ function PanelHistorial<T extends IHistorialItem>({
       {isLoading ? (
         <div className={styles.spinnerContainer}>
           <Spinner
-            label='Espere por favor...'
+            label='Cargando historial...'
             size={SpinnerSize.large}
-            styles={{ label: { color: colorGeneral } }}
+            styles={{
+                label: {
+                  color: colorGeneral,
+                },
+                circle: {
+                  borderTopColor: colorGeneral,
+                },
+            }}
           />
         </div>
       ) : timeoutExceeded ? (
         <div className={styles.spinnerContainer}>
-          <span style={{ color: colorGeneral }}>
-            No se pudo obtener el historial.
-          </span>
+          <div className={styles.estadoCentrado}>
+            <Icon iconName='Warning' className={styles.errorIcono} style={{ color: colorGeneral }} />
+            <span className={styles.errorTexto} style={{ color: colorGeneral }}>
+              No se pudo obtener el historial.
+            </span>
+          </div>
         </div>
       ) : (
         <div

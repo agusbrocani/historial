@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { DefaultButton } from '@fluentui/react';
 import { HistorialPanel, IHistorialItem } from './components/HistorialPanel';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
@@ -46375,6 +46376,17 @@ const items: IHistorialItem[] = [
     },
   ];
 
+  // Simulación de delay
+  const [delayedItems, setDelayedItems] = useState<IHistorialItem[]>([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDelayedItems(itemsReducido);
+    }, 3000); // 3 segundos de delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div style={{ padding: 20 }}>
       {/* <DefaultButton text="Ver Historial" onClick={() => isPanelOpen ? setIsPanelOpen(false) : setIsPanelOpen(true)} />
@@ -46386,21 +46398,22 @@ const items: IHistorialItem[] = [
 
       <Historial
         // items={items}
-        items={itemsReducido}
+        // items={itemsReducido}
         // items={[]}
-        colorGeneral='#0078d4'
+        items={delayedItems}
+        colorGeneral='violet'
         colorAvatar='#c4314b'
         textoEncabezadoHistorial={'Historial de cambios'}
         leyendaToolTip='Historial'
-        estilosBoton={{
-          root: {
-            color: '#0078d4',
-            width: 30,
-            height: 30,
-            border: '1px solid #0078d4',
-            borderRadius: 6,
-          }
-        }}
+        // estilosBoton={{
+        //   root: {
+        //     color: '#0078d4',
+        //     width: 30,
+        //     height: 30,
+        //     border: '1px solid #0078d4',
+        //     borderRadius: 6,
+        //   }
+        // }}
         onClose={() => console.log('Cerré la ventana lateral.')}
       />
 

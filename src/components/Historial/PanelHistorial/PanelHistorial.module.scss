@@ -1,3 +1,101 @@
+// .historialPanel {
+//   /* Scrollbar personalizado */
+//   :global(*::-webkit-scrollbar) {
+//     width: 14px;
+//   }
+//   :global(*::-webkit-scrollbar-track) {
+//     background: transparent;
+//   }
+//   :global(*::-webkit-scrollbar-thumb) {
+//     background-color: rgba(0, 0, 0, 0.25);
+//     border-radius: 8px;
+//     border: 3px solid transparent;
+//     background-clip: content-box;
+//     min-height: 30px;
+//   }
+//   :global(*::-webkit-scrollbar-thumb:hover) {
+//     background-color: rgba(0, 0, 0, 0.4);
+//   }
+//   :global(*) {
+//     scrollbar-width: auto;
+//   }
+
+//   /* ------------------------------------------------------------
+//      Panel sin esquinas redondeadas, overflow recortado
+//      ------------------------------------------------------------ */
+//   :global(.ms-Panel-main) {
+//     overflow: hidden; /* quitamos border-radius para esquinas cuadradas */
+//   }
+
+//   /* ------------------------------------------------------------
+//      Header y navegación
+//      ------------------------------------------------------------ */
+//   :global(.ms-Panel-navigation) {
+//     position: relative;
+//     flex-shrink: 0;
+//   }
+//   :global(.ms-Panel-navigation)::after {
+//     content: '';
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     bottom: -1px;
+//     height: 1px;
+//     background-color: #e1e1e1;
+//   }
+
+//   /* ------------------------------------------------------------
+//      Contenido principal (recorta overflow)
+//      ------------------------------------------------------------ */
+//   :global(.ms-Panel-content) {
+//     display: flex;
+//     flex-direction: column;
+//     flex-grow: 1;
+//     padding-right: 0;
+//     overflow: hidden;
+//   }
+
+//   /* ------------------------------------------------------------
+//      Zona de scroll interno con sombra interior
+//      ------------------------------------------------------------ */
+//   :global(.ms-Panel-scrollableContent) {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//     overflow-y: auto;
+//     overflow-x: hidden;
+//     box-shadow: inset 0 8px 8px -8px rgba(0, 0, 0, 0.2);
+//   }
+
+//   /* ------------------------------------------------------------
+//      Comandos (sin padding extra)
+//      ------------------------------------------------------------ */
+//   :global(.ms-Panel-commands) {
+//     padding-top: 0;
+//     padding-bottom: 0;
+//   }
+// }
+
+// .miEncabezadoPersonalizado {
+//   display: flex;
+//   align-items: center;
+//   padding: 14px 18px;
+// }
+
+// .tituloEncabezado {
+//   font-size: 18px;
+//   font-weight: 600;
+//   color: #ffffff;
+//   margin: 0;
+// }
+
+// .spinnerContainer {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
 .historialPanel {
   /* Scrollbar personalizado */
   :global(*::-webkit-scrollbar) {
@@ -20,16 +118,10 @@
     scrollbar-width: auto;
   }
 
-  /* ------------------------------------------------------------
-     Panel sin esquinas redondeadas, overflow recortado
-     ------------------------------------------------------------ */
   :global(.ms-Panel-main) {
-    overflow: hidden; /* quitamos border-radius para esquinas cuadradas */
+    overflow: hidden;
   }
 
-  /* ------------------------------------------------------------
-     Header y navegación
-     ------------------------------------------------------------ */
   :global(.ms-Panel-navigation) {
     position: relative;
     flex-shrink: 0;
@@ -44,9 +136,6 @@
     background-color: #e1e1e1;
   }
 
-  /* ------------------------------------------------------------
-     Contenido principal (recorta overflow)
-     ------------------------------------------------------------ */
   :global(.ms-Panel-content) {
     display: flex;
     flex-direction: column;
@@ -55,9 +144,6 @@
     overflow: hidden;
   }
 
-  /* ------------------------------------------------------------
-     Zona de scroll interno con sombra interior
-     ------------------------------------------------------------ */
   :global(.ms-Panel-scrollableContent) {
     flex: 1;
     display: flex;
@@ -67,9 +153,6 @@
     box-shadow: inset 0 8px 8px -8px rgba(0, 0, 0, 0.2);
   }
 
-  /* ------------------------------------------------------------
-     Comandos (sin padding extra)
-     ------------------------------------------------------------ */
   :global(.ms-Panel-commands) {
     padding-top: 0;
     padding-bottom: 0;
@@ -94,4 +177,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-inline: 20px;
+  text-align: center;
+}
+
+.estadoCentrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.errorIcono {
+  font-size: 24px;
+}
+
+.errorTexto {
+  font-size: 14px;
+  font-weight: 500;
 }

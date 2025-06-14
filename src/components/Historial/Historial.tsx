@@ -33,7 +33,7 @@ function Historial<T extends IHistorialItem>({
 
   const leyendaDefaultToolTip = 'Historial';
   const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
-  const colorGeneralFinal = colorGeneral ?? '#000000';
+  const colorGeneralFinal = colorGeneral?.trim() ? colorGeneral : '#000000';
   const colorAvatarFinal = colorAvatar ?? colorGeneralFinal;
 
   // Al abrir el panel, mostrar spinner y comenzar timeout
@@ -55,16 +55,16 @@ function Historial<T extends IHistorialItem>({
     };
   }, [isPanelOpen]);
 
-  // Si llegan los items antes del timeout, limpiar y mostrar
+  // Si llegan los items con el panel abierto, ocultar spinner y cancelar timeout
   useEffect(() => {
-    if (items.length > 0) {
+    if (isPanelOpen && items.length > 0) {
       setIsLoading(false);
       setTimeoutExceeded(false);
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     }
-  }, [items]);
+  }, [items, isPanelOpen]);
 
   const iconButton = (
     <IconButton
