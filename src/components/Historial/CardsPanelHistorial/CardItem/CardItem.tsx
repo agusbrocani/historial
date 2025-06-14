@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useState, memo } from 'react';
+import { useRef, useEffect, useState, memo } from 'react';
 import { Icon, TooltipHost, ICalloutProps } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
@@ -26,6 +26,31 @@ const tooltipCalloutProps: ICalloutProps = {
     },
   },
 };
+
+type TooltipSpanProps = {
+  refEl: React.RefObject<HTMLElement>;
+  content: string;
+  isTruncated: boolean;
+  className: string;
+  block?: boolean;
+};
+
+const TooltipSpan = ({ refEl, content, isTruncated, className, block = false }: TooltipSpanProps) =>
+  isTruncated ? (
+    <TooltipHost
+      content={content}
+      calloutProps={tooltipCalloutProps}
+      styles={{ root: { display: block ? 'block' : 'inline-block', maxWidth: '100%', width: block ? '100%' : 'auto' } }}
+    >
+      <span ref={refEl} className={className}>
+        {content}
+      </span>
+    </TooltipHost>
+  ) : (
+    <span ref={refEl} className={className}>
+      {content}
+    </span>
+  );
 
 function CardItem<T extends IHistorialItem>({
   item,
@@ -63,13 +88,13 @@ function CardItem<T extends IHistorialItem>({
 
             const usr = usuarioRef.current;
             if (usr) {
-              const isTruncated = usr.scrollWidth > usr.clientWidth + 1;
+              const isTruncated = Math.floor(usr.scrollWidth) > Math.floor(usr.clientWidth);
               setIsUsuarioTruncado(isTruncated);
             }
 
             const ind = indiceRef.current;
             if (ind) {
-              const isTruncated = ind.scrollWidth > ind.clientWidth + 1;
+              const isTruncated = Math.floor(ind.scrollWidth) > Math.floor(ind.clientWidth);
               setIsIndiceTruncado(isTruncated);
             }
           } catch (error) {
@@ -90,7 +115,7 @@ function CardItem<T extends IHistorialItem>({
       mounted = false;
       observer.disconnect();
     };
-  }, [item.usuario, item.observacion, index, total]);
+  }, [item.usuario, item.observacion]);
 
   useEffect(() => {
     if (!expanded && hasInteracted.current) {
@@ -164,21 +189,12 @@ function CardItem<T extends IHistorialItem>({
           {iniciales}
         </div>
 
-        {isUsuarioTruncado ? (
-          <TooltipHost
-            content={usuarioTexto}
-            calloutProps={tooltipCalloutProps}
-            styles={{ root: { display: 'inline-block', maxWidth: '100%' } }}
-          >
-            <span ref={usuarioRef} className={styles.texto}>
-              {usuarioTexto}
-            </span>
-          </TooltipHost>
-        ) : (
-          <span ref={usuarioRef} className={styles.texto}>
-            {usuarioTexto}
-          </span>
-        )}
+        <TooltipSpan
+          refEl={usuarioRef}
+          content={usuarioTexto}
+          isTruncated={isUsuarioTruncado}
+          className={styles.texto}
+        />
       </div>
 
       <div>
@@ -195,7 +211,6 @@ function CardItem<T extends IHistorialItem>({
             className={styles.verBtn}
             style={{ color: `${colorGeneral}` }}
             onClick={() => toggleExpand(true)}
-            role='button'
             aria-expanded={false}
             aria-controls={observacionId}
           >
@@ -207,7 +222,6 @@ function CardItem<T extends IHistorialItem>({
             className={styles.verBtn}
             style={{ color: `${colorGeneral}` }}
             onClick={() => toggleExpand(false)}
-            role='button'
             aria-expanded={true}
             aria-controls={observacionId}
           >
@@ -216,21 +230,13 @@ function CardItem<T extends IHistorialItem>({
         )}
       </div>
 
-      {isIndiceTruncado ? (
-        <TooltipHost
-          content={textoIndice}
-          calloutProps={tooltipCalloutProps}
-          styles={{ root: { display: 'block', width: '100%' } }}
-        >
-          <span ref={indiceRef} className={styles.indice}>
-            {textoIndice}
-          </span>
-        </TooltipHost>
-      ) : (
-        <span ref={indiceRef} className={styles.indice}>
-          {textoIndice}
-        </span>
-      )}
+      <TooltipSpan
+        refEl={indiceRef}
+        content={textoIndice}
+        isTruncated={isIndiceTruncado}
+        className={styles.indice}
+        block
+      />
     </div>
   );
 }
