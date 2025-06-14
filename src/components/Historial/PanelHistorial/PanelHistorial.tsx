@@ -47,6 +47,7 @@ function PanelHistorial<T extends IHistorialItem>({
     }
   }, [isPanelOpen, items.length]);
 
+  // visibleItems: items visibles segun el paginado por batchSize
   const visibleItems = items.slice(0, loadedCount);
 
   const handleDismiss = () => {
@@ -98,6 +99,7 @@ function PanelHistorial<T extends IHistorialItem>({
     return () => observer.disconnect();
   }, [isPanelOpen]);
 
+  // Observa el ultimo nodo visible para paginado infinito
   useEffect(() => {
     if (!scrollableContentRef.current) return;
     const node = lastCardRef.current;
