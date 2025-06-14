@@ -118,9 +118,11 @@ function PanelHistorial<T extends IHistorialItem>({
     return () => clearTimeout(timeoutId);
   }, [handleIntersect, loadedCount, visibleItems]);
 
-  if (0 !== items.length) {
-    setIsLoading(false);
-  }
+  useEffect(() => {
+    if (0 !== items.length) {
+      setIsLoading(false);
+    }
+  }, [items.length]);
 
   return (
     <Panel
