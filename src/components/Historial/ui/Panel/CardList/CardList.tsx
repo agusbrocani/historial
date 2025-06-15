@@ -1,6 +1,6 @@
 import styles from './CardList.module.scss';
-import { IHistorialItem } from '../../../HistorialPanel';
-import CardItem from '../CardItem/CardItem';
+import { IHistorialItem } from '../../../IHistorialItem';
+import CardItem from './CardItem/CardItem';
 import { RefObject } from 'react';
 
 type CardListProps<T extends IHistorialItem> = {
@@ -8,7 +8,6 @@ type CardListProps<T extends IHistorialItem> = {
   colorGeneral: string;
   colorAvatar: string;
   totalItems: number;
-  onCollapseRequest?: (ref: HTMLDivElement | null) => void;
   lastCardRef: RefObject<HTMLDivElement>;
 };
 
@@ -17,7 +16,6 @@ function CardList<T extends IHistorialItem>({
   colorGeneral,
   colorAvatar,
   totalItems,
-  onCollapseRequest,
   lastCardRef,
 }: CardListProps<T>) {
   return (
@@ -32,7 +30,6 @@ function CardList<T extends IHistorialItem>({
               colorAvatar={colorAvatar}
               index={index}
               total={totalItems}
-              onCollapseRequest={onCollapseRequest}
             />
           </div>
         );

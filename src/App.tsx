@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DefaultButton } from '@fluentui/react';
-import { HistorialPanel, IHistorialItem } from './components/HistorialPanel';
+import { IHistorialItem } from './components/Historial/IHistorialItem';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import Historial from './components/Historial/Historial'
 
@@ -46397,13 +46396,6 @@ const items: IHistorialItem[] = [
 
   return (
     <div style={{ padding: 20 }}>
-      {/* <DefaultButton text="Ver Historial" onClick={() => isPanelOpen ? setIsPanelOpen(false) : setIsPanelOpen(true)} />
-      <HistorialPanel
-        isOpen={isPanelOpen}
-        onDismiss={() => isPanelOpen ? setIsPanelOpen(false) : setIsPanelOpen(true)}
-        items={items}
-      /> */}
-
       <Historial
         // items={items}
         // items={itemsReducido}

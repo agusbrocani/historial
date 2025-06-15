@@ -1,0 +1,34 @@
+.container {
+  margin: 8px 0 6px;
+}
+
+.textoTruncado {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.textoExpanded {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 4px;
+  padding: 0;
+}

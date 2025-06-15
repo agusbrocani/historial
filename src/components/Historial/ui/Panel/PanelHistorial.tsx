@@ -1,4 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { 
+  useState, 
+  useRef, 
+  useEffect, 
+  useCallback 
+} from 'react';
 import {
   Panel,
   PanelType,
@@ -8,8 +13,8 @@ import {
   IconButton,
 } from '@fluentui/react';
 import styles from './PanelHistorial.module.scss';
-import CardList from '../CardsPanelHistorial/CardList/CardList';
-import { IHistorialItem } from '../../HistorialPanel';
+import CardList from './CardList/CardList';
+import { IHistorialItem } from '../../IHistorialItem';
 
 type PanelHistorialProps<T extends IHistorialItem> = {
   items: T[];
@@ -48,12 +53,6 @@ function PanelHistorial<T extends IHistorialItem>({
     setIsPanelOpen(false);
     onClose?.();
   };
-
-  const handleCollapseRequest = useCallback((cardRef: HTMLDivElement | null) => {
-    if (cardRef && scrollableContentRef.current?.contains(cardRef)) {
-      cardRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, []);
 
   const handleIntersect: IntersectionObserverCallback = useCallback(
     (entries, observer) => {
@@ -236,7 +235,6 @@ function PanelHistorial<T extends IHistorialItem>({
             colorGeneral={colorGeneral}
             colorAvatar={colorAvatar}
             totalItems={items.length}
-            onCollapseRequest={handleCollapseRequest}
             lastCardRef={lastCardRef}
           />
         </div>

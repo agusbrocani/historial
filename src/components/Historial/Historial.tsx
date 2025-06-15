@@ -7,9 +7,9 @@ import {
   IconButton,
   IButtonStyles
 } from '@fluentui/react';
-import PanelHistorial from './PanelHistorial/PanelHistorial';
-import { IHistorialItem } from '../HistorialPanel';
-import CustomTooltip from './CustomTooltip';
+import PanelHistorial from './ui/Panel/PanelHistorial';
+import { IHistorialItem } from './IHistorialItem';
+import CustomTooltip from './utils/components/CustomTooltip';
 
 type HistorialProps<T extends IHistorialItem> = {
   items: T[];
