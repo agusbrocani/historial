@@ -45033,7 +45033,7 @@ const items: IHistorialItem[] = [
     {
       estadoAnterior: 'ESTADO ANTERIOR LARGO PARA QUE ROMPA EL DISEÑO ACTUAL',
       estadoPosterior: 'ESTADO POSTERIOR LARGO PARA QUE ROMPA EL DISEÑO ACTUAL',
-      usuario: 'juan.carlos.gonzalez.fernandez.perez',
+      usuario: 'juan.carlos.gonzalez.fernandez.perezZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',
       fecha: '30-05-2025',
       hora: '14:30',
       observacion: 'Fin del ciclo de vida AGREGO ESTE CODIGO PARA QUE SEA LARGO Y SI TIENE QUE ROMPER, SE ROMPA',

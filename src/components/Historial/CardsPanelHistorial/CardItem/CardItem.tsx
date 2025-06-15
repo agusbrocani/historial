@@ -269,9 +269,9 @@ function CardItem<T extends IHistorialItem>({
     item.fecha && item.hora
       ? `${item.fecha} a las ${item.hora} hs.`
       : 'Fecha no disponible';
-  const estadoUnico = item.estadoUnico || 'Sin estado unico';
-  const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
-  const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
+  const estadoUnico = (item.estadoUnico || 'Sin estado unico').toUpperCase();
+  const estadoAnterior = (item.estadoAnterior || 'Sin estado anterior').toUpperCase();
+  const estadoPosterior = (item.estadoPosterior || 'Sin estado posterior').toUpperCase();
 
   // Solo grid para el caso solicitado
   const conEstadoAnteriorPosterior = (
