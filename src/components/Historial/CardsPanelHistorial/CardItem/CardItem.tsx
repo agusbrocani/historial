@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState, memo } from 'react';
-import { Icon, TooltipHost, ICalloutProps } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
-import { useIsTruncated } from '../../hooks/useIsTruncated';
+import { useIsTruncated } from './hooks/useIsTruncated';
+import Tooltip from '../../Tooltip';
 
 type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
@@ -12,55 +13,6 @@ type CardHistorialItemProps<T extends IHistorialItem> = {
   colorAvatar: string;
   onCollapseRequest?: (ref: HTMLDivElement | null) => void;
 };
-
-const tooltipCalloutProps: ICalloutProps = {
-  gapSpace: 8,
-  directionalHint: 0,
-  isBeakVisible: false,
-  styles: {
-    root: {
-      borderRadius: 8,
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
-      border: '1px solid #e0e0e0',
-      background: '#fff',
-      padding: 8,
-    },
-  },
-};
-
-const TooltipSpan = ({
-  refEl,
-  content,
-  isTruncated,
-  className,
-  block = false,
-}: {
-  refEl: React.RefObject<HTMLElement>;
-  content: string;
-  isTruncated: boolean;
-  className: string;
-  block?: boolean;
-}) =>
-  isTruncated ? (
-    <TooltipHost
-      content={content}
-      calloutProps={tooltipCalloutProps}
-      styles={{
-        root: {
-          display: block ? 'block' : 'inline-block',
-          maxWidth: '100%',
-        },
-      }}
-    >
-      <span ref={refEl} className={className}>
-        {content}
-      </span>
-    </TooltipHost>
-  ) : (
-    <span ref={refEl} className={className}>
-      {content}
-    </span>
-  );
 
 function CardItem<T extends IHistorialItem>({
   item,
@@ -79,7 +31,6 @@ function CardItem<T extends IHistorialItem>({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
 
-  // Nuevo: Solo 1 ResizeObserver y sólo si realmente hace falta
   useEffect(() => {
     let mounted = true;
 
@@ -93,7 +44,6 @@ function CardItem<T extends IHistorialItem>({
 
     update();
 
-    // Resize solo sobre la observación
     const observer =
       observacionRef.current &&
       new window.ResizeObserver(update);
@@ -159,7 +109,7 @@ function CardItem<T extends IHistorialItem>({
   const observacionId = `obs-${index}`;
   const textoIndice = `Cambio ${index + 1} de ${total}`;
 
-  // ✅ Solo usa hook, sin observer por cada span
+  // Hook para saber si hay truncado
   const usuarioTrunc = useIsTruncated(usuarioRef);
   const indiceTrunc = useIsTruncated(indiceRef);
 
@@ -183,12 +133,12 @@ function CardItem<T extends IHistorialItem>({
           {iniciales}
         </div>
 
-        <TooltipSpan
-          refEl={usuarioRef}
-          content={usuarioTexto}
-          isTruncated={usuarioTrunc}
-          className={styles.texto}
-        />
+        {/* Usuario con Tooltip solo si truncado */}
+        <Tooltip content={usuarioTexto} show={usuarioTrunc}>
+          <span ref={usuarioRef} className={styles.texto}>
+            {usuarioTexto}
+          </span>
+        </Tooltip>
       </div>
 
       <div>
@@ -227,13 +177,12 @@ function CardItem<T extends IHistorialItem>({
         )}
       </div>
 
-      <TooltipSpan
-        refEl={indiceRef}
-        content={textoIndice}
-        isTruncated={indiceTrunc}
-        className={styles.indice}
-        block
-      />
+      {/* Indice con Tooltip solo si truncado */}
+      <Tooltip content={textoIndice} show={indiceTrunc}>
+        <span ref={indiceRef} className={styles.indice}>
+          {textoIndice}
+        </span>
+      </Tooltip>
     </div>
   );
 }
