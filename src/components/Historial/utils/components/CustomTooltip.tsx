@@ -1,5 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Callout, DirectionalHint } from '@fluentui/react';
+import React, { 
+  useRef, 
+  useState, 
+  useEffect 
+} from 'react';
+import { 
+  Callout, 
+  DirectionalHint 
+} from '@fluentui/react';
 
 const tooltipCalloutProps = {
   gapSpace: 8,
@@ -84,7 +91,7 @@ const CustomTooltip: React.FC<TooltipProps> = ({
 
   const handleTooltipLeave = () => {
     overTooltipRef.current = false;
-    // cerrar inmediatamente si ya no estamos en trigger
+    // cerrar inmediatamente si ya no estoy en trigger
     if (!overTriggerRef.current) {
       setVisible(false);
       onMouseLeave?.();

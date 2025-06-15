@@ -1,4 +1,8 @@
-import { useState, useEffect, RefObject } from 'react';
+import { 
+  useState, 
+  useEffect, 
+  RefObject 
+} from 'react';
 
 export function useIsTruncated(ref: RefObject<HTMLElement>): boolean {
   const [isTruncated, setIsTruncated] = useState(false);
