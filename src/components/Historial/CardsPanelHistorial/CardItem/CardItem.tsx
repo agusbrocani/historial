@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, memo } from 'react';
 import { Icon, TooltipHost, ICalloutProps } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../HistorialPanel';
-import { useTruncationObserver } from '../hooks/useTruncationObserver';
+import { useIsTruncated } from '../../hooks/useIsTruncated';
 
 type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
@@ -45,7 +45,12 @@ const TooltipSpan = ({
     <TooltipHost
       content={content}
       calloutProps={tooltipCalloutProps}
-      styles={{ root: { display: block ? 'block' : 'inline-block', maxWidth: '100%' } }}
+      styles={{
+        root: {
+          display: block ? 'block' : 'inline-block',
+          maxWidth: '100%',
+        },
+      }}
     >
       <span ref={refEl} className={className}>
         {content}
@@ -74,32 +79,34 @@ function CardItem<T extends IHistorialItem>({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const hasInteracted = useRef(false);
 
-  // Nuevo hook desacoplado: devuelve [usuarioTrunc, indiceTrunc]
-  const [usuarioTrunc, indiceTrunc] = useTruncationObserver([usuarioRef, indiceRef]);
-
+  // Nuevo: Solo 1 ResizeObserver y sólo si realmente hace falta
   useEffect(() => {
     let mounted = true;
-    const observer = new ResizeObserver(() => {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          if (!mounted) return;
-          try {
-            const el = observacionRef.current;
-            if (el) {
-              const isOverflowing = el.scrollHeight - el.clientHeight > 1;
-              setShouldShowButton(isOverflowing);
-            }
-          } catch (error) {
-            setShouldShowButton(false);
-          }
-        }, 0);
-      });
-    });
 
-    if (observacionRef.current) observer.observe(observacionRef.current);
+    const update = () => {
+      if (!mounted) return;
+      const el = observacionRef.current;
+      setShouldShowButton(
+        !!el && el.scrollHeight - el.clientHeight > 1
+      );
+    };
+
+    update();
+
+    // Resize solo sobre la observación
+    const observer =
+      observacionRef.current &&
+      new window.ResizeObserver(update);
+
+    if (observacionRef.current && observer) {
+      observer.observe(observacionRef.current);
+    }
+    window.addEventListener('resize', update);
+
     return () => {
       mounted = false;
-      observer.disconnect();
+      observer && observer.disconnect();
+      window.removeEventListener('resize', update);
     };
   }, [item.observacion]);
 
@@ -115,8 +122,12 @@ function CardItem<T extends IHistorialItem>({
   };
 
   const partes = item.usuario?.split('.') ?? [];
-  const iniciales = ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
-  const fechaHoraTexto = item.fecha && item.hora ? `${item.fecha} a las ${item.hora} hs.` : 'Fecha no disponible';
+  const iniciales =
+    ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
+  const fechaHoraTexto =
+    item.fecha && item.hora
+      ? `${item.fecha} a las ${item.hora} hs.`
+      : 'Fecha no disponible';
   const estadoUnico = item.estadoUnico || 'Sin estado unico';
   const estadoAnterior = item.estadoAnterior || 'Sin estado anterior';
   const estadoPosterior = item.estadoPosterior || 'Sin estado posterior';
@@ -125,14 +136,20 @@ function CardItem<T extends IHistorialItem>({
   const conEstadoAnteriorPosterior = (
     <>
       <span>{estadoAnterior}</span>
-      <Icon iconName='Forward' className={styles.iconoEstado} style={{ color: `${colorGeneral}` }} />
+      <Icon
+        iconName='Forward'
+        className={styles.iconoEstado}
+        style={{ color: `${colorGeneral}` }}
+      />
       <span>{estadoPosterior}</span>
     </>
   );
 
   const estadoDefinido = (() => {
-    if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior) return 'Exceso de estados';
-    else if (!item.estadoUnico && !item.estadoAnterior && item.estadoPosterior) return 'Sin estado';
+    if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior)
+      return 'Exceso de estados';
+    else if (!item.estadoUnico && !item.estadoAnterior && item.estadoPosterior)
+      return 'Sin estado';
     else if (item.estadoUnico) return conEstadoUnico;
     else return conEstadoAnteriorPosterior;
   })();
@@ -142,8 +159,16 @@ function CardItem<T extends IHistorialItem>({
   const observacionId = `obs-${index}`;
   const textoIndice = `Cambio ${index + 1} de ${total}`;
 
+  // ✅ Solo usa hook, sin observer por cada span
+  const usuarioTrunc = useIsTruncated(usuarioRef);
+  const indiceTrunc = useIsTruncated(indiceRef);
+
   return (
-    <div className={styles.card} ref={cardRef} style={{ borderLeftColor: `${colorGeneral}` }}>
+    <div
+      className={styles.card}
+      ref={cardRef}
+      style={{ borderLeftColor: `${colorGeneral}` }}
+    >
       <div className={styles.estados}>{estadoDefinido}</div>
 
       <div className={styles.infoGrid}>
@@ -151,7 +176,10 @@ function CardItem<T extends IHistorialItem>({
           <Icon iconName='Calendar' />
         </div>
         <span className={styles.textoMultilinea}>{fechaHoraTexto}</span>
-        <div className={styles.avatar} style={{ backgroundColor: colorAvatar }}>
+        <div
+          className={styles.avatar}
+          style={{ backgroundColor: colorAvatar }}
+        >
           {iniciales}
         </div>
 
@@ -168,7 +196,10 @@ function CardItem<T extends IHistorialItem>({
           id={observacionId}
           ref={observacionRef}
           className={expanded ? styles.observacionExpanded : styles.observacion}
-          style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
+          style={{
+            wordWrap: 'break-word',
+            overflowWrap: 'break-word',
+          }}
         >
           {observacionTexto}
         </p>

@@ -24,7 +24,6 @@ function CardList<T extends IHistorialItem>({
     <div className={styles.container}>
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
-
         return (
           <div key={index} ref={isLast ? lastCardRef : null}>
             <CardItem

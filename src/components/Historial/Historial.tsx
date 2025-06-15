@@ -37,8 +37,21 @@ function Historial<T extends IHistorialItem>({
 
   const leyendaDefaultToolTip = 'Historial';
   const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
-  const colorGeneralFinal = colorGeneral?.trim() ? colorGeneral : stylesVars.colorGeneral;
-  const colorAvatarFinal = colorAvatar?.trim() ? colorAvatar : stylesVars.colorAvatar;
+  const colorGeneralFinal = (() => { 
+    const s = new Option().style; 
+    s.color = colorGeneral?.trim() || ''; 
+    return s.color ? colorGeneral : '#000000'; 
+  })();
+
+  const colorAvatarFinal = (() => { 
+    const s = new Option().style; 
+    s.color = colorAvatar?.trim() || ''; 
+    if (s.color) return colorAvatar; 
+    // Si el avatar no es válido, intento usar colorGeneralFinal:
+    const g = new Option().style; 
+    g.color = colorGeneralFinal; 
+    return g.color ? colorGeneralFinal : '#000000'; 
+  })();
 
   useEffect(() => {
     if (isPanelOpen) {
