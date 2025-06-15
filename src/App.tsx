@@ -46425,7 +46425,6 @@ const items: IHistorialItem[] = [
         // }}
         onClose={() => console.log('Cerré la ventana lateral.')}
       />
-
     </div>
   );
 };

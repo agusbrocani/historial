@@ -1,11 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
+import { 
+  useEffect, 
+  useState, 
+  useRef 
+} from 'react';
 import {
   IconButton,
   IButtonStyles
 } from '@fluentui/react';
 import PanelHistorial from './PanelHistorial/PanelHistorial';
 import { IHistorialItem } from '../HistorialPanel';
-import Tooltip from './Tooltip';
+import CustomTooltip from './CustomTooltip';
 
 type HistorialProps<T extends IHistorialItem> = {
   items: T[];
@@ -112,9 +116,9 @@ function Historial<T extends IHistorialItem>({
 
   return (
     <>
-      <Tooltip content={leyenda} show={true}>
+      <CustomTooltip content={leyenda} show={true}>
         {iconButton}
-      </Tooltip>
+      </CustomTooltip>
       {isPanelOpen && (
         <PanelHistorial
           items={items}

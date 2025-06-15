@@ -7,7 +7,9 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
+// Sombra y elevación: se activa tanto con :hover como con .cardHover JS
+.card:hover,
+.cardHover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -79,11 +81,9 @@
   margin: 8px 0 6px 0;
   font-size: 14px;
   color: #000;
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  // stylelint-disable-next-line property-no-unknown
   line-clamp: 3; // Comentario para compatibilidad futura (sin efecto hoy)
   overflow: hidden;
   text-overflow: ellipsis;
