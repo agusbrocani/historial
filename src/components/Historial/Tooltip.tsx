@@ -83,13 +83,28 @@ const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,
   show = true,
-  graciaMs = 500
+  graciaMs = 400
 }) => {
   const [visible, setVisible] = useState(false);
+  const [overTrigger, setOverTrigger] = useState(false);
   const [overTooltip, setOverTooltip] = useState(false);
-  const [yaEntroTooltip, setYaEntroTooltip] = useState(false);
+
+  // refs para obtener valor actualizado siempre en los timeouts
+  const overTriggerRef = useRef(false);
+  const overTooltipRef = useRef(false);
+
   const graciaTimeout = useRef<NodeJS.Timeout | null>(null);
   const targetRef = useRef<HTMLSpanElement | null>(null);
+
+  // Sincronizar refs con el estado real
+  const syncOverTrigger = (value: boolean) => {
+    overTriggerRef.current = value;
+    setOverTrigger(value);
+  };
+  const syncOverTooltip = (value: boolean) => {
+    overTooltipRef.current = value;
+    setOverTooltip(value);
+  };
 
   const clearGraceTimeout = () => {
     if (graciaTimeout.current) {
@@ -98,51 +113,44 @@ const Tooltip: React.FC<TooltipProps> = ({
     }
   };
 
-  const openTooltip = () => {
-    if (show) {
-      setVisible(true);
-      setYaEntroTooltip(false);
-      clearGraceTimeout();
-      graciaTimeout.current = setTimeout(() => {
-        if (!yaEntroTooltip) setVisible(false);
-      }, graciaMs);
-    }
-  };
-
   const handleTriggerEnter = () => {
-    if (!visible) {
-      openTooltip();
-    } else {
+    if (show) {
+      syncOverTrigger(true);
+      setVisible(true);
       clearGraceTimeout();
     }
   };
 
   const handleTriggerLeave = () => {
-    if (!overTooltip && visible) {
-      clearGraceTimeout();
-      graciaTimeout.current = setTimeout(() => {
-        if (!yaEntroTooltip) setVisible(false);
-      }, graciaMs);
-    }
+    syncOverTrigger(false);
+    clearGraceTimeout();
+    graciaTimeout.current = setTimeout(() => {
+      // Acá chequeo los valores actualizados
+      if (!overTooltipRef.current && !overTriggerRef.current) setVisible(false);
+    }, graciaMs);
   };
 
   const handleTooltipEnter = () => {
-    setOverTooltip(true);
-    setYaEntroTooltip(true);
+    syncOverTooltip(true);
     clearGraceTimeout();
   };
 
   const handleTooltipLeave = () => {
-    setOverTooltip(false);
-    setVisible(false);
+    syncOverTooltip(false);
+    // Si no estoy ni en el trigger ni en el tooltip, cerrar
+    if (!overTriggerRef.current) setVisible(false);
     clearGraceTimeout();
   };
 
+  React.useEffect(() => () => clearGraceTimeout(), []);
+
   React.useEffect(() => {
-    return () => {
+    if (!visible) {
+      syncOverTrigger(false);
+      syncOverTooltip(false);
       clearGraceTimeout();
-    };
-  }, []);
+    }
+  }, [visible]);
 
   return (
     <>
@@ -174,3 +182,4 @@ const Tooltip: React.FC<TooltipProps> = ({
 };
 
 export default Tooltip;
+
