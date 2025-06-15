@@ -6,7 +6,6 @@ import {
 } from '@fluentui/react';
 import PanelHistorial from './PanelHistorial/PanelHistorial';
 import { IHistorialItem } from '../HistorialPanel';
-import stylesVars from './_variables.module.scss';
 
 type HistorialProps<T extends IHistorialItem> = {
   items: T[];
