@@ -86,6 +86,16 @@ function Historial<T extends IHistorialItem>({
             border: `1px solid ${colorGeneralFinal}`,
             borderRadius: 6,
           },
+          rootHovered: {
+            color: '#fff',
+            background: colorGeneralFinal,
+            border: `1px solid ${colorGeneralFinal}`,
+          },
+          rootPressed: {
+            color: '#fff',
+            background: colorGeneralFinal,
+            border: `1px solid ${colorGeneralFinal}`,
+          }
         }
       }
       aria-label={leyenda}
