@@ -50,7 +50,7 @@
   justify-content: center;
 }
 
-.texto {
+.textoUsuario {
   font-size: 13px;
   color: #333;
   display: block;
@@ -62,6 +62,7 @@
 }
 
 .indice {
+  padding-top: 4px;
   font-style: italic;
   font-size: 12px;
   color: #444;
@@ -73,7 +74,7 @@
   text-overflow: ellipsis;
 }
 
-.textoMultilinea {
+.fechaHoraTexto {
   font-size: 13px;
   color: #333;
   display: block;
@@ -106,4 +107,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.renderizableSection {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
 }

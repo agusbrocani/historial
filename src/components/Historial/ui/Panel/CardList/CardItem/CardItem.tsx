@@ -1,14 +1,14 @@
-import { 
-  useRef, 
-  useState, 
-  memo 
+import {
+  Fragment,
+  useRef,
+  useState,
+  memo
 } from 'react';
 import { Icon } from '@fluentui/react';
 import styles from './CardItem.module.scss';
 import { IHistorialItem } from '../../../../IHistorialItem';
 import { useIsTruncated } from '../../../../utils/hooks/useIsTruncated';
 import CustomTooltip from '../../../../utils/components/CustomTooltip';
-import TextoExpandible from '../../../../utils/components/TextoExpandible/TextoExpandible';
 
 type CardHistorialItemProps<T extends IHistorialItem> = {
   item: T;
@@ -38,16 +38,15 @@ function CardItem<T extends IHistorialItem>({
   const partes = item.usuario?.split('.') ?? [];
   const iniciales =
     ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
+  
   const fechaHoraTexto =
     item.fecha && item.hora
       ? `${item.fecha} a las ${item.hora} hs.`
       : 'Fecha no disponible';
-
-  // Estado gráfico
-  const estadoUnico = (item.estadoUnico || 'Sin estado unico').toUpperCase();
+  
+      const estadoUnico = (item.estadoUnico || 'Sin estado unico').toUpperCase();
   const estadoAnterior = (item.estadoAnterior || 'Sin estado anterior').toUpperCase();
   const estadoPosterior = (item.estadoPosterior || 'Sin estado posterior').toUpperCase();
-
   const conEstadoAnteriorPosterior = (
     <div className={styles.estadoGrid}>
       <span className={styles.estadoTexto}>{estadoAnterior}</span>
@@ -74,7 +73,6 @@ function CardItem<T extends IHistorialItem>({
   })();
 
   const usuarioTexto = item.usuario || 'Usuario no identificado';
-  const observacionTexto = item.observacion || 'Sin observaciones';
   const textoIndice = `Cambio ${index + 1} de ${total}`;
 
   const usuarioTrunc = useIsTruncated(usuarioRef);
@@ -98,12 +96,12 @@ function CardItem<T extends IHistorialItem>({
       {/* Estados */}
       <div className={styles.estados}>{estadoDefinido}</div>
 
-      {/* Fecha, avatar y usuario */}
+      {/* Icono Fecha, Fecha, Avatar y Usuario */}
       <div className={styles.infoGrid}>
         <div className={styles.iconoCalendario}>
           <Icon iconName="Calendar" />
         </div>
-        <span className={styles.textoMultilinea}>{fechaHoraTexto}</span>
+        <span className={styles.fechaHoraTexto}>{fechaHoraTexto}</span>
         <div className={styles.avatar} style={{ backgroundColor: colorAvatar }}>
           {iniciales}
         </div>
@@ -113,32 +111,20 @@ function CardItem<T extends IHistorialItem>({
           onMouseEnter={() => setIsTooltipHovered(true)}
           onMouseLeave={() => setIsTooltipHovered(false)}
         >
-          <span ref={usuarioRef} className={styles.texto}>
+          <span ref={usuarioRef} className={styles.textoUsuario}>
             {usuarioTexto}
           </span>
         </CustomTooltip>
       </div>
 
-      {/* Observación expandible */}
-      <TextoExpandible
-        texto={observacionTexto}
-        color={colorGeneral}
-        lines={3}
-      />
+      {/* Sección renderizable */}
+      {item.renderizable && (
+        <div className={styles.renderizableSection}>
+          {item.renderizable.map((item, index) => <Fragment key={index}>{item}</Fragment>)}
+        </div>
+      )}
 
-      <TextoExpandible
-        texto={observacionTexto}
-        color={colorGeneral}
-        lines={3}
-      />
-
-      <TextoExpandible
-        texto={observacionTexto}
-        color={colorGeneral}
-        lines={3}
-      />
-
-      {/* Índice con tooltip */}
+      {/* Índice */}
       <CustomTooltip
         content={textoIndice}
         show={indiceTrunc}

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface IHistorialItem {
   estadoUnico?: string;
   estadoAnterior?: string;
@@ -5,5 +7,6 @@ export interface IHistorialItem {
   usuario: string;
   fecha: string;
   hora: string;
-  observacion: string;
+  // observacion: string;
+  renderizable?: ReactNode[];
 }

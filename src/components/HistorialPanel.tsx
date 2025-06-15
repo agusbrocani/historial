@@ -75,6 +75,8 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
     fallbackFocusRef.current?.focus();
   };
 
+  ///const observacionTexto = item.observacion || 'Sin observaciones';
+
   return (
     <>
       <div tabIndex={-1} ref={fallbackFocusRef} />
@@ -121,9 +123,9 @@ export const HistorialPanel: React.FC<HistorialPanelProps> = ({ isOpen, onDismis
                 </div>
               )}
 
-              {item.observacion?.trim() && (
+              {/* {item.observacion?.trim() && (
                 <div className={styles.observacion}>{item.observacion}</div>
-              )}
+              )} */}
 
               <div className={styles.numeroRegistro}>
                 Cambio {index + 1} de {items.length}
