@@ -123,6 +123,7 @@ const CustomTooltip: React.FC<TooltipProps> = ({
           target={targetRef.current}
           directionalHint={DirectionalHint.bottomCenter}
           {...tooltipCalloutProps}
+          className='fadeIn'
           onMouseEnter={handleTooltipEnter}
           onMouseLeave={handleTooltipLeave}
           setInitialFocus={false}
