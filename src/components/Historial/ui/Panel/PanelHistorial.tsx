@@ -16,8 +16,8 @@ import styles from './PanelHistorial.module.scss';
 import CardList from './CardList/CardList';
 import { IHistorialItem } from '../../IHistorialItem';
 
-type PanelHistorialProps<T extends IHistorialItem> = {
-  items: T[];
+type PanelHistorialProps = {
+  items: IHistorialItem[];
   batchSize: number;
   colorGeneral: string;
   colorAvatar: string;
@@ -25,11 +25,11 @@ type PanelHistorialProps<T extends IHistorialItem> = {
   textoEncabezadoHistorial: string;
   isPanelOpen: boolean;
   setIsPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  timeoutExceeded: boolean;
   onClose?: () => void;
-  timeoutExceeded?: boolean;
 };
 
-function PanelHistorial<T extends IHistorialItem>({
+function PanelHistorial({
   items,
   batchSize,
   colorGeneral,
@@ -38,9 +38,9 @@ function PanelHistorial<T extends IHistorialItem>({
   textoEncabezadoHistorial,
   isPanelOpen,
   setIsPanelOpen,
-  onClose,
   timeoutExceeded = false,
-}: PanelHistorialProps<T>) {
+  onClose
+}: PanelHistorialProps) {
   const scrollableContentRef = useRef<HTMLDivElement | null>(null);
   const lastCardRef = useRef<HTMLDivElement | null>(null);
 

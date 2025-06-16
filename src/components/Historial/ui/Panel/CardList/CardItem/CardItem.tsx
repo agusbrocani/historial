@@ -10,21 +10,21 @@ import { IHistorialItem } from '../../../../IHistorialItem';
 import { useIsTruncated } from '../../../../utils/hooks/useIsTruncated';
 import CustomTooltip from '../../../../utils/components/CustomTooltip';
 
-type CardHistorialItemProps<T extends IHistorialItem> = {
-  item: T;
+type CardHistorialItemProps = {
+  item: IHistorialItem;
   index: number;
   total: number;
   colorGeneral: string;
   colorAvatar: string;
 };
 
-function CardItem<T extends IHistorialItem>({
+function CardItem({
   item,
   index,
   total,
   colorGeneral,
   colorAvatar,
-}: CardHistorialItemProps<T>) {
+}: CardHistorialItemProps) {
   // Hover state para card y tooltip
   const [isCardHovered, setIsCardHovered] = useState(false);
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);
@@ -38,13 +38,17 @@ function CardItem<T extends IHistorialItem>({
   const partes = item.usuario?.split('.') ?? [];
   const iniciales =
     ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase() || '?';
-  
-  const fechaHoraTexto =
-    item.fecha && item.hora
-      ? `${item.fecha} a las ${item.hora} hs.`
-      : 'Fecha no disponible';
-  
-      const estadoUnico = (item.estadoUnico || 'Sin estado unico').toUpperCase();
+
+  const fechaHoraTexto = (() => {
+    if (item.fecha && item.hora)
+      return `${item.fecha} a las ${item.hora} hs.`;
+    else if (item.fecha && !item.hora)
+      return `${item.fecha}.`
+    else
+      return 'Fecha no disponible';
+  })();
+
+  const estadoUnico = (item.estadoUnico || 'Sin estado unico').toUpperCase();
   const estadoAnterior = (item.estadoAnterior || 'Sin estado anterior').toUpperCase();
   const estadoPosterior = (item.estadoPosterior || 'Sin estado posterior').toUpperCase();
   const conEstadoAnteriorPosterior = (
@@ -63,8 +67,8 @@ function CardItem<T extends IHistorialItem>({
 
   const estadoDefinido = (() => {
     if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior)
-      return 'Exceso de estados';
-    else if (!item.estadoUnico && !item.estadoAnterior && item.estadoPosterior)
+      return 'Hay 3 estados en donde debería haber 1 o 2.';
+    else if (!item.estadoUnico && !item.estadoAnterior && !item.estadoPosterior)
       return 'Sin estado';
     else if (item.estadoUnico)
       return <span>{estadoUnico}</span>;
@@ -118,11 +122,9 @@ function CardItem<T extends IHistorialItem>({
       </div>
 
       {/* Sección renderizable */}
-      {item.renderizable && (
-        <div className={styles.renderizableSection}>
-          {item.renderizable.map((item, index) => <Fragment key={index}>{item}</Fragment>)}
-        </div>
-      )}
+      <div className={styles.renderizableSection}>
+        {item.renderizable?.map((item, index) => <Fragment key={index}>{item}</Fragment>)}
+      </div>
 
       {/* Índice */}
       <CustomTooltip

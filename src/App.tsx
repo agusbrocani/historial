@@ -46482,7 +46482,16 @@ const App: React.FC = () => {
 
 
 
-
+  // const romperCard = null;
+  const romperCard = [
+    {
+      estadoAnterior: 'Borrador',
+      estadoPosterior: 'Publicado',
+      usuario: 'agustin.brocani@outlook.com',
+      fecha: '29-05-2025',
+      hora: '14:30',
+    }
+  ]
 
 
 
@@ -46491,8 +46500,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDelayedItems(testItems);
-    }, 3000); // 1 segundo de delay
+      setDelayedItems(itemsReducido);
+    }, 1000); // 1 segundo de delay
 
     return () => clearTimeout(timer);
   }, []);
@@ -46519,6 +46528,52 @@ const App: React.FC = () => {
         //   }
         // }}
         onClose={() => console.log('Cerré la ventana lateral.')}
+      />
+
+      <Historial
+        items={[
+          {},
+          // {
+          //   estadoUnico: 'Unico',
+          //   estadoAnterior: 'Anterior',
+          //   estadoPosterior: 'Posterior',
+          //   usuario: '@agustin.brocani@outlook.com@asd',
+          //   fecha: '29-05-2025',
+          //   hora: '14:30'
+          // },
+          // {
+          //   estadoUnico: null,
+          //   estadoAnterior: null,
+          //   estadoPosterior: null,
+          //   usuario: null,
+          //   fecha: null,
+          //   hora: null,
+          //   renderizable: null
+          // },
+          // {
+          //   usuario: 'Caso en que no envie el estado',
+          //   fecha: null,
+          //   hora: null,
+          //   renderizable: [null]
+          // },
+          // {
+          //   estadoUnico: null,
+          //   estadoAnterior: null,
+          //   estadoPosterior: null,
+          //   usuario: null,
+          //   fecha: null,
+          //   hora: null,
+          //   renderizable: [<div>Hello world!</div>, <div>Prueba de renderizado</div>]
+          // },
+          // undefined,
+          // null,
+          {
+            usuario: undefined,
+            fecha: '30-01',
+            renderizable: null
+            // renderizable:[NaN, null, undefined, true, false]
+          }
+        ]}
       />
     </div>
   );

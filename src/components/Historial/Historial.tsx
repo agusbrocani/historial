@@ -1,7 +1,7 @@
-import { 
-  useEffect, 
-  useState, 
-  useRef 
+import {
+  useEffect,
+  useState,
+  useRef
 } from 'react';
 import {
   IconButton,
@@ -11,10 +11,10 @@ import PanelHistorial from './ui/Panel/PanelHistorial';
 import { IHistorialItem } from './IHistorialItem';
 import CustomTooltip from './utils/components/CustomTooltip';
 
-type HistorialProps<T extends IHistorialItem> = {
-  items: T[];
+type HistorialProps = {
+  items: IHistorialItem[];
   batchSize?: number;
-  textoEncabezadoHistorial: string;
+  textoEncabezadoHistorial?: string;
   colorGeneral?: string;
   colorAvatar?: string;
   leyendaToolTip?: string;
@@ -23,7 +23,7 @@ type HistorialProps<T extends IHistorialItem> = {
 };
 
 const BATCH_SIZE_MINIMO = 10;
-function Historial<T extends IHistorialItem>({
+function Historial({
   items,
   batchSize = BATCH_SIZE_MINIMO,
   textoEncabezadoHistorial,
@@ -32,7 +32,7 @@ function Historial<T extends IHistorialItem>({
   leyendaToolTip,
   estilosBoton,
   onClose
-}: HistorialProps<T>) {
+}: HistorialProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [timeoutExceeded, setTimeoutExceeded] = useState(false);
@@ -40,20 +40,20 @@ function Historial<T extends IHistorialItem>({
 
   const leyendaDefaultToolTip = 'Historial';
   const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
-  const colorGeneralFinal = (() => { 
-    const s = new Option().style; 
-    s.color = colorGeneral?.trim() || ''; 
-    return s.color ? colorGeneral : '#000000'; 
+  const colorGeneralFinal = (() => {
+    const s = new Option().style;
+    s.color = colorGeneral?.trim() || '';
+    return s.color ? colorGeneral : '#000000';
   })();
 
-  const colorAvatarFinal = (() => { 
-    const s = new Option().style; 
-    s.color = colorAvatar?.trim() || ''; 
-    if (s.color) return colorAvatar; 
-    // Si el avatar no es válido, intento usar colorGeneralFinal:
-    const g = new Option().style; 
-    g.color = colorGeneralFinal; 
-    return g.color ? colorGeneralFinal : '#000000'; 
+  const colorAvatarFinal = (() => {
+    const s = new Option().style;
+    s.color = colorAvatar?.trim() || '';
+    if (s.color) return colorAvatar;
+    // Si el avatar no es válido, intento usar colorGeneralFinal
+    const g = new Option().style;
+    g.color = colorGeneralFinal;
+    return g.color ? colorGeneralFinal : '#000000';
   })();
 
   useEffect(() => {
@@ -113,12 +113,17 @@ function Historial<T extends IHistorialItem>({
   const batchSizeFinal = Number.isFinite(batchSize)
     ? Math.max(batchSize, BATCH_SIZE_MINIMO)
     : BATCH_SIZE_MINIMO;
+  
+  const textoEncabezadoHistorialFinal = textoEncabezadoHistorial ?? 'Historial de cambios'; 
 
   return (
     <>
+      {/* Botón con tooltip */}
       <CustomTooltip content={leyenda} show={true}>
         {iconButton}
       </CustomTooltip>
+
+      {/* Panel lateral, sólo si el usuario lo abrió */}
       {isPanelOpen && (
         <PanelHistorial
           items={items}
@@ -126,11 +131,11 @@ function Historial<T extends IHistorialItem>({
           colorGeneral={colorGeneralFinal}
           colorAvatar={colorAvatarFinal}
           isLoading={isLoading}
-          textoEncabezadoHistorial={textoEncabezadoHistorial}
+          textoEncabezadoHistorial={textoEncabezadoHistorialFinal}
           isPanelOpen={isPanelOpen}
           setIsPanelOpen={setIsPanelOpen}
-          onClose={onClose}
           timeoutExceeded={timeoutExceeded}
+          onClose={onClose}
         />
       )}
     </>

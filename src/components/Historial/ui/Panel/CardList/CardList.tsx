@@ -3,21 +3,21 @@ import { IHistorialItem } from '../../../IHistorialItem';
 import CardItem from './CardItem/CardItem';
 import { RefObject } from 'react';
 
-type CardListProps<T extends IHistorialItem> = {
-  items: T[];
+type CardListProps = {
+  items: IHistorialItem[];
   colorGeneral: string;
   colorAvatar: string;
   totalItems: number;
   lastCardRef: RefObject<HTMLDivElement>;
 };
 
-function CardList<T extends IHistorialItem>({
+function CardList({
   items,
   colorGeneral,
   colorAvatar,
   totalItems,
   lastCardRef,
-}: CardListProps<T>) {
+}: CardListProps) {
   return (
     <div className={styles.container}>
       {items.map((item, index) => {

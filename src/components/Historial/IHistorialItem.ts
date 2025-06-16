@@ -4,9 +4,8 @@ export interface IHistorialItem {
   estadoUnico?: string;
   estadoAnterior?: string;
   estadoPosterior?: string;
-  usuario: string;
-  fecha: string;
-  hora: string;
-  // observacion: string;
+  usuario?: string;
+  fecha?: string;
+  hora?: string;
   renderizable?: ReactNode[];
 }
