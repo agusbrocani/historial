@@ -10,7 +10,7 @@ import { IHistorialItem } from '../../../../IHistorialItem';
 import { useIsTruncated } from '../../../../utils/hooks/useIsTruncated';
 import CustomTooltip from '../../../../utils/components/CustomTooltip';
 
-type CardHistorialItemProps = {
+type CardItemProps = {
   item: IHistorialItem;
   index: number;
   total: number;
@@ -24,7 +24,7 @@ function CardItem({
   total,
   colorGeneral,
   colorAvatar,
-}: CardHistorialItemProps) {
+}: CardItemProps) {
   // Hover state para card y tooltip
   const [isCardHovered, setIsCardHovered] = useState(false);
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);

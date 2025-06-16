@@ -46516,8 +46516,8 @@ const App: React.FC = () => {
         // batchSize={-10}
         colorGeneral='#0078d4'
         colorAvatar='#c4314b'
-        textoEncabezadoHistorial={'Historial de cambios'}
-        leyendaToolTip='Historial'
+        textoEncabezadoPanel={'Historial de cambios'}
+        textoToolTipBoton='Historial 2025'
         // estilosBoton={{
         //   root: {
         //     color: '#0078d4',
@@ -46527,7 +46527,7 @@ const App: React.FC = () => {
         //     borderRadius: 6,
         //   }
         // }}
-        onClose={() => console.log('Cerré la ventana lateral.')}
+        onClosePanel={() => console.log('Cerré la ventana lateral.')}
       />
 
       <Historial

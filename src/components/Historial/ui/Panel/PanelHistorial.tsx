@@ -22,7 +22,7 @@ type PanelHistorialProps = {
   colorGeneral: string;
   colorAvatar: string;
   isLoading: boolean;
-  textoEncabezadoHistorial: string;
+  textoEncabezado: string;
   isPanelOpen: boolean;
   setIsPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   timeoutExceeded: boolean;
@@ -35,7 +35,7 @@ function PanelHistorial({
   colorGeneral,
   colorAvatar,
   isLoading,
-  textoEncabezadoHistorial,
+  textoEncabezado,
   isPanelOpen,
   setIsPanelOpen,
   timeoutExceeded = false,
@@ -148,7 +148,7 @@ function PanelHistorial({
             }}
           />
           <span className={styles.tituloEncabezado}>
-            {textoEncabezadoHistorial}
+            {textoEncabezado}
           </span>
           <IconButton
             iconProps={{

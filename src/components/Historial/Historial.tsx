@@ -14,32 +14,32 @@ import CustomTooltip from './utils/components/CustomTooltip';
 type HistorialProps = {
   items: IHistorialItem[];
   batchSize?: number;
-  textoEncabezadoHistorial?: string;
+  textoEncabezadoPanel?: string;
   colorGeneral?: string;
   colorAvatar?: string;
-  leyendaToolTip?: string;
+  textoToolTipBoton?: string;
   estilosBoton?: IButtonStyles;
-  onClose?: () => void;
+  onClosePanel?: () => void;
 };
 
 const BATCH_SIZE_MINIMO = 10;
 function Historial({
   items,
   batchSize = BATCH_SIZE_MINIMO,
-  textoEncabezadoHistorial,
+  textoEncabezadoPanel,
   colorGeneral,
   colorAvatar,
-  leyendaToolTip,
+  textoToolTipBoton,
   estilosBoton,
-  onClose
+  onClosePanel
 }: HistorialProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [timeoutExceeded, setTimeoutExceeded] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const leyendaDefaultToolTip = 'Historial';
-  const leyenda = leyendaToolTip ?? leyendaDefaultToolTip;
+  const textoDefaultToolTipBoton = 'Historial';
+  const textoToolTip = textoToolTipBoton ?? textoDefaultToolTipBoton;
   const colorGeneralFinal = (() => {
     const s = new Option().style;
     s.color = colorGeneral?.trim() || '';
@@ -102,7 +102,7 @@ function Historial({
           }
         }
       }
-      aria-label={leyenda}
+      aria-label={textoToolTip}
       onClick={() => {
         (document.activeElement as HTMLElement)?.blur();
         setIsPanelOpen(true);
@@ -114,12 +114,12 @@ function Historial({
     ? Math.max(batchSize, BATCH_SIZE_MINIMO)
     : BATCH_SIZE_MINIMO;
   
-  const textoEncabezadoHistorialFinal = textoEncabezadoHistorial ?? 'Historial de cambios'; 
+  const textoEncabezadoPanelFinal = textoEncabezadoPanel ?? 'Historial de cambios'; 
 
   return (
     <>
       {/* Botón con tooltip */}
-      <CustomTooltip content={leyenda} show={true}>
+      <CustomTooltip content={textoToolTip} show={true}>
         {iconButton}
       </CustomTooltip>
 
@@ -131,11 +131,11 @@ function Historial({
           colorGeneral={colorGeneralFinal}
           colorAvatar={colorAvatarFinal}
           isLoading={isLoading}
-          textoEncabezadoHistorial={textoEncabezadoHistorialFinal}
+          textoEncabezado={textoEncabezadoPanelFinal}
           isPanelOpen={isPanelOpen}
           setIsPanelOpen={setIsPanelOpen}
           timeoutExceeded={timeoutExceeded}
-          onClose={onClose}
+          onClose={onClosePanel}
         />
       )}
     </>
