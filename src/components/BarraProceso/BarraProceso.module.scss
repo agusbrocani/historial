@@ -1,0 +1,138 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 24px;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.estadoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.estadoCapsula {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f3f3f3; // texto casi blanco, igual que los íconos en el stepper
+  background-color: #555555; // mismo gris que .completado
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.estadoCapsula svg {
+  flex-shrink: 0;
+  color: white;
+  font-size: 18px;
+}
+
+.stepperWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.historialWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+
+
+// .container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+//   padding: 12px 24px;
+//   box-sizing: border-box;
+//   background-color: #fff;
+//   font-family: 'Segoe UI', sans-serif;
+// }
+
+// .estadoWrapper {
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+// }
+
+// .estadoCapsula {
+//   display: inline-flex;
+//   align-items: center;
+//   gap: 8px;
+//   border: 1px solid currentColor;
+//   border-radius: 999px;
+//   padding: 6px 16px;
+//   font-size: 13px;
+//   font-weight: bold;
+//   color: currentColor;
+//   background-color: #fff;
+// }
+
+// .stepperWrapper {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .historialWrapper {
+//   display: flex;
+//   justify-content: flex-end;
+// }
+
+
+
+
+// .container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+//   padding: 12px 24px;
+//   box-sizing: border-box;
+//   background-color: #fff;
+//   font-family: 'Segoe UI', sans-serif;
+// }
+
+// .estadoWrapper {
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+// }
+
+// .estadoIcono {
+//   font-size: 18px;
+// }
+
+// .estadoLabel {
+//   font-size: 14px;
+//   font-weight: 500;
+//   color: #555;
+// }
+
+// .estadoValor {
+//   font-size: 14px;
+//   font-weight: 600;
+// }
+
+// .stepperWrapper {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .historialWrapper {
+//   display: flex;
+//   justify-content: flex-end;
+// }

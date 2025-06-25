@@ -53,7 +53,7 @@
 //   const estadoPosterior = (item.estadoPosterior || 'Sin estado posterior').toUpperCase();
 //   const conEstadoAnteriorPosterior = (
 //     <div className={styles.estadoGrid}>
-//       <span className={styles.estadoTexto}>{estadoAnterior}</span>
+//       <span className={styles.estadoTexto} style={{ color: `${colorGeneral}`}}>{estadoAnterior}</span>
 //       <span className={styles.flechaCentro}>
 //         <Icon
 //           iconName='Forward'
@@ -61,17 +61,17 @@
 //           style={{ color: colorGeneral }}
 //         />
 //       </span>
-//       <span className={styles.estadoTexto}>{estadoPosterior}</span>
+//       <span className={styles.estadoTexto} style={{ color: `${colorGeneral}`}}>{estadoPosterior}</span>
 //     </div>
 //   );
 
 //   const estadoDefinido = (() => {
 //     if (item.estadoUnico && item.estadoAnterior && item.estadoPosterior)
-//       return 'Hay 3 estados en donde debería haber 1 o 2.';
+//       return <span className={styles.estadoTexto} style={{ color: `${colorGeneral}`}}>EXCESO DE ESTADOS</span>;
 //     else if (!item.estadoUnico && !item.estadoAnterior && !item.estadoPosterior)
-//       return 'Sin estado';
+//       return <span className={styles.estadoTexto} style={{ color: `${colorGeneral}`}}>SIN ESTADO</span>;
 //     else if (item.estadoUnico)
-//       return <span>{estadoUnico}</span>;
+//       return <span className={styles.estadoTexto} style={{ color: `${colorGeneral}`}}>{estadoUnico}</span>;
 //     else
 //       return conEstadoAnteriorPosterior;
 //   })();
@@ -144,9 +144,7 @@
 // export default memo(CardItem);
 
 
-// CardItem.tsx
-
-import {
+import React, {
   Fragment,
   useRef,
   useState,
@@ -173,12 +171,10 @@ function CardItem({
   colorGeneral,
   colorAvatar,
 }: CardItemProps) {
-  // Hover state para card y tooltip
   const [isCardHovered, setIsCardHovered] = useState(false);
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);
   const isHovered = isCardHovered || isTooltipHovered;
 
-  // Refs para tooltip e índice
   const cardRef = useRef<HTMLDivElement | null>(null);
   const usuarioRef = useRef<HTMLSpanElement | null>(null);
   const indiceRef = useRef<HTMLSpanElement | null>(null);
@@ -204,7 +200,7 @@ function CardItem({
     <div className={styles.statusContainer}>
       <span
         className={styles.statusBadge}
-        style={{ backgroundColor: `${colorGeneral}`, color: 'white' }}
+        style={{ color: `${colorGeneral}` }}
       >
         {estadoAnterior}
       </span>
@@ -215,7 +211,7 @@ function CardItem({
       />
       <span
         className={styles.statusBadge}
-        style={{ backgroundColor: `${colorGeneral}`, color: 'white' }}
+        style={{ color: `${colorGeneral}` }}
       >
         {estadoPosterior}
       </span>
@@ -228,7 +224,7 @@ function CardItem({
         <div className={styles.statusContainer}>
           <span
             className={styles.statusBadge}
-            style={{ backgroundColor: `${colorGeneral}`, color: 'white' }}
+            style={{ color: `${colorGeneral}` }}
           >
             Hay 3 estados en donde debería haber 1 o 2.
           </span>
@@ -241,7 +237,7 @@ function CardItem({
         <div className={styles.statusContainer}>
           <span
             className={styles.statusBadge}
-            style={{ backgroundColor: `${colorGeneral}`, color: 'white' }}
+            style={{ color: `${colorGeneral}` }}
           >
             Sin estado
           </span>
@@ -254,7 +250,7 @@ function CardItem({
         <div className={styles.statusContainer}>
           <span
             className={styles.statusBadge}
-            style={{ backgroundColor: `${colorGeneral}`, color: 'white' }}
+            style={{ color: `${colorGeneral}` }}
           >
             {estadoUnico}
           </span>
@@ -333,3 +329,4 @@ function CardItem({
 }
 
 export default memo(CardItem);
+ 
