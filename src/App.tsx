@@ -6,6 +6,23 @@ import Historial from './components/Historial/Historial'
 import TextoExpandible from './components/Historial/utils/components/TextoExpandible/TextoExpandible';
 
 import { DefaultButton } from '@fluentui/react';
+import ProcesoStepper from './components/Stepper/ProcesoStepper';
+
+
+// import {
+//   Edit24Regular,
+//   Checkmark24Regular,
+//   Document24Regular,
+//   Ribbon24Regular,
+// } from '@fluentui/react-icons';
+
+import {
+  Mail24Regular,         // Solicitud: representa mensaje o inicio de contacto
+  CloudAdd24Regular,     // Carga: representa subida/agregado en la nube
+  Search24Regular,       // Validación: lupa para revisión o inspección
+  Checkmark24Regular     // Aprobación: check de confirmación
+} from '@fluentui/react-icons';
+import BarraProceso from './components/BarraProceso/BarraProceso';
 
 initializeIcons();
 
@@ -45025,8 +45042,6 @@ const App: React.FC = () => {
   const itemsReducido: IHistorialItem[] = [
     {
       estadoUnico: 'Estado único de prueba LARGO PARA QUE ROMPA EL DISEÑO ACTUAL QUE CONSTRUI',
-      // estadoAnterior: 'Borrador',
-      // estadoPosterior: 'Publicado',
       usuario: 'agustin.brocani@outlook.comMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
       fecha: '29-05-2025',
       hora: '14:30',
@@ -46506,76 +46521,110 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <div style={{ padding: 20 }}>
-      <Historial
-        // items={items}
-        // items={itemsReducido}
-        // items={[]}
-        items={delayedItems}
-        // batchSize={-10}
-        colorGeneral='#0078d4'
-        colorAvatar='#c4314b'
-        textoEncabezadoPanel={'Historial de cambios'}
-        textoToolTipBoton='Historial 2025'
-        // estilosBoton={{
-        //   root: {
-        //     color: '#0078d4',
-        //     width: 30,
-        //     height: 30,
-        //     border: '1px solid #0078d4',
-        //     borderRadius: 6,
-        //   }
-        // }}
-        onClosePanel={() => console.log('Cerré la ventana lateral.')}
-      />
+  // const pasos = [
+  //   { nombre: 'Creación', icono: <Edit24Regular /> },
+  //   { nombre: 'Aprobación', icono: <Checkmark24Regular /> },
+  //   { nombre: 'Documentación', icono: <Document24Regular /> },
+  //   { nombre: 'Verificación', icono: <Ribbon24Regular /> },
+  // ];
 
-      <Historial
-        items={[
-          {},
-          // {
-          //   estadoUnico: 'Unico',
-          //   estadoAnterior: 'Anterior',
-          //   estadoPosterior: 'Posterior',
-          //   usuario: '@agustin.brocani@outlook.com@asd',
-          //   fecha: '29-05-2025',
-          //   hora: '14:30'
-          // },
-          // {
-          //   estadoUnico: null,
-          //   estadoAnterior: null,
-          //   estadoPosterior: null,
-          //   usuario: null,
-          //   fecha: null,
-          //   hora: null,
-          //   renderizable: null
-          // },
-          // {
-          //   usuario: 'Caso en que no envie el estado',
-          //   fecha: null,
-          //   hora: null,
-          //   renderizable: [null]
-          // },
-          // {
-          //   estadoUnico: null,
-          //   estadoAnterior: null,
-          //   estadoPosterior: null,
-          //   usuario: null,
-          //   fecha: null,
-          //   hora: null,
-          //   renderizable: [<div>Hello world!</div>, <div>Prueba de renderizado</div>]
-          // },
-          // undefined,
-          // null,
-          {
-            usuario: undefined,
-            fecha: '30-01',
-            renderizable: null
-            // renderizable:[NaN, null, undefined, true, false]
-          }
-        ]}
-      />
-    </div>
+  // const PASO_STEPPER = {
+  //   CREACION: 1,
+  //   APROBACION: 2,
+  //   DOCUMENTACION: 3,
+  //   VERIFICACION: 4,
+  // }
+
+  // const pasos = [
+  //   { nombre: 'Solicitud', icono: <Mail24Regular /> },
+  //   { nombre: 'Carga', icono: <CloudAdd24Regular /> },
+  //   { nombre: 'Validación', icono: <Search24Regular /> },
+  //   { nombre: 'Aprobación', icono: <Checkmark24Regular /> },
+  // ];
+
+  // const PASO_STEPPER = {
+  //   SOLICITUD: 1,
+  //   CARGA: 2,
+  //   VALIDACION: 3,
+  //   APROBACION: 4,
+  // }
+
+  return (
+    // <div style={{ width: "100%" }}>
+    //   <ProcesoStepper pasos={pasos} stepActual={PASO_STEPPER.CARGA} colorPrincipal='#0078d4'/>
+    //   <BarraProceso/>
+    // </div>
+    <BarraProceso estado='Borrador' colorGeneral='#0078d4'/>  
+
+    // <div style={{ padding: 20 }}>
+    //   <Historial
+    //     // items={items}
+    //     // items={itemsReducido}
+    //     // items={[]}
+    //     items={delayedItems}
+    //     // batchSize={-10}
+    //     colorGeneral='#0078d4'
+    //     colorAvatar='#c4314b'
+    //     textoEncabezadoPanel={'Historial de cambios'}
+    //     textoToolTipBoton='Historial 2025'
+    //     // estilosBoton={{
+    //     //   root: {
+    //     //     color: '#0078d4',
+    //     //     width: 30,
+    //     //     height: 30,
+    //     //     border: '1px solid #0078d4',
+    //     //     borderRadius: 6,
+    //     //   }
+    //     // }}
+    //     onClosePanel={() => console.log('Cerré la ventana lateral.')}
+    //   />
+
+    //   <Historial
+    //     items={[
+    //       {},
+    //       // {
+    //       //   estadoUnico: 'Unico',
+    //       //   estadoAnterior: 'Anterior',
+    //       //   estadoPosterior: 'Posterior',
+    //       //   usuario: '@agustin.brocani@outlook.com@asd',
+    //       //   fecha: '29-05-2025',
+    //       //   hora: '14:30'
+    //       // },
+    //       // {
+    //       //   estadoUnico: null,
+    //       //   estadoAnterior: null,
+    //       //   estadoPosterior: null,
+    //       //   usuario: null,
+    //       //   fecha: null,
+    //       //   hora: null,
+    //       //   renderizable: null
+    //       // },
+    //       // {
+    //       //   usuario: 'Caso en que no envie el estado',
+    //       //   fecha: null,
+    //       //   hora: null,
+    //       //   renderizable: [null]
+    //       // },
+    //       // {
+    //       //   estadoUnico: null,
+    //       //   estadoAnterior: null,
+    //       //   estadoPosterior: null,
+    //       //   usuario: null,
+    //       //   fecha: null,
+    //       //   hora: null,
+    //       //   renderizable: [<div>Hello world!</div>, <div>Prueba de renderizado</div>]
+    //       // },
+    //       // undefined,
+    //       // null,
+    //       {
+    //         usuario: undefined,
+    //         fecha: '30-01',
+    //         renderizable: null
+    //         // renderizable:[NaN, null, undefined, true, false]
+    //       }
+    //     ]}
+    //   />
+    // </div>
   );
 };
 
