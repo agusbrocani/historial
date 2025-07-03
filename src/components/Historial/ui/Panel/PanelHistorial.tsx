@@ -21,6 +21,7 @@ type PanelHistorialProps = {
   batchSize: number;
   colorGeneral: string;
   colorAvatar: string;
+  ordenNumeracionCardsAsc: boolean;
   isLoading: boolean;
   textoEncabezado: string;
   isPanelOpen: boolean;
@@ -34,6 +35,7 @@ function PanelHistorial({
   batchSize,
   colorGeneral,
   colorAvatar,
+  ordenNumeracionCardsAsc,
   isLoading,
   textoEncabezado,
   isPanelOpen,
@@ -235,6 +237,7 @@ function PanelHistorial({
             colorGeneral={colorGeneral}
             colorAvatar={colorAvatar}
             totalItems={items.length}
+            ordenNumeracionCardsAsc={ordenNumeracionCardsAsc}
             lastCardRef={lastCardRef}
           />
         </div>

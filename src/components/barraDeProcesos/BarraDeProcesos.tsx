@@ -14,6 +14,7 @@ export default function BarraProceso({
   stepActual,
   colorGeneral,
   colorAvatar,
+  ordenNumeracionCardsAsc,
   items,
   batchSize,
   textoEncabezadoPanel,
@@ -46,6 +47,7 @@ export default function BarraProceso({
           items={items} 
           colorGeneral={colorGeneral}
           colorAvatar={colorAvatar}
+          ordenNumeracionCardsAsc={ordenNumeracionCardsAsc}
           batchSize={batchSize}
           textoEncabezadoPanel={textoEncabezadoPanel}
           textoToolTipBoton={textoToolTipBoton}

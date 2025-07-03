@@ -46677,6 +46677,7 @@ const App: React.FC = () => {
           estado={estadoActual}
           pasos={pasos}
           stepActual={pasoActual}
+          ordenNumeracionCardsAsc={false}
           items={parsearItemsSolicitudAFormatoHistorial(itemsSolicitud, COLOR_GENERAL_HISTORIAL)}
           textoEncabezadoPanel={TITULO_PANEL_HISTORIAL}
           colorGeneral={COLOR_GENERAL_HISTORIAL}
