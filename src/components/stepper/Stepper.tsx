@@ -10,7 +10,7 @@ export type StepperProps = {
   pasos: Paso[];
   stepActual: number;
   colorGeneral?: string;
-  finalizado?: boolean;
+  seCompletaronTodosLosSteps?: boolean;
 };
 
 function aclararColor(color: string | null | undefined, factor: number = 0.4): string {
@@ -55,15 +55,15 @@ export default function Stepper({
   pasos,
   stepActual,
   colorGeneral = '#000000',
-  finalizado = false,
+  seCompletaronTodosLosSteps = false,
 }: StepperProps) {
   return (
     <div className={styles.stepperContainer}>
       <div className={styles.stepper}>
         {pasos.map((paso, index) => {
           const pasoNumero = index + 1;
-          const esActual = !finalizado && pasoNumero === stepActual;
-          const esPrevio = finalizado || pasoNumero < stepActual;
+          const esActual = !seCompletaronTodosLosSteps && pasoNumero === stepActual;
+          const esPrevio = seCompletaronTodosLosSteps || pasoNumero < stepActual;
 
           return (
             <div key={`${paso.nombre}-${index}`} className={styles.step}>

@@ -12,6 +12,7 @@ export default function BarraProceso({
   estado,
   pasos,
   stepActual,
+  seCompletaronTodosLosSteps,
   colorGeneral,
   colorAvatar,
   items,
@@ -38,6 +39,7 @@ export default function BarraProceso({
           pasos={pasos}
           stepActual={stepActual}
           colorGeneral={colorGeneral}
+          seCompletaronTodosLosSteps={seCompletaronTodosLosSteps}
         />
       </div>
 
