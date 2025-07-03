@@ -13,6 +13,7 @@
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .textoExpanded {
@@ -22,6 +23,8 @@
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  overflow: visible;
+  word-break: break-word;
 }
 
 .toggleBtn {

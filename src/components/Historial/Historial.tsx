@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   useEffect,
   useState,
@@ -11,7 +12,7 @@ import PanelHistorial from './ui/Panel/PanelHistorial';
 import { IHistorialItem } from './IHistorialItem';
 import CustomTooltip from './utils/components/CustomTooltip';
 
-type HistorialProps = {
+export type HistorialProps = {
   items: IHistorialItem[];
   batchSize?: number;
   textoEncabezadoPanel?: string;
@@ -113,7 +114,7 @@ function Historial({
   const batchSizeFinal = Number.isFinite(batchSize)
     ? Math.max(batchSize, BATCH_SIZE_MINIMO)
     : BATCH_SIZE_MINIMO;
-  
+
   const textoEncabezadoPanelFinal = textoEncabezadoPanel ?? 'Historial de cambios'; 
 
   return (
@@ -143,3 +144,4 @@ function Historial({
 }
 
 export default Historial;
+ 

@@ -42,7 +42,6 @@ const TextoExpandible: React.FC<TextoExpandibleProps> = ({
   const handleClick = () => {
     setExpanded((prev) => {
       const next = !prev;
-      // si colapsamos, scrollear al párrafo
       if (prev && pRef.current) {
         pRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }

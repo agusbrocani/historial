@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px 24px;
+  background-color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+.estadoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.estadoCapsula {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  background-color: #fff;
+  border: 1px solid;
+  padding: 6px 16px;
+  border-radius: 999px;
+  line-height: 1;
+  user-select: none;
+}
+
+.stepperWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.historialWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+ 

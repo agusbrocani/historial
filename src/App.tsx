@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { IHistorialItem } from './components/Historial/IHistorialItem';
+import { IHistorialItem } from './components/historial/IHistorialItem';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-import Historial from './components/Historial/Historial'
-import TextoExpandible from './components/Historial/utils/components/TextoExpandible/TextoExpandible';
+import Historial from './components/historial/Historial'
+import TextoExpandible from './components/historial/utils/components/TextoExpandible/TextoExpandible';
 
 import { DefaultButton } from '@fluentui/react';
-import ProcesoStepper from './components/Stepper/ProcesoStepper';
+import ProcesoStepper from './components/stepper/Stepper';
 
 
 // import {
@@ -22,7 +22,9 @@ import {
   Search24Regular,       // Validación: lupa para revisión o inspección
   Checkmark24Regular     // Aprobación: check de confirmación
 } from '@fluentui/react-icons';
-import BarraProceso from './components/BarraProceso/BarraProceso';
+import BarraProceso from './components/barraDeProcesos/BarraDeProcesos';
+import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/helpers/parsearItemsAFormatoHistorial';
+import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 
 initializeIcons();
 
@@ -46549,12 +46551,98 @@ const App: React.FC = () => {
   //   APROBACION: 4,
   // }
 
+  const pasos = [
+    { nombre: 'Solicitud', icono: <Mail24Regular /> },
+    { nombre: 'Carga', icono: <CloudAdd24Regular /> },
+    { nombre: 'Validación', icono: <Search24Regular /> },
+    { nombre: 'Aprobación', icono: <Checkmark24Regular /> },
+  ];
+
+  enum PASO_STEPPER {
+    SOLICITUD = 1,
+    CARGA = 2,
+    VALIDACION = 3,
+    APROBACION = 4
+  };
+
+  const estadoActual = 'Aprobación'
+  const pasoActual = PASO_STEPPER.CARGA;
+ 
+  const TITULO_PANEL_HISTORIAL: string = 'Historial de cambios';
+  const COLOR_GENERAL_HISTORIAL: string = '#0078d4';
+  const COLOR_AVATAR_CARD_HISTORIAL: string = '#c4314b';
+  
+ const itemsSolicitud = [
+    {
+        Id: 11,
+        Titulo: "Solicitado",
+        Observacion: "Este ES UN COMENTARIO Este ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGO",
+        IdSolicitud: 44,
+        EstadoAnterior: "Anulado",
+        EstadoActual: "Solicitado",
+        Fecha: "2025-06-18T18:30:46.065Z",
+        Usuario: {
+            ID: 14,
+            Email: undefined,
+        },
+    },
+    {
+        Id: 10,
+        Titulo: "Devuelto Cargador",
+        Observacion: "Devolver prueba aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        IdSolicitud: 44,
+        EstadoAnterior: "Solicitado",
+        EstadoActual: "Devuelto Cargador",
+        Fecha: "2025-06-18T18:21:58.641Z",
+        Usuario: {
+            ID: 26,
+            Email: "juan.p.villar@set.ypf.com",
+        },
+    },
+    {
+        Id: 9,
+        Titulo: "Solicitado",
+        Observacion: "",
+        IdSolicitud: 44,
+        EstadoAnterior: "",
+        EstadoActual: "Solicitado",
+        Fecha: "2025-06-18T18:19:21.784Z",
+        Usuario: {
+            ID: 26,
+            Email: "juan.p.villar@set.ypf.com",
+        },
+    },
+        {
+        Id: 11,
+        Titulo: "Solicitado",
+        Observacion: "Este ES UN COMENTARIO Este ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGO",
+        IdSolicitud: 44,
+        EstadoAnterior: "Devuelto Cargador",
+        EstadoActual: "Solicitado",
+        Fecha: "2025-06-18T18:30:46.065Z",
+        Usuario: {
+            ID: 14,
+            Email: undefined,
+        },
+    }
+  ];
+
+
   return (
     // <div style={{ width: "100%" }}>
     //   <ProcesoStepper pasos={pasos} stepActual={PASO_STEPPER.CARGA} colorPrincipal='#0078d4'/>
     //   <BarraProceso/>
     // </div>
-    <BarraProceso estado='Borrador' colorGeneral='#0078d4'/>  
+    
+    <BarraDeProcesos
+        estado={estadoActual}
+        pasos={pasos}
+        stepActual={pasoActual}
+        items={parsearItemsSolicitudAFormatoHistorial(itemsSolicitud, COLOR_GENERAL_HISTORIAL)}
+        textoEncabezadoPanel={TITULO_PANEL_HISTORIAL}
+        colorGeneral={COLOR_GENERAL_HISTORIAL}
+        colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
+    />
 
     // <div style={{ padding: 20 }}>
     //   <Historial

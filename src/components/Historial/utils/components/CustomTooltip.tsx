@@ -36,7 +36,6 @@ type TooltipProps = {
   children: React.ReactElement;
   show?: boolean;
   graciaMs?: number;
-  /** Se disparan tanto al entrar/salir del trigger como del callout */
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 };
@@ -51,7 +50,6 @@ const CustomTooltip: React.FC<TooltipProps> = ({
 }) => {
   const [visible, setVisible] = useState(false);
 
-  // refs para estado real en timeouts
   const overTriggerRef = useRef(false);
   const overTooltipRef = useRef(false);
   const graciaTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -91,7 +89,6 @@ const CustomTooltip: React.FC<TooltipProps> = ({
 
   const handleTooltipLeave = () => {
     overTooltipRef.current = false;
-    // cerrar inmediatamente si ya no estoy en trigger
     if (!overTriggerRef.current) {
       setVisible(false);
       onMouseLeave?.();
@@ -99,14 +96,12 @@ const CustomTooltip: React.FC<TooltipProps> = ({
     clearGraceTimeout();
   };
 
-  // limpiar al desmontar
   useEffect(() => {
     return () => {
       clearGraceTimeout();
     };
   }, []);
 
-  // si visible cambia a false, reseteo refs
   useEffect(() => {
     if (!visible) {
       overTriggerRef.current = false;

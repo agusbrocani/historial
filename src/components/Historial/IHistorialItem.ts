@@ -9,3 +9,4 @@ export interface IHistorialItem {
   hora?: string;
   renderizable?: ReactNode[];
 }
+ 
