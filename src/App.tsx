@@ -46551,6 +46551,60 @@ const App: React.FC = () => {
   //   APROBACION: 4,
   // }
 
+  const itemsSolicitud = [
+     {
+         Id: 11,
+         Titulo: "Solicitado",
+         Observacion: "Este ES UN COMENTARIO Este ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGO",
+         IdSolicitud: 44,
+         EstadoAnterior: "Anulado",
+         EstadoActual: "Solicitado",
+         Fecha: "2025-06-18T18:30:46.065Z",
+         Usuario: {
+             ID: 14,
+             Email: undefined,
+         },
+     },
+     {
+         Id: 10,
+         Titulo: "Devuelto Cargador",
+         Observacion: "Devolver prueba aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         IdSolicitud: 44,
+         EstadoAnterior: "Solicitado",
+         EstadoActual: "Devuelto Cargador",
+         Fecha: "2025-06-18T18:21:58.641Z",
+         Usuario: {
+             ID: 26,
+             Email: "juan.p.villar@set.ypf.com",
+         },
+     },
+     {
+         Id: 9,
+         Titulo: "Solicitado",
+         Observacion: "",
+         IdSolicitud: 44,
+         EstadoAnterior: "",
+         EstadoActual: "Solicitado",
+         Fecha: "2025-06-18T18:19:21.784Z",
+         Usuario: {
+             ID: 26,
+             Email: "juan.p.villar@set.ypf.com",
+         },
+     },
+         {
+         Id: 11,
+         Titulo: "Solicitado",
+         Observacion: "Este ES UN COMENTARIO Este ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGO",
+         IdSolicitud: 44,
+         EstadoAnterior: "Devuelto Cargador",
+         EstadoActual: "Solicitado",
+         Fecha: "2025-06-18T18:30:46.065Z",
+         Usuario: {
+             ID: 14,
+             Email: undefined,
+         },
+     }
+   ];
   const pasos = [
     { nombre: 'Solicitud', icono: <Mail24Regular /> },
     { nombre: 'Carga', icono: <CloudAdd24Regular /> },
@@ -46565,69 +46619,53 @@ const App: React.FC = () => {
     APROBACION = 4
   };
 
-  const estadoActual = 'Aprobación'
-  const pasoActual = PASO_STEPPER.CARGA;
- 
+  
   const TITULO_PANEL_HISTORIAL: string = 'Historial de cambios';
   const COLOR_GENERAL_HISTORIAL: string = '#0078d4';
   const COLOR_AVATAR_CARD_HISTORIAL: string = '#c4314b';
   
- const itemsSolicitud = [
-    {
-        Id: 11,
-        Titulo: "Solicitado",
-        Observacion: "Este ES UN COMENTARIO Este ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGO",
-        IdSolicitud: 44,
-        EstadoAnterior: "Anulado",
-        EstadoActual: "Solicitado",
-        Fecha: "2025-06-18T18:30:46.065Z",
-        Usuario: {
-            ID: 14,
-            Email: undefined,
-        },
-    },
-    {
-        Id: 10,
-        Titulo: "Devuelto Cargador",
-        Observacion: "Devolver prueba aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        IdSolicitud: 44,
-        EstadoAnterior: "Solicitado",
-        EstadoActual: "Devuelto Cargador",
-        Fecha: "2025-06-18T18:21:58.641Z",
-        Usuario: {
-            ID: 26,
-            Email: "juan.p.villar@set.ypf.com",
-        },
-    },
-    {
-        Id: 9,
-        Titulo: "Solicitado",
-        Observacion: "",
-        IdSolicitud: 44,
-        EstadoAnterior: "",
-        EstadoActual: "Solicitado",
-        Fecha: "2025-06-18T18:19:21.784Z",
-        Usuario: {
-            ID: 26,
-            Email: "juan.p.villar@set.ypf.com",
-        },
-    },
-        {
-        Id: 11,
-        Titulo: "Solicitado",
-        Observacion: "Este ES UN COMENTARIO Este ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGOEste ES UN COMENTARIO LARGO",
-        IdSolicitud: 44,
-        EstadoAnterior: "Devuelto Cargador",
-        EstadoActual: "Solicitado",
-        Fecha: "2025-06-18T18:30:46.065Z",
-        Usuario: {
-            ID: 14,
-            Email: undefined,
-        },
-    }
-  ];
 
-  const [completado, setCompletado] = useState(false);
+  enum ESTADOS {
+    SOLICITADO = "Solicitado",
+    DEVUELTO_CARGADOR = "Devuelto Cargador",
+    CORREGIDO = "Corregido",
+    GENERADO = "Generado",
+    DEVUELTO_SOLICITANTE = "Devuelto Solicitante",
+    PENDIENTE = "Pendiente",
+    DEVUELTO_REVISOR = "Devuelto Revisor",
+    RECHAZADO = "Rechazado",
+    APROBADO = "Aprobado",
+}
+
+  enum STEPS {
+      STEP_ONE = 1,
+      STEP_TWO = 2,
+      STEP_THREE = 3,
+      STEP_FOUR = 4,
+      STEPS_COMPLETED = 5
+  }
+  const SIN_ESTADO = null;
+
+  const estadoStepMap: Map<string, number> = new Map([
+      [ESTADOS.DEVUELTO_CARGADOR, STEPS.STEP_ONE],
+      [ESTADOS.DEVUELTO_REVISOR, STEPS.STEP_ONE],
+      [ESTADOS.SOLICITADO, STEPS.STEP_TWO],
+      [ESTADOS.CORREGIDO, STEPS.STEP_TWO],
+      [ESTADOS.DEVUELTO_SOLICITANTE, STEPS.STEP_TWO],
+      [ESTADOS.GENERADO, STEPS.STEP_THREE],
+      [ESTADOS.PENDIENTE, STEPS.STEP_FOUR],
+      [ESTADOS.RECHAZADO, STEPS.STEPS_COMPLETED],
+      [ESTADOS.APROBADO, STEPS.STEPS_COMPLETED]
+  ])
+  
+  const estadoActual = ESTADOS.APROBADO;
+  const pasoActual = estadoStepMap.get(estadoActual) ?? 1;
+
+  // if (5 === STEPS.STEPS_COMPLETED) {
+  //   setCompletado(true);
+  // }
+
+
 
   return (
     // <div style={{ width: "100%" }}>
@@ -46639,19 +46677,11 @@ const App: React.FC = () => {
           estado={estadoActual}
           pasos={pasos}
           stepActual={pasoActual}
-          seCompletaronTodosLosSteps={completado}
           items={parsearItemsSolicitudAFormatoHistorial(itemsSolicitud, COLOR_GENERAL_HISTORIAL)}
           textoEncabezadoPanel={TITULO_PANEL_HISTORIAL}
           colorGeneral={COLOR_GENERAL_HISTORIAL}
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />
-      <div style={{ paddingTop: '20px' }}>
-        <button 
-          onClick={() => setCompletado(completado => !completado)}
-        >
-          METI UN BOTON PARA PROBAR
-        </button>
-      </div>
     </>
 
     // <div style={{ padding: 20 }}>

@@ -1,8 +1,4 @@
 import React from 'react';
-import { 
-  useEffect, 
-  useState 
-} from 'react';
 import styles from './BarraDeProcesos.module.scss';
 import Stepper from '../stepper/Stepper';
 import { StepperProps } from '../stepper/Stepper';
@@ -16,7 +12,6 @@ export default function BarraProceso({
   estado,
   pasos,
   stepActual,
-  seCompletaronTodosLosSteps,
   colorGeneral,
   colorAvatar,
   items,
@@ -26,12 +21,6 @@ export default function BarraProceso({
   estilosBoton,
   onClosePanel
 }: BarraProcesoProps) {
-  const [completado, setCompletado] = useState(seCompletaronTodosLosSteps);
-
-  useEffect(() => {
-    setCompletado(seCompletaronTodosLosSteps ?? false);
-  }, [seCompletaronTodosLosSteps]);
-
   return (
     <div className={styles.container}>
       <div className={styles.estadoWrapper}>
@@ -49,7 +38,6 @@ export default function BarraProceso({
           pasos={pasos} 
           stepActual={stepActual}
           colorGeneral={colorGeneral}
-          seCompletaronTodosLosSteps={completado}
         />
       </div>
 
