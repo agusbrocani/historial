@@ -46627,23 +46627,32 @@ const App: React.FC = () => {
     }
   ];
 
+  const [completado, setCompletado] = useState(false);
 
   return (
     // <div style={{ width: "100%" }}>
     //   <ProcesoStepper pasos={pasos} stepActual={PASO_STEPPER.CARGA} colorPrincipal='#0078d4'/>
     //   <BarraProceso/>
     // </div>
-    
-    <BarraDeProcesos
-        estado={estadoActual}
-        pasos={pasos}
-        stepActual={pasoActual}
-        seCompletaronTodosLosSteps={false}
-        items={parsearItemsSolicitudAFormatoHistorial(itemsSolicitud, COLOR_GENERAL_HISTORIAL)}
-        textoEncabezadoPanel={TITULO_PANEL_HISTORIAL}
-        colorGeneral={COLOR_GENERAL_HISTORIAL}
-        colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
-    />
+    <>
+      <BarraDeProcesos
+          estado={estadoActual}
+          pasos={pasos}
+          stepActual={pasoActual}
+          seCompletaronTodosLosSteps={completado}
+          items={parsearItemsSolicitudAFormatoHistorial(itemsSolicitud, COLOR_GENERAL_HISTORIAL)}
+          textoEncabezadoPanel={TITULO_PANEL_HISTORIAL}
+          colorGeneral={COLOR_GENERAL_HISTORIAL}
+          colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
+      />
+      <div style={{ paddingTop: '20px' }}>
+        <button 
+          onClick={() => setCompletado(completado => !completado)}
+        >
+          METI UN BOTON PARA PROBAR
+        </button>
+      </div>
+    </>
 
     // <div style={{ padding: 20 }}>
     //   <Historial

@@ -58,45 +58,49 @@ export default function Stepper({
   seCompletaronTodosLosSteps = false,
 }: StepperProps) {
   return (
-    <div className={styles.stepperContainer}>
-      <div className={styles.stepper}>
-        {pasos.map((paso, index) => {
-          const pasoNumero = index + 1;
-          const esActual = !seCompletaronTodosLosSteps && pasoNumero === stepActual;
-          const esPrevio = seCompletaronTodosLosSteps || pasoNumero < stepActual;
+    <>
+      {pasos &&
+        <div className={styles.stepperContainer}>
+          <div className={styles.stepper}>
+            {pasos.map((paso, index) => {
+              const pasoNumero = index + 1;
+              const esActual = !seCompletaronTodosLosSteps && pasoNumero === stepActual;
+              const esPrevio = seCompletaronTodosLosSteps || pasoNumero < stepActual;
 
-          return (
-            <div key={`${paso.nombre}-${index}`} className={styles.step}>
-              <div
-                className={`${styles.iconWrapper} ${
-                  esActual
-                    ? styles.actual
-                    : esPrevio
-                    ? styles.completado
-                    : styles.pendiente
-                }`}
-                style={{
-                  backgroundColor: esActual
-                    ? colorGeneral
-                    : esPrevio
-                    ? aclararColor(colorGeneral)
-                    : '',
-                }}
-              >
-                {paso.icono}
-              </div>
-              <span
-                className={`${styles.nombrePaso} ${
-                  esActual ? styles.actualText : ''
-                }`}
-                style={{ color: esActual ? colorGeneral : '' }}
-              >
-                {paso.nombre}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+              return (
+                <div key={`${paso.nombre}-${index}`} className={styles.step}>
+                  <div
+                    className={`${styles.iconWrapper} ${
+                      esActual
+                        ? styles.actual
+                        : esPrevio
+                        ? styles.completado
+                        : styles.pendiente
+                    }`}
+                    style={{
+                      backgroundColor: esActual
+                        ? colorGeneral
+                        : esPrevio
+                        ? aclararColor(colorGeneral)
+                        : '',
+                    }}
+                  >
+                    {paso.icono}
+                  </div>
+                  <span
+                    className={`${styles.nombrePaso} ${
+                      esActual ? styles.actualText : ''
+                    }`}
+                    style={{ color: esActual ? colorGeneral : '' }}
+                  >
+                    {paso.nombre}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      }
+    </>
   );
 }
