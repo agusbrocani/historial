@@ -8,7 +8,7 @@ type CardListProps = {
   colorGeneral: string;
   colorAvatar: string;
   totalItems: number;
-  ordenNumeracionCardsAsc: boolean;
+  ordenNumeracionCardsDesc: boolean;
   lastCardRef: RefObject<HTMLDivElement>;
 };
 
@@ -17,7 +17,7 @@ function CardList({
   colorGeneral,
   colorAvatar,
   totalItems,
-  ordenNumeracionCardsAsc,
+  ordenNumeracionCardsDesc,
   lastCardRef,
 }: CardListProps) {
   return (
@@ -32,7 +32,7 @@ function CardList({
               colorAvatar={colorAvatar}
               index={index}
               total={totalItems}
-              ordenNumeracionCardsAsc={ordenNumeracionCardsAsc}
+              ordenNumeracionCardsDesc={ordenNumeracionCardsDesc}
             />
           </div>
         );

@@ -14,7 +14,7 @@ type CardItemProps = {
   item: IHistorialItem;
   index: number;
   total: number;
-  ordenNumeracionCardsAsc: boolean;
+  ordenNumeracionCardsDesc: boolean;
   colorGeneral: string;
   colorAvatar: string;
 };
@@ -23,7 +23,7 @@ function CardItem({
   item,
   index,
   total,
-  ordenNumeracionCardsAsc = true,
+  ordenNumeracionCardsDesc = false,
   colorGeneral,
   colorAvatar,
 }: CardItemProps) {
@@ -118,8 +118,7 @@ function CardItem({
   })();
 
   const usuarioTexto = item.usuario || 'Usuario no identificado';
-  const textoIndice = `Cambio ${ordenNumeracionCardsAsc? index + 1 : total - index} de ${total}`;
-
+  const textoIndice = `Cambio ${ordenNumeracionCardsDesc? total - index : index + 1} de ${total}`;
   const usuarioTrunc = useIsTruncated(usuarioRef);
   const indiceTrunc = useIsTruncated(indiceRef);
 

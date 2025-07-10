@@ -18,7 +18,7 @@ export type HistorialProps = {
   textoEncabezadoPanel?: string;
   colorGeneral?: string;
   colorAvatar?: string;
-  ordenNumeracionCardsAsc?: boolean;
+  ordenNumeracionCardsDesc?: boolean;
   textoToolTipBoton?: string;
   estilosBoton?: IButtonStyles;
   onClosePanel?: () => void;
@@ -31,7 +31,7 @@ function Historial({
   textoEncabezadoPanel,
   colorGeneral,
   colorAvatar,
-  ordenNumeracionCardsAsc,
+  ordenNumeracionCardsDesc,
   textoToolTipBoton,
   estilosBoton,
   onClosePanel
@@ -133,7 +133,7 @@ function Historial({
           batchSize={batchSizeFinal}
           colorGeneral={colorGeneralFinal}
           colorAvatar={colorAvatarFinal}
-          ordenNumeracionCardsAsc={ordenNumeracionCardsAsc}
+          ordenNumeracionCardsDesc={ordenNumeracionCardsDesc}
           isLoading={isLoading}
           textoEncabezado={textoEncabezadoPanelFinal}
           isPanelOpen={isPanelOpen}
