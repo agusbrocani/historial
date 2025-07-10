@@ -22,7 +22,7 @@ export const BandejaDeGestionDeProductos: React.FC<PropsBandeja> = ({ productos,
           <Spinner label="Cargando productos..." />
         </div>
       ) : (
-        <div className={estilos.wrapperTabla}>
+        <div className={estilos.wrapper}>
           <table className={estilos.tabla}>
             <thead>
               <tr>
@@ -31,37 +31,41 @@ export const BandejaDeGestionDeProductos: React.FC<PropsBandeja> = ({ productos,
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {productos && productos.length > 0 ? (
-                productos.map((producto, indice) => (
-                  <tr key={indice}>
-                    {columnasProducto.map((col) => {
-                      const valor = producto[col.clave as keyof IProducto]?.toString() || '';
-                      const debeTruncar = valor.length > 30;
-
-                      return (
-                        <td key={col.clave}>
-                          {debeTruncar ? (
-                            <CustomTooltip content={valor}>
-                              <span className={estilos.truncado}>{valor}</span>
-                            </CustomTooltip>
-                          ) : (
-                            valor
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={columnasProducto.length} className={estilos.sinDatos}>
-                    No hay productos para mostrar.
-                  </td>
-                </tr>
-              )}
-            </tbody>
           </table>
+          <div className={estilos.scrollBody}>
+            <table className={estilos.tabla}>
+              <tbody>
+                {productos && productos.length > 0 ? (
+                  productos.map((producto, indice) => (
+                    <tr key={indice}>
+                      {columnasProducto.map((col) => {
+                        const valor = producto[col.clave as keyof IProducto]?.toString() || '';
+                        const debeTruncar = valor.length > 30;
+
+                        return (
+                          <td key={col.clave}>
+                            {debeTruncar ? (
+                              <CustomTooltip content={valor}>
+                                <span className={estilos.truncado}>{valor}</span>
+                              </CustomTooltip>
+                            ) : (
+                              valor
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={columnasProducto.length} className={estilos.sinDatos}>
+                      No hay productos para mostrar.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

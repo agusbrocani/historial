@@ -1,106 +1,88 @@
 .contenedorTabla {
   padding: 1rem;
-  background-color: transparent;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
 }
 
 .encabezado {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .botonNuevo {
   background-color: #0078d4;
   color: white;
+  padding: 6px 12px;
   border: none;
-  padding: 8px 16px;
   border-radius: 4px;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
 }
 
-.botonNuevo:hover {
-  background-color: #005a9e;
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
 }
 
-.wrapperTabla {
-  max-height: 440px; // 10 filas de ~40 + header
-  overflow-y: auto;
+.wrapper {
+  border: 1px solid #ddd;
   border-radius: 6px;
+  overflow: hidden;
+}
+
+.scrollBody {
+  max-height: 440px; // 10 filas aprox
+  overflow-y: auto;
 }
 
 .tabla {
   width: 100%;
   border-collapse: collapse;
-  font-family: 'Segoe UI', sans-serif;
-  color: #323130;
-  background-color: #fff;
   table-layout: fixed;
 }
 
-thead {
-  background-color: #f3f2f1;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-th {
-  padding: 12px 10px;
-  font-size: 14px;
-  font-weight: 600;
-  border-bottom: 2px solid #c8c6c4;
-  border-right: 1px solid #ddd;
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #f0f0f0;
   text-align: left;
-}
-
-th:last-child {
-  border-right: none;
-}
-
-td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 14px;
-  vertical-align: middle;
-  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-right: 1px solid #ddd;
 }
 
+th:last-child,
 td:last-child {
   border-right: none;
 }
 
-.truncado {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  vertical-align: bottom;
+th {
+  background-color: #f3f2f1;
+  font-weight: 600;
 }
 
 tr:nth-child(even) {
-  background-color: #f3f2f1;
+  background-color: #f9f9f9;
 }
 
 tr:hover {
-  background-color: #e4e4e4;
+  background-color: #f1f1f1;
 }
 
-.spinnerContainer {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
+.truncado {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sinDatos {
   text-align: center;
   padding: 20px;
-  font-style: italic;
-  color: #666;
+  color: #999;
 }
