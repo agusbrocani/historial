@@ -27,7 +27,7 @@ export const BandejaDeGestionDeProductos: React.FC<PropsBandeja> = ({ productos,
             <thead>
               <tr>
                 {columnasProducto.map((col) => (
-                  <th key={col.clave}>{col.encabezado}</th>
+                  <th key={col.clave} className={estilos.celdaEncabezado}>{col.encabezado}</th>
                 ))}
               </tr>
             </thead>
