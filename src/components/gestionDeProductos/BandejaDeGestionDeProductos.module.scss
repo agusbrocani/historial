@@ -1,0 +1,84 @@
+.contenedorTabla {
+  padding: 1rem;
+  background-color: transparent;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.botonNuevo {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.botonNuevo:hover {
+  background-color: #005a9e;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  color: #ffffff;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th {
+  background-color: #f3f2f1;
+  color: #323130;
+  padding: 12px 10px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 2px solid #c8c6c4;
+}
+
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #333;
+  font-size: 14px;
+  vertical-align: middle;
+  max-width: 200px;
+  white-space: nowrap;
+}
+
+.truncado {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+tr:hover {
+  background-color: #3a3a3a;
+}
+
+.spinnerContainer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.sinDatos {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #ccc;
+}

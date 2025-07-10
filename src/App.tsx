@@ -25,6 +25,8 @@ import {
 import BarraProceso from './components/barraDeProcesos/BarraDeProcesos';
 import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/helpers/parsearItemsAFormatoHistorial';
 import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
+import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
+import { IProducto } from './components/gestionDeProductos/tipos';
 
 initializeIcons();
 
@@ -46665,6 +46667,41 @@ const App: React.FC = () => {
   //   setCompletado(true);
   // }
 
+  const [productos, setProductos] = useState<IProducto[] | null>(null);
+  const [cargando, setCargando] = useState(true);  
+
+  useEffect(() => {
+    setTimeout(() => {
+      const datos: IProducto[] = [
+        {
+          producto: "Producto A",
+          lineaDeNegocio: "Negocio 1",
+          area: "Área 1",
+          seccion: "Sección A",
+          enCatalogo: "Sí",
+          cantidadDeFds: 10,
+          cantidadDeFie: 5,
+          idViejoFds: 1001,
+          idViejoFie: 2001,
+        },
+        {
+          producto: "Otro producto largo para truncar",
+          lineaDeNegocio: "Negocio largo",
+          area: "Área muy extensa",
+          seccion: "Sección B",
+          enCatalogo: "No",
+          cantidadDeFds: 8,
+          cantidadDeFie: 3,
+          idViejoFds: 1002,
+          idViejoFie: 2002,
+        }
+      ];
+      setProductos(datos);
+      setCargando(false);
+    }, 2000);
+  }, []);
+
+
 
 
   return (
@@ -46684,6 +46721,7 @@ const App: React.FC = () => {
           colorGeneral={COLOR_GENERAL_HISTORIAL}
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />
+      <BandejaDeGestionDeProductos productos={productos} cargando={cargando} />
     </>
 
     // <div style={{ padding: 20 }}>
