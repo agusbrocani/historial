@@ -46893,7 +46893,7 @@ const App: React.FC = () => {
 
   const guardarProducto = (data: any) => {
     console.log('📝 Producto guardado:', data);
-    alert('✅ Producto guardado correctamente.');
+    // alert('✅ Producto guardado correctamente.');
   };
 
   return (

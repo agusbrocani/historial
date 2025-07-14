@@ -26,13 +26,14 @@ const FormularioDeProducto: React.FC<Props> = ({
   const [area, setArea] = useState('');
   const [seccion, setSeccion] = useState('');
   const [enCatalogo, setEnCatalogo] = useState('No');
-  const [cantidadFDS, setCantidadFDS] = useState(0);
-  const [cantidadFIE, setCantidadFIE] = useState(0);
+  const [cantidadFDS, setCantidadFDS] = useState('');
+  const [cantidadFIE, setCantidadFIE] = useState('');
   const [idViejoFDS, setIdViejoFDS] = useState('');
   const [idViejoFIE, setIdViejoFIE] = useState('');
   const [error, setError] = useState(false);
   const [exito, setExito] = useState(false);
   const [productoPendiente, setProductoPendiente] = useState<any>(null);
+  const [bloqueado, setBloqueado] = useState(false); // 🔒 Nuevo estado
 
   const opcionesDropdown = (items: string[]): IDropdownOption[] =>
     items.map((item) => ({ key: item, text: item }));
@@ -52,15 +53,16 @@ const FormularioDeProducto: React.FC<Props> = ({
       area,
       seccion,
       enCatalogo,
-      cantidadFDS,
-      cantidadFIE,
-      idViejoFDS,
-      idViejoFIE
+      cantidadFDS: cantidadFDS === '' ? null : Number(cantidadFDS),
+      cantidadFIE: cantidadFIE === '' ? null : Number(cantidadFIE),
+      idViejoFDS: idViejoFDS || null,
+      idViejoFIE: idViejoFIE || null
     };
 
     setError(false);
     setExito(true);
     setProductoPendiente(nuevoProducto);
+    setBloqueado(true); // 🔒 Bloqueo real
   };
 
   useEffect(() => {
@@ -76,12 +78,13 @@ const FormularioDeProducto: React.FC<Props> = ({
     setArea('');
     setSeccion('');
     setEnCatalogo('No');
-    setCantidadFDS(0);
-    setCantidadFIE(0);
+    setCantidadFDS('');
+    setCantidadFIE('');
     setIdViejoFDS('');
     setIdViejoFIE('');
     setError(false);
     setExito(false);
+    setBloqueado(false);
   };
 
   const areasDisponibles = linea ? areasPorLinea[linea] || [] : [];
@@ -96,7 +99,8 @@ const FormularioDeProducto: React.FC<Props> = ({
           label="Producto"
           required
           value={producto}
-          onChange={(_, v) => setProducto(v || '')}
+          disabled={bloqueado}
+          onChange={(_, v) => !bloqueado && setProducto(v || '')}
         />
       </div>
 
@@ -109,7 +113,9 @@ const FormularioDeProducto: React.FC<Props> = ({
             required
             options={opcionesDropdown(lineasDeNegocio)}
             selectedKey={linea}
+            disabled={bloqueado}
             onChange={(_, o) => {
+              if (bloqueado) return;
               setLinea(o?.key as string);
               setArea('');
               setSeccion('');
@@ -123,11 +129,12 @@ const FormularioDeProducto: React.FC<Props> = ({
             required
             options={opcionesDropdown(areasDisponibles)}
             selectedKey={area}
+            disabled={!linea || bloqueado}
             onChange={(_, o) => {
+              if (bloqueado) return;
               setArea(o?.key as string);
               setSeccion('');
             }}
-            disabled={!linea}
           />
         </div>
 
@@ -137,8 +144,8 @@ const FormularioDeProducto: React.FC<Props> = ({
             required
             options={opcionesDropdown(seccionesDisponibles)}
             selectedKey={seccion}
-            onChange={(_, o) => setSeccion(o?.key as string)}
-            disabled={!area}
+            disabled={!area || bloqueado}
+            onChange={(_, o) => !bloqueado && setSeccion(o?.key as string)}
           />
         </div>
       </fieldset>
@@ -151,7 +158,8 @@ const FormularioDeProducto: React.FC<Props> = ({
             { key: 'No', text: 'No' }
           ]}
           selectedKey={enCatalogo}
-          onChange={(_, o) => setEnCatalogo(o?.key as string)}
+          disabled={bloqueado}
+          onChange={(_, o) => !bloqueado && setEnCatalogo(o?.key as string)}
         />
       </div>
 
@@ -159,8 +167,12 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label="Cantidad de FDS"
           type="number"
-          value={cantidadFDS.toString()}
-          onChange={(_, v) => setCantidadFDS(Math.max(0, Number(v)))}
+          value={cantidadFDS}
+          disabled={bloqueado}
+          onChange={(_, v) => {
+            if (bloqueado) return;
+            setCantidadFDS(v ?? '');
+          }}
         />
       </div>
 
@@ -168,8 +180,12 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label="Cantidad de FIE"
           type="number"
-          value={cantidadFIE.toString()}
-          onChange={(_, v) => setCantidadFIE(Math.max(0, Number(v)))}
+          value={cantidadFIE}
+          disabled={bloqueado}
+          onChange={(_, v) => {
+            if (bloqueado) return;
+            setCantidadFIE(v ?? '');
+          }}
         />
       </div>
 
@@ -177,7 +193,8 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label="Id Viejo FDS"
           value={idViejoFDS}
-          onChange={(_, v) => setIdViejoFDS(v || '')}
+          disabled={bloqueado}
+          onChange={(_, v) => !bloqueado && setIdViejoFDS(v ?? '')}
         />
       </div>
 
@@ -185,7 +202,8 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label="Id Viejo FIE"
           value={idViejoFIE}
-          onChange={(_, v) => setIdViejoFIE(v || '')}
+          disabled={bloqueado}
+          onChange={(_, v) => !bloqueado && setIdViejoFIE(v ?? '')}
         />
       </div>
 
@@ -202,8 +220,12 @@ const FormularioDeProducto: React.FC<Props> = ({
       )}
 
       <div className={styles.botones}>
-        <PrimaryButton onClick={handleSubmit}>Agregar producto</PrimaryButton>
-        <DefaultButton onClick={handleCancelar}>Cancelar</DefaultButton>
+        <PrimaryButton onClick={handleSubmit} disabled={bloqueado}>
+          Agregar producto
+        </PrimaryButton>
+        <DefaultButton onClick={handleCancelar} disabled={bloqueado}>
+          Cancelar
+        </DefaultButton>
       </div>
     </div>
   );
