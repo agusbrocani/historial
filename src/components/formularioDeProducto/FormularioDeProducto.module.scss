@@ -11,25 +11,25 @@
 .titulo {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   color: #333;
 }
 
 .fila {
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.75rem; // antes: 1.2rem
 }
 
 .grupoCampos {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1rem; // antes: 1.5rem
+  margin-bottom: 1rem; // antes: 1.5rem
 }
 
 .tituloGrupo {
   font-weight: 600;
   font-size: 1.1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   color: #444;
   padding: 0 0.5rem;
 }
@@ -37,23 +37,23 @@
 .botones {
   display: flex;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1.2rem; // antes: 2rem
 }
 
 .error {
   background-color: #fde7e9;
   color: #a80000;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 4px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin-top: 1rem;
 }
 
 .exito {
   background-color: #e6f4ea;
   color: #107c10;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 4px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin-top: 1rem;
 }

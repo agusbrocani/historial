@@ -46920,6 +46920,18 @@ const App: React.FC = () => {
           areasPorLinea={areas}
           seccionesPorArea={secciones}
           onGuardar={guardarProducto}
+
+          productoAEditar={{
+            producto: 'Agua Mineral',
+            lineaDeNegocio: 'Alimentos',
+            area: 'Bebidas',
+            seccion: 'Agua',
+            enCatalogo: 'Sí',
+            cantidadFDS: 20,
+            cantidadFIE: 15,
+            idViejoFDS: 1234,
+            idViejoFIE: 5678
+          }}
         />
       </div>
     </>
