@@ -1,24 +1,37 @@
 .contenedorFormulario {
+  padding: 2rem;
+  border-radius: 12px;
   background-color: #ffffff;
-  padding: 2.5rem;
-  border-radius: 16px;
   max-width: 900px;
-  margin: 3rem auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1rem;
+  margin: 2rem auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-h2 {
-  font-size: 1.4rem;
+.titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
   margin-bottom: 1.5rem;
-  color: #323130;
+  color: #333;
+}
+
+.fila {
+  margin-bottom: 1.2rem;
+}
+
+.grupoCampos {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tituloGrupo {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #444;
+  padding: 0 0.5rem;
 }
 
 .botones {
@@ -27,55 +40,20 @@ h2 {
   margin-top: 2rem;
 }
 
-.mensajeError {
+.error {
   background-color: #fde7e9;
   color: #a80000;
-  padding: 0.75rem 1.25rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-}
-
-:global(.ms-Dropdown) {
-  background-color: #ffffff;
+  padding: 0.75rem 1rem;
   border-radius: 4px;
-}
-
-:global(.ms-Dropdown-title) {
-  font-size: 1rem;
-  padding: 0.6rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  background-color: #fff;
-}
-
-:global(.ms-Dropdown-caretDownWrapper) {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-:global(.ms-Dropdown.is-disabled .ms-Dropdown-title) {
-  background-color: #f3f2f1;
-  color: #a6a6a6;
-  border: 1px solid #ddd;
-  cursor: not-allowed;
-}
-
-:global(.ms-TextField) label {
   font-size: 0.95rem;
-  margin-bottom: 0.4rem;
+  margin-top: 1rem;
 }
 
-:global(.ms-TextField-fieldGroup) {
-  height: 40px;
-  font-size: 1rem;
-}
-
-:global(.ms-TextField-field) {
-  padding: 0.6rem;
+.exito {
+  background-color: #e6f4ea;
+  color: #107c10;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  margin-top: 1rem;
 }

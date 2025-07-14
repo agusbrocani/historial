@@ -46902,7 +46902,7 @@ const App: React.FC = () => {
     //   <BarraProceso/>
     // </div>
     <>
-      <BarraDeProcesos
+      {/* <BarraDeProcesos
           estado={estadoActual}
           pasos={pasos}
           stepActual={pasoActual}
@@ -46913,7 +46913,7 @@ const App: React.FC = () => {
           colorGeneral={COLOR_GENERAL_HISTORIAL}
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />
-      <BandejaDeGestionDeProductos productos={productos} cargando={cargando} />
+      <BandejaDeGestionDeProductos productos={productos} cargando={cargando} /> */}
       <div style={{ padding: 40 }}>
         <FormularioDeProducto
           lineasDeNegocio={lineas}
