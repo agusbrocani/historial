@@ -10,26 +10,15 @@ import {
   DialogFooter
 } from '@fluentui/react';
 import styles from './FormularioDeProducto.module.scss';
-import { ClaveCampo, NOMBRE_CAMPO_LEIBLE } from './constantesCampos';
-
-interface ProductoData {
-  [ClaveCampo.Producto]: string;
-  [ClaveCampo.LineaDeNegocio]: string;
-  [ClaveCampo.Area]: string;
-  [ClaveCampo.Seccion]: string;
-  [ClaveCampo.EnCatalogo]: 'Sí' | 'No';
-  [ClaveCampo.CantidadFDS]: number | null;
-  [ClaveCampo.CantidadFIE]: number | null;
-  [ClaveCampo.IdViejoFDS]: number | null;
-  [ClaveCampo.IdViejoFIE]: number | null;
-}
+import { ClaveCampo, NOMBRE_CAMPO_LEIBLE, ProductoData } from './constantesCampos';
 
 interface Props {
   lineasDeNegocio: string[];
   areasPorLinea: Record<string, string[]>;
   seccionesPorArea: Record<string, string[]>;
   onGuardar: (data: ProductoData) => void;
-  productoAEditar?: ProductoData;
+  producto: ProductoData;
+  setProducto: React.Dispatch<React.SetStateAction<ProductoData>>;
 }
 
 const FormularioDeProducto: React.FC<Props> = ({
@@ -37,49 +26,35 @@ const FormularioDeProducto: React.FC<Props> = ({
   areasPorLinea,
   seccionesPorArea,
   onGuardar,
-  productoAEditar
+  producto,
+  setProducto
 }) => {
-  const [producto, setProducto] = useState(productoAEditar?.producto || '');
-  const [linea, setLinea] = useState(productoAEditar?.lineaDeNegocio || '');
-  const [area, setArea] = useState(productoAEditar?.area || '');
-  const [seccion, setSeccion] = useState(productoAEditar?.seccion || '');
-  const [enCatalogo, setEnCatalogo] = useState<'Sí' | 'No'>(productoAEditar?.enCatalogo || 'No');
-  const [cantidadFDS, setCantidadFDS] = useState(productoAEditar?.cantidadFDS?.toString() || '');
-  const [cantidadFIE, setCantidadFIE] = useState(productoAEditar?.cantidadFIE?.toString() || '');
-  const [idViejoFDS, setIdViejoFDS] = useState(productoAEditar?.idViejoFDS?.toString() || '');
-  const [idViejoFIE, setIdViejoFIE] = useState(productoAEditar?.idViejoFIE?.toString() || '');
-
   const [error, setError] = useState(false);
   const [exito, setExito] = useState(false);
-  const [bloqueado, setBloqueado] = useState(false);
   const [mostrarDialogo, setMostrarDialogo] = useState(false);
-  const [productoPendiente, setProductoPendiente] = useState<ProductoData | null>(null);
+  const [productoPendiente, setProductoPendiente] = useState<ProductoData>(producto);
+  const [confirmado, setConfirmado] = useState(false);
+
+  const esProductoValido = (p: ProductoData) =>
+    p.producto && p.lineaDeNegocio && p.area && p.seccion;
+
+  const esEdicion = esProductoValido(producto) && !confirmado;
 
   const opcionesDropdown = (items: string[]): IDropdownOption[] =>
     items.map((item) => ({ key: item, text: item }));
 
-  const construirProducto = (): ProductoData => ({
-    [ClaveCampo.Producto]: producto,
-    [ClaveCampo.LineaDeNegocio]: linea,
-    [ClaveCampo.Area]: area,
-    [ClaveCampo.Seccion]: seccion,
-    [ClaveCampo.EnCatalogo]: enCatalogo,
-    [ClaveCampo.CantidadFDS]: cantidadFDS === '' ? null : Number(cantidadFDS),
-    [ClaveCampo.CantidadFIE]: cantidadFIE === '' ? null : Number(cantidadFIE),
-    [ClaveCampo.IdViejoFDS]: idViejoFDS === '' ? null : Number(idViejoFDS),
-    [ClaveCampo.IdViejoFIE]: idViejoFIE === '' ? null : Number(idViejoFIE)
-  });
-
   const validarCampos = (): boolean => {
-    if (!producto || !linea || !area || !seccion) return false;
+    if (!esProductoValido(productoPendiente)) return false;
+
     if (
-      (cantidadFDS !== '' && Number(cantidadFDS) < 0) ||
-      (cantidadFIE !== '' && Number(cantidadFIE) < 0) ||
-      (idViejoFDS !== '' && isNaN(Number(idViejoFDS))) ||
-      (idViejoFIE !== '' && isNaN(Number(idViejoFIE)))
+      (productoPendiente.cantidadFDS !== null && productoPendiente.cantidadFDS < 0) ||
+      (productoPendiente.cantidadFIE !== null && productoPendiente.cantidadFIE < 0) ||
+      (productoPendiente.idViejoFDS !== null && isNaN(Number(productoPendiente.idViejoFDS))) ||
+      (productoPendiente.idViejoFIE !== null && isNaN(Number(productoPendiente.idViejoFIE)))
     ) {
       return false;
     }
+
     return true;
   };
 
@@ -89,49 +64,65 @@ const FormularioDeProducto: React.FC<Props> = ({
       setExito(false);
       return;
     }
-    setProductoPendiente(construirProducto());
+
     setMostrarDialogo(true);
   };
 
   const confirmarGuardar = () => {
     setError(false);
     setExito(true);
-    setBloqueado(true);
+    setConfirmado(true);
     setMostrarDialogo(false);
+    onGuardar(productoPendiente);
   };
 
   const cancelarGuardar = () => {
-    setProductoPendiente(null);
     setMostrarDialogo(false);
   };
 
-  useEffect(() => {
-    if (exito && productoPendiente) {
-      onGuardar(productoPendiente);
-      setProductoPendiente(null);
-    }
-  }, [exito, productoPendiente, onGuardar]);
-
   const handleCancelar = () => {
-    setProducto('');
-    setLinea('');
-    setArea('');
-    setSeccion('');
-    setEnCatalogo('No');
-    setCantidadFDS('');
-    setCantidadFIE('');
-    setIdViejoFDS('');
-    setIdViejoFIE('');
     setError(false);
     setExito(false);
-    setBloqueado(false);
+    setConfirmado(true); // Bloquea la edición después de cancelar
+
+    if (esEdicion) {
+      setProductoPendiente(producto); // Vuelve al estado original en edición
+    } else {
+      const productoVacio: ProductoData = {
+        producto: '',
+        lineaDeNegocio: '',
+        area: '',
+        seccion: '',
+        enCatalogo: 'No',
+        cantidadFDS: null,
+        cantidadFIE: null,
+        idViejoFDS: null,
+        idViejoFIE: null
+      };
+      setProducto(productoVacio);
+      setProductoPendiente(productoVacio); // Limpia el formulario en alta
+    }
   };
 
-  const areasDisponibles = linea ? areasPorLinea[linea] || [] : [];
-  const seccionesDisponibles = area ? seccionesPorArea[area] || [] : [];
+
+  const areasDisponibles = productoPendiente.lineaDeNegocio
+    ? areasPorLinea[productoPendiente.lineaDeNegocio] || []
+    : [];
+
+  const seccionesDisponibles = productoPendiente.area
+    ? seccionesPorArea[productoPendiente.area] || []
+    : [];
+
+  useEffect(() => {
+    const productoRecibidoEsValido = esProductoValido(producto);
+    if (productoRecibidoEsValido) {
+      setProductoPendiente(producto);
+    }
+  }, [producto]);
 
   const renderResumenProducto = () => {
     if (!productoPendiente) return null;
+
     return (
       <ul style={{ paddingLeft: 16 }}>
         {(Object.entries(productoPendiente) as [ClaveCampo, any][])
@@ -145,19 +136,23 @@ const FormularioDeProducto: React.FC<Props> = ({
     );
   };
 
+  const textoAccion = esEdicion ? 'guardar' : 'dar de alta';
+
   return (
     <div className={styles.contenedorFormulario}>
       <h2 className={styles.titulo}>
-        {productoAEditar ? 'Editar Producto' : 'Nuevo Producto'}
+        {esEdicion ? 'Editar Producto' : 'Alta de Producto'}
       </h2>
 
       <div className={styles.fila}>
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.Producto]}
           required
-          value={producto}
-          disabled={bloqueado}
-          onChange={(_, v) => !bloqueado && setProducto(v || '')}
+          value={productoPendiente.producto}
+          disabled={confirmado}
+          onChange={(_, v) =>
+            setProductoPendiente((p) => ({ ...p, producto: v || '' }))
+          }
         />
       </div>
 
@@ -167,13 +162,15 @@ const FormularioDeProducto: React.FC<Props> = ({
             label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.LineaDeNegocio]}
             required
             options={opcionesDropdown(lineasDeNegocio)}
-            selectedKey={linea}
-            disabled={bloqueado}
+            selectedKey={productoPendiente.lineaDeNegocio}
+            disabled={confirmado}
             onChange={(_, o) => {
-              if (bloqueado) return;
-              setLinea(o?.key as string);
-              setArea('');
-              setSeccion('');
+              setProductoPendiente((p) => ({
+                ...p,
+                lineaDeNegocio: o?.key as string,
+                area: '',
+                seccion: ''
+              }));
             }}
           />
         </div>
@@ -183,12 +180,14 @@ const FormularioDeProducto: React.FC<Props> = ({
             label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.Area]}
             required
             options={opcionesDropdown(areasDisponibles)}
-            selectedKey={area}
-            disabled={!linea || bloqueado}
+            selectedKey={productoPendiente.area}
+            disabled={!productoPendiente.lineaDeNegocio || confirmado}
             onChange={(_, o) => {
-              if (bloqueado) return;
-              setArea(o?.key as string);
-              setSeccion('');
+              setProductoPendiente((p) => ({
+                ...p,
+                area: o?.key as string,
+                seccion: ''
+              }));
             }}
           />
         </div>
@@ -198,9 +197,11 @@ const FormularioDeProducto: React.FC<Props> = ({
             label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.Seccion]}
             required
             options={opcionesDropdown(seccionesDisponibles)}
-            selectedKey={seccion}
-            disabled={!area || bloqueado}
-            onChange={(_, o) => !bloqueado && setSeccion(o?.key as string)}
+            selectedKey={productoPendiente.seccion}
+            disabled={!productoPendiente.area || confirmado}
+            onChange={(_, o) =>
+              setProductoPendiente((p) => ({ ...p, seccion: o?.key as string }))
+            }
           />
         </div>
       </fieldset>
@@ -212,9 +213,14 @@ const FormularioDeProducto: React.FC<Props> = ({
             { key: 'Sí', text: 'Sí' },
             { key: 'No', text: 'No' }
           ]}
-          selectedKey={enCatalogo}
-          disabled={bloqueado}
-          onChange={(_, o) => !bloqueado && setEnCatalogo(o?.key as 'Sí' | 'No')}
+          selectedKey={productoPendiente.enCatalogo}
+          disabled={confirmado}
+          onChange={(_, o) =>
+            setProductoPendiente((p) => ({
+              ...p,
+              enCatalogo: o?.key as 'Sí' | 'No'
+            }))
+          }
         />
       </div>
 
@@ -222,9 +228,14 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.CantidadFDS]}
           type="number"
-          value={cantidadFDS}
-          disabled={bloqueado}
-          onChange={(_, v) => !bloqueado && setCantidadFDS(v ?? '')}
+          value={productoPendiente.cantidadFDS?.toString() ?? ''}
+          disabled={confirmado}
+          onChange={(_, v) =>
+            setProductoPendiente((p) => ({
+              ...p,
+              cantidadFDS: v ? Number(v) : null
+            }))
+          }
         />
       </div>
 
@@ -232,9 +243,14 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.CantidadFIE]}
           type="number"
-          value={cantidadFIE}
-          disabled={bloqueado}
-          onChange={(_, v) => !bloqueado && setCantidadFIE(v ?? '')}
+          value={productoPendiente.cantidadFIE?.toString() ?? ''}
+          disabled={confirmado}
+          onChange={(_, v) =>
+            setProductoPendiente((p) => ({
+              ...p,
+              cantidadFIE: v ? Number(v) : null
+            }))
+          }
         />
       </div>
 
@@ -242,9 +258,14 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.IdViejoFDS]}
           type="number"
-          value={idViejoFDS}
-          disabled={bloqueado}
-          onChange={(_, v) => !bloqueado && setIdViejoFDS(v ?? '')}
+          value={productoPendiente.idViejoFDS?.toString() ?? ''}
+          disabled={confirmado}
+          onChange={(_, v) =>
+            setProductoPendiente((p) => ({
+              ...p,
+              idViejoFDS: v ? Number(v) : null
+            }))
+          }
         />
       </div>
 
@@ -252,9 +273,14 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.IdViejoFIE]}
           type="number"
-          value={idViejoFIE}
-          disabled={bloqueado}
-          onChange={(_, v) => !bloqueado && setIdViejoFIE(v ?? '')}
+          value={productoPendiente.idViejoFIE?.toString() ?? ''}
+          disabled={confirmado}
+          onChange={(_, v) =>
+            setProductoPendiente((p) => ({
+              ...p,
+              idViejoFIE: v ? Number(v) : null
+            }))
+          }
         />
       </div>
 
@@ -266,15 +292,15 @@ const FormularioDeProducto: React.FC<Props> = ({
 
       {exito && (
         <div className={styles.exito}>
-          Producto {productoAEditar ? 'editado' : 'agregado'} exitosamente.
+          Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente.
         </div>
       )}
 
       <div className={styles.botones}>
-        <PrimaryButton onClick={handleSubmit} disabled={bloqueado}>
-          {productoAEditar ? 'Guardar cambios' : 'Agregar producto'}
+        <PrimaryButton onClick={handleSubmit} disabled={confirmado}>
+          {esEdicion ? 'Guardar cambios' : 'Dar de alta'}
         </PrimaryButton>
-        <DefaultButton onClick={handleCancelar} disabled={bloqueado}>
+        <DefaultButton onClick={handleCancelar} disabled={confirmado}>
           Cancelar
         </DefaultButton>
       </div>
@@ -284,7 +310,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         onDismiss={cancelarGuardar}
         dialogContentProps={{
           type: DialogType.normal,
-          title: `¿Está seguro que desea ${productoAEditar ? 'guardar los cambios' : 'agregar este nuevo producto'}?`,
+          title: `¿Está seguro que desea ${textoAccion} el producto?`,
           subText: 'Revise la información antes de confirmar:'
         }}
       >

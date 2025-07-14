@@ -28,6 +28,7 @@ import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
 import { IProducto } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
+import { ProductoData } from './components/formularioDeProducto/constantesCampos';
 
 initializeIcons();
 
@@ -46896,6 +46897,33 @@ const App: React.FC = () => {
     // alert('✅ Producto guardado correctamente.');
   };
 
+  const [producto, setProducto] = useState<ProductoData>({
+    producto: '',
+    lineaDeNegocio: '',
+    area: '',
+    seccion: '',
+    enCatalogo: 'No',
+    cantidadFDS: null,
+    cantidadFIE: null,
+    idViejoFDS: null,
+    idViejoFIE: null
+  });
+
+    useEffect(() => {
+    // Simula cargar un producto existente para edición
+      setProducto({
+        producto: 'Agua Mineral',
+        lineaDeNegocio: 'Alimentos',
+        area: 'Bebidas',
+        seccion: 'Agua',
+        enCatalogo: 'Sí',
+        cantidadFDS: 20,
+        cantidadFIE: 15,
+        idViejoFDS: 1234,
+        idViejoFIE: 5678,
+      });
+    }, []);
+
   return (
     // <div style={{ width: "100%" }}>
     //   <ProcesoStepper pasos={pasos} stepActual={PASO_STEPPER.CARGA} colorPrincipal='#0078d4'/>
@@ -46919,19 +46947,9 @@ const App: React.FC = () => {
           lineasDeNegocio={lineas}
           areasPorLinea={areas}
           seccionesPorArea={secciones}
+          producto={producto}
+          setProducto={setProducto}
           onGuardar={guardarProducto}
-
-          productoAEditar={{
-            producto: 'Agua Mineral',
-            lineaDeNegocio: 'Alimentos',
-            area: 'Bebidas',
-            seccion: 'Agua',
-            enCatalogo: 'Sí',
-            cantidadFDS: 20,
-            cantidadFIE: 15,
-            idViejoFDS: 1234,
-            idViejoFIE: 5678
-          }}
         />
       </div>
     </>

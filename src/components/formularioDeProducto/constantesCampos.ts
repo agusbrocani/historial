@@ -23,3 +23,15 @@ export const NOMBRE_CAMPO_LEIBLE: Record<ClaveCampo, string> = {
   [ClaveCampo.IdViejoFDS]: 'Id Viejo FDS',
   [ClaveCampo.IdViejoFIE]: 'Id Viejo FIE',
 };
+
+export interface ProductoData {
+  [ClaveCampo.Producto]: string;
+  [ClaveCampo.LineaDeNegocio]: string;
+  [ClaveCampo.Area]: string;
+  [ClaveCampo.Seccion]: string;
+  [ClaveCampo.EnCatalogo]: 'Sí' | 'No';
+  [ClaveCampo.CantidadFDS]: number | null;
+  [ClaveCampo.CantidadFIE]: number | null;
+  [ClaveCampo.IdViejoFDS]: number | null;
+  [ClaveCampo.IdViejoFIE]: number | null;
+}
