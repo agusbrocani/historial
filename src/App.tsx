@@ -27,6 +27,7 @@ import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/h
 import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
 import { IProducto } from './components/gestionDeProductos/tipos';
+import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
 
 initializeIcons();
 
@@ -46878,7 +46879,22 @@ const App: React.FC = () => {
   }, []);
 
 
+  const lineas = ['Tecnología', 'Alimentos'];
+  const areas = {
+    Tecnología: ['Hardware', 'Software'],
+    Alimentos: ['Bebidas', 'Snacks'],
+  };
+  const secciones = {
+    Hardware: ['Placas', 'Memorias'],
+    Software: ['Sistemas', 'Apps'],
+    Bebidas: ['Agua', 'Jugos'],
+    Snacks: ['Galletitas', 'Chocolates'],
+  };
 
+  const guardarProducto = (data: any) => {
+    console.log('📝 Producto guardado:', data);
+    alert('✅ Producto guardado correctamente.');
+  };
 
   return (
     // <div style={{ width: "100%" }}>
@@ -46898,7 +46914,16 @@ const App: React.FC = () => {
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />
       <BandejaDeGestionDeProductos productos={productos} cargando={cargando} />
+      <div style={{ padding: 40 }}>
+        <FormularioDeProducto
+          lineasDeNegocio={lineas}
+          areasPorLinea={areas}
+          seccionesPorArea={secciones}
+          onGuardar={guardarProducto}
+        />
+      </div>
     </>
+
 
     // <div style={{ padding: 20 }}>
     //   <Historial
