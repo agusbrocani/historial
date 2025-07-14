@@ -29,6 +29,7 @@ import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/Ban
 import { IProducto } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
 import { ProductoData } from './components/formularioDeProducto/constantesCampos';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 initializeIcons();
 
@@ -46909,20 +46910,20 @@ const App: React.FC = () => {
     idViejoFIE: null
   });
 
-    useEffect(() => {
-    // Simula cargar un producto existente para edición
-      setProducto({
-        producto: 'Agua Mineral',
-        lineaDeNegocio: 'Alimentos',
-        area: 'Bebidas',
-        seccion: 'Agua',
-        enCatalogo: 'Sí',
-        cantidadFDS: 20,
-        cantidadFIE: 15,
-        idViejoFDS: 1234,
-        idViejoFIE: 5678,
-      });
-    }, []);
+    // useEffect(() => {
+    // // Simula cargar un producto existente para edición
+    //   setProducto({
+    //     producto: 'Agua Mineral',
+    //     lineaDeNegocio: 'Alimentos',
+    //     area: 'Bebidas',
+    //     seccion: 'Agua',
+    //     enCatalogo: 'Sí',
+    //     cantidadFDS: 20,
+    //     cantidadFIE: 15,
+    //     idViejoFDS: 1234,
+    //     idViejoFIE: 5678,
+    //   });
+    // }, []);
 
   return (
     // <div style={{ width: "100%" }}>
@@ -46942,16 +46943,24 @@ const App: React.FC = () => {
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />
       <BandejaDeGestionDeProductos productos={productos} cargando={cargando} /> */}
-      <div style={{ padding: 40 }}>
-        <FormularioDeProducto
-          lineasDeNegocio={lineas}
-          areasPorLinea={areas}
-          seccionesPorArea={secciones}
-          producto={producto}
-          setProducto={setProducto}
-          onGuardar={guardarProducto}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/formulario"
+          element={
+            <div style={{ padding: 40 }}>
+              <FormularioDeProducto
+                lineasDeNegocio={lineas}
+                areasPorLinea={areas}
+                seccionesPorArea={secciones}
+                producto={producto}
+                setProducto={() => {}}
+                onGuardar={(p) => console.log('Producto guardado', p)}
+              />
+            </div>
+          }
         />
-      </div>
+      </Routes>
     </>
 
 
@@ -47028,3 +47037,13 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div style={{ padding: 40 }}>
+      <button onClick={() => navigate('/formulario')}>Ir al formulario</button>
+    </div>
+  );
+};

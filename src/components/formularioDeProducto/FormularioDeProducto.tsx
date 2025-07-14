@@ -11,6 +11,7 @@ import {
 } from '@fluentui/react';
 import styles from './FormularioDeProducto.module.scss';
 import { ClaveCampo, NOMBRE_CAMPO_LEIBLE, ProductoData } from './constantesCampos';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   lineasDeNegocio: string[];
@@ -34,6 +35,7 @@ const FormularioDeProducto: React.FC<Props> = ({
   const [mostrarDialogo, setMostrarDialogo] = useState(false);
   const [productoPendiente, setProductoPendiente] = useState<ProductoData>(producto);
   const [confirmado, setConfirmado] = useState(false);
+  const navigate = useNavigate();
 
   const esProductoValido = (p: ProductoData) =>
     p.producto && p.lineaDeNegocio && p.area && p.seccion;
@@ -74,6 +76,7 @@ const FormularioDeProducto: React.FC<Props> = ({
     setConfirmado(true);
     setMostrarDialogo(false);
     onGuardar(productoPendiente);
+    navigate(-1);
   };
 
   const cancelarGuardar = () => {
@@ -83,10 +86,10 @@ const FormularioDeProducto: React.FC<Props> = ({
   const handleCancelar = () => {
     setError(false);
     setExito(false);
-    setConfirmado(true); // Bloquea la edición después de cancelar
+    setConfirmado(true);
 
     if (esEdicion) {
-      setProductoPendiente(producto); // Vuelve al estado original en edición
+      setProductoPendiente(producto); // Restaurar en edición
     } else {
       const productoVacio: ProductoData = {
         producto: '',
@@ -100,10 +103,11 @@ const FormularioDeProducto: React.FC<Props> = ({
         idViejoFIE: null
       };
       setProducto(productoVacio);
-      setProductoPendiente(productoVacio); // Limpia el formulario en alta
+      setProductoPendiente(productoVacio);
     }
-  };
 
+    navigate(-1);
+  };
 
   const areasDisponibles = productoPendiente.lineaDeNegocio
     ? areasPorLinea[productoPendiente.lineaDeNegocio] || []
