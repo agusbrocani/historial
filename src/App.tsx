@@ -46903,7 +46903,7 @@ const App: React.FC = () => {
     lineaDeNegocio: '',
     area: '',
     seccion: '',
-    enCatalogo: 'No',
+    enCatalogo: null,
     cantidadFDS: null,
     cantidadFIE: null,
     idViejoFDS: null,

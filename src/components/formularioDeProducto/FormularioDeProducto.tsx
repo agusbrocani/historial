@@ -96,7 +96,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         lineaDeNegocio: '',
         area: '',
         seccion: '',
-        enCatalogo: 'No',
+        enCatalogo: null,
         cantidadFDS: null,
         cantidadFIE: null,
         idViejoFDS: null,
@@ -105,7 +105,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       setProducto(productoVacio);
       setProductoPendiente(productoVacio);
     }
-
+    for (let t = Date.now(); Date.now() - t < 1000; );
     navigate(-1);
   };
 
@@ -288,18 +288,6 @@ const FormularioDeProducto: React.FC<Props> = ({
         />
       </div>
 
-      {error && (
-        <div className={styles.error}>
-          Por favor complete todos los campos obligatorios y verifique los valores ingresados.
-        </div>
-      )}
-
-      {exito && (
-        <div className={styles.exito}>
-          Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente.
-        </div>
-      )}
-
       <div className={styles.botones}>
         <PrimaryButton onClick={handleSubmit} disabled={confirmado}>
           {esEdicion ? 'Guardar cambios' : 'Dar de alta'}
@@ -324,6 +312,18 @@ const FormularioDeProducto: React.FC<Props> = ({
           <DefaultButton onClick={cancelarGuardar} text="No" />
         </DialogFooter>
       </Dialog>
+      
+      {error && (
+        <div className={styles.error}>
+          Por favor complete todos los campos obligatorios y verifique los valores ingresados.
+        </div>
+      )}
+
+      {exito && (
+        <div className={styles.exito}>
+          Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente.
+        </div>
+      )}
     </div>
   );
 };
