@@ -76,7 +76,7 @@ const FormularioDeProducto: React.FC<Props> = ({
     setConfirmado(true);
     setMostrarDialogo(false);
     onGuardar(productoPendiente);
-    navigate(-1);
+    // navigate(-1);
   };
 
   const cancelarGuardar = () => {
@@ -105,7 +105,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       setProducto(productoVacio);
       setProductoPendiente(productoVacio);
     }
-    for (let t = Date.now(); Date.now() - t < 1000; );
+
     navigate(-1);
   };
 
@@ -148,7 +148,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         {esEdicion ? 'Editar Producto' : 'Alta de Producto'}
       </h2>
 
-      <div className={styles.fila}>
+      {/* <div className={styles.fila}>
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.Producto]}
           required
@@ -157,6 +157,46 @@ const FormularioDeProducto: React.FC<Props> = ({
           onChange={(_, v) =>
             setProductoPendiente((p) => ({ ...p, producto: v || '' }))
           }
+        />
+      </div> */}
+
+      <div className={styles.fila}>
+        <TextField
+          label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.Producto]}
+          required
+          value={productoPendiente.producto}
+          disabled={confirmado}
+          errorMessage={
+            error && (!productoPendiente.producto || productoPendiente.producto.trim() === '')
+              ? 'El nombre del producto no puede estar vacío.'
+              : undefined
+          }
+          onChange={(_, v) => {
+            const texto = v ?? '';
+
+            // No normalizamos mientras el usuario escribe para que pueda tipear un espacio
+            // Solo se bloquean caracteres inválidos
+            const soloPermitido = texto.replace(/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]/g, '');
+
+            // El valor completo se limpia al confirmar con handleSubmit
+            setProductoPendiente((p) => ({
+              ...p,
+              producto: soloPermitido
+            }));
+          }}
+          onBlur={() => {
+            const texto = productoPendiente.producto ?? '';
+
+            const normalizado = texto
+              .replace(/\s+/g, ' ')         // un solo espacio entre palabras
+              .trim()                       // sin espacios al inicio/final
+              .slice(0, 255);               // máximo 255 caracteres
+
+            setProductoPendiente((p) => ({
+              ...p,
+              producto: normalizado
+            }));
+          }}
         />
       </div>
 
@@ -231,13 +271,25 @@ const FormularioDeProducto: React.FC<Props> = ({
       <div className={styles.fila}>
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.CantidadFDS]}
-          type="number"
+          type="text"
+          inputMode="numeric"
           value={productoPendiente.cantidadFDS?.toString() ?? ''}
           disabled={confirmado}
+          onKeyDown={(e) => {
+            if (!/^\d$/.test(e.key) && !['Backspace', 'Tab', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+              e.preventDefault();
+            }
+          }}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData('Text');
+            if (!/^\d+$/.test(pasted)) {
+              e.preventDefault();
+            }
+          }}
           onChange={(_, v) =>
             setProductoPendiente((p) => ({
               ...p,
-              cantidadFDS: v ? Number(v) : null
+              cantidadFDS: v && /^\d+$/.test(v) ? Number(v) : null
             }))
           }
         />
@@ -246,13 +298,25 @@ const FormularioDeProducto: React.FC<Props> = ({
       <div className={styles.fila}>
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.CantidadFIE]}
-          type="number"
+          type="text"
+          inputMode="numeric"
           value={productoPendiente.cantidadFIE?.toString() ?? ''}
           disabled={confirmado}
+          onKeyDown={(e) => {
+            if (!/^\d$/.test(e.key) && !['Backspace', 'Tab', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+              e.preventDefault();
+            }
+          }}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData('Text');
+            if (!/^\d+$/.test(pasted)) {
+              e.preventDefault();
+            }
+          }}
           onChange={(_, v) =>
             setProductoPendiente((p) => ({
               ...p,
-              cantidadFIE: v ? Number(v) : null
+              cantidadFIE: v && /^\d+$/.test(v) ? Number(v) : null
             }))
           }
         />
@@ -261,13 +325,25 @@ const FormularioDeProducto: React.FC<Props> = ({
       <div className={styles.fila}>
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.IdViejoFDS]}
-          type="number"
+          type="text"
+          inputMode="numeric"
           value={productoPendiente.idViejoFDS?.toString() ?? ''}
           disabled={confirmado}
+          onKeyDown={(e) => {
+            if (!/^\d$/.test(e.key) && !['Backspace', 'Tab', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+              e.preventDefault();
+            }
+          }}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData('Text');
+            if (!/^\d+$/.test(pasted)) {
+              e.preventDefault();
+            }
+          }}
           onChange={(_, v) =>
             setProductoPendiente((p) => ({
               ...p,
-              idViejoFDS: v ? Number(v) : null
+              idViejoFDS: v && /^\d+$/.test(v) ? Number(v) : null
             }))
           }
         />
@@ -276,13 +352,25 @@ const FormularioDeProducto: React.FC<Props> = ({
       <div className={styles.fila}>
         <TextField
           label={NOMBRE_CAMPO_LEIBLE[ClaveCampo.IdViejoFIE]}
-          type="number"
+          type="text"
+          inputMode="numeric"
           value={productoPendiente.idViejoFIE?.toString() ?? ''}
           disabled={confirmado}
+          onKeyDown={(e) => {
+            if (!/^\d$/.test(e.key) && !['Backspace', 'Tab', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+              e.preventDefault();
+            }
+          }}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData('Text');
+            if (!/^\d+$/.test(pasted)) {
+              e.preventDefault();
+            }
+          }}
           onChange={(_, v) =>
             setProductoPendiente((p) => ({
               ...p,
-              idViejoFIE: v ? Number(v) : null
+              idViejoFIE: v && /^\d+$/.test(v) ? Number(v) : null
             }))
           }
         />
@@ -312,7 +400,7 @@ const FormularioDeProducto: React.FC<Props> = ({
           <DefaultButton onClick={cancelarGuardar} text="No" />
         </DialogFooter>
       </Dialog>
-      
+
       {error && (
         <div className={styles.error}>
           Por favor complete todos los campos obligatorios y verifique los valores ingresados.
