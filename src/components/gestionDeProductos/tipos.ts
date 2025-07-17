@@ -13,19 +13,6 @@ export interface ISeccion {
   Titulo: string;
   AreaId: number;
 }
-
-export interface IProductoFormulario {
-  producto: string;
-  lineaDeNegocio: ILineaDeNegocio;
-  area: IArea;
-  seccion: ISeccion;
-  enCatalogo: boolean | null;
-  cantidadDeFds: number | null;
-  cantidadDeFie: number | null;
-  idViejoFds: number | null;
-  idViejoFie: number | null;
-}
-
 export interface IProducto {
   Id: number | null;
   Titulo: string;

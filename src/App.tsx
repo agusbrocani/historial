@@ -26,11 +26,11 @@ import BarraProceso from './components/barraDeProcesos/BarraDeProcesos';
 import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/helpers/parsearItemsAFormatoHistorial';
 import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
-import { IArea, IProducto, ILineaDeNegocio, ISeccion, IProductoFormulario } from './components/gestionDeProductos/tipos';
+import { IArea, IProducto, ILineaDeNegocio, ISeccion } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
 import { ProductoData } from './components/formularioDeProducto/constantesCampos';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { obtenerAreasPorLinea, obtenerSeccionesPorArea, transformarProducto } from './components/formularioDeProducto/utils';
+import { obtenerAreasPorLinea, obtenerSeccionesPorArea } from './components/formularioDeProducto/utils';
 
 initializeIcons();
 
@@ -46672,21 +46672,22 @@ const App: React.FC = () => {
   // }
 
 
-  const guardarProducto = (data: any) => {
-    console.log('📝 Producto guardado:', transformarProducto(data));
+  const guardarProducto = (data: IProducto) => {
+    console.log('📝 Producto guardado:', data);
     // alert('✅ Producto guardado correctamente.');
   };
 
-  const [producto, setProducto] = useState<IProductoFormulario>({
-    producto: '',
-    lineaDeNegocio: { key: '', text: '' },
-    area: { Id: 0, Titulo: '', LineaNegocioId: 0, ResponsableId: null },
-    seccion: { Id: 0, Titulo: '', AreaId: 0 },
-    enCatalogo: null,
-    cantidadDeFds: null,
-    cantidadDeFie: null,
-    idViejoFds: null,
-    idViejoFie: null
+  const [producto, setProducto] = useState<IProducto>({
+    Id: null,
+    Titulo: '',
+    LineaNegocioId: null,
+    AreaId: null,
+    SeccionId: null,
+    EnCatalogo: null,
+    CantidadFDS: null,
+    CantidadFIE: null,
+    IdViejoFDS: null,
+    IdViejoFIE: null
   });
 
     // useEffect(() => {
