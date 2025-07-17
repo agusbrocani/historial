@@ -28,7 +28,6 @@ import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
 import { IArea, IProducto, ILineaDeNegocio, ISeccion } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
-import { ProductoData } from './components/formularioDeProducto/constantesCampos';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { obtenerAreasPorLinea, obtenerSeccionesPorArea } from './components/formularioDeProducto/utils';
 
@@ -46783,7 +46782,7 @@ const App: React.FC = () => {
                 areas={areas}
                 secciones={secciones}
                 producto={producto}
-                setProducto={() => {}}
+                setProducto={setProducto}
                 onGuardar={guardarProducto}
               />
             </div>
