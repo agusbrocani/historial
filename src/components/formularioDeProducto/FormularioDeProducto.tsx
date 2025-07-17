@@ -20,7 +20,6 @@ interface Props {
   producto: IProducto;
   setProducto: React.Dispatch<React.SetStateAction<IProducto>>;
 }
-
 const FormularioDeProducto: React.FC<Props> = ({
   lineasDeNegocio,
   areas,
@@ -42,7 +41,7 @@ const FormularioDeProducto: React.FC<Props> = ({
     p.AreaId !== null &&
     p.SeccionId !== null;
 
-  const esEdicion = producto.Id !== null && !confirmado;
+  const esEdicion = producto.Id !== null;
 
   const validarCampos = (): boolean => {
     if (!esProductoValido(productoPendiente)) return false;
@@ -70,6 +69,9 @@ const FormularioDeProducto: React.FC<Props> = ({
     setMostrarDialogo(false);
     setProducto(productoPendiente);
     onGuardar(productoPendiente);
+    setTimeout(() => {
+      navigate(-1);
+    }, 1500);
   };
 
   const cancelarGuardar = () => {
@@ -219,12 +221,12 @@ const FormularioDeProducto: React.FC<Props> = ({
           value={productoPendiente[key as keyof IProducto]?.toString() ?? ''}
           disabled={confirmado}
           onChange={(_, v) => {
-            // Permitimos vacío (borra el campo) o número válido dentro del rango seguro
+            // Permito vacío (borra el campo) o número válido dentro del rango seguro
             if (/^\d*$/.test(v ?? '') && (v === '' || Number(v) <= Number.MAX_SAFE_INTEGER)) {
               const numero = v === '' ? null : Number(v);
               setProductoPendiente(p => ({ ...p, [key]: numero }));
             }
-            // Si no es válido, ignoramos el cambio (no seteamos el estado)
+            // Si no es válido, ignoro el cambio (no seteo el estado)
           }}
           onKeyDown={(e) => {
             const tecla = e.key;
@@ -269,7 +271,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       </Dialog>
 
       {error && <div className={styles.error}>Por favor complete todos los campos obligatorios y verifique los valores ingresados.</div>}
-      {exito && <div className={styles.exito}>Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente.</div>}
+      {exito && <div className={styles.exito}>Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente. Redirigiendo...</div>}
     </div>
   );
 };
