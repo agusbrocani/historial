@@ -20,6 +20,7 @@ interface Props {
   producto: IProducto;
   setProducto: React.Dispatch<React.SetStateAction<IProducto>>;
 }
+
 const FormularioDeProducto: React.FC<Props> = ({
   lineasDeNegocio,
   areas,
@@ -43,6 +44,18 @@ const FormularioDeProducto: React.FC<Props> = ({
 
   const esEdicion = producto.Id !== null;
 
+  const sonIguales = (a: IProducto, b: IProducto): boolean => {
+    const claves: (keyof IProducto)[] = [
+      'Titulo', 'LineaNegocioId', 'AreaId', 'SeccionId',
+      'EnCatalogo', 'CantidadFDS', 'CantidadFIE', 'IdViejoFDS', 'IdViejoFIE'
+    ];
+    return claves.every(k => {
+      const valorA = typeof a[k] === 'string' ? (a[k] as string).trim() : a[k];
+      const valorB = typeof b[k] === 'string' ? (b[k] as string).trim() : b[k];
+      return valorA === valorB;
+    });
+  };
+
   const validarCampos = (): boolean => {
     if (!esProductoValido(productoPendiente)) return false;
     const numerosValidos = ['CantidadFDS', 'CantidadFIE', 'IdViejoFDS', 'IdViejoFIE'] as const;
@@ -59,6 +72,18 @@ const FormularioDeProducto: React.FC<Props> = ({
       setExito(false);
       return;
     }
+
+    if (esEdicion && sonIguales(producto, productoPendiente)) {
+      setError(false);
+      setExito(true);
+      setConfirmado(true);
+      setMostrarDialogo(false);
+      setTimeout(() => {
+        navigate(-1);
+      }, 1500);
+      return;
+    }
+
     setMostrarDialogo(true);
   };
 
@@ -118,7 +143,7 @@ const FormularioDeProducto: React.FC<Props> = ({
   return (
     <div className={styles.contenedorFormulario}>
       <h2 className={styles.titulo}>{esEdicion ? 'Editar Producto' : 'Alta de Producto'}</h2>
-      
+
       <TextField
         label="Nombre del producto"
         required
@@ -127,11 +152,10 @@ const FormularioDeProducto: React.FC<Props> = ({
         onChange={(_, v) => {
           if (v === undefined) return;
           const limpio = v
-            .replace(/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ ]+/g, '') // solo caracteres válidos
-            .replace(/\s+/g, ' ')                      // solo un espacio
-            .replace(/^\s+/, '')                       // remueve espacios al inicio
+            .replace(/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ ]+/g, '')
+            .replace(/\s+/g, ' ')
+            .replace(/^\s+/, '')
             .slice(0, 255);
-
           setProductoPendiente(p => ({ ...p, Titulo: limpio }));
         }}
       />
@@ -219,12 +243,10 @@ const FormularioDeProducto: React.FC<Props> = ({
           value={productoPendiente[key as keyof IProducto]?.toString() ?? ''}
           disabled={confirmado}
           onChange={(_, v) => {
-            // Permito vacío (borra el campo) o número válido dentro del rango seguro
             if (/^\d*$/.test(v ?? '') && (v === '' || Number(v) <= Number.MAX_SAFE_INTEGER)) {
               const numero = v === '' ? null : Number(v);
               setProductoPendiente(p => ({ ...p, [key]: numero }));
             }
-            // Si no es válido, ignoro el cambio (no seteo el estado)
           }}
           onKeyDown={(e) => {
             const tecla = e.key;
@@ -257,7 +279,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         onDismiss={cancelarGuardar}
         dialogContentProps={{
           type: DialogType.normal,
-          title: `¿Está seguro que desea ${esEdicion ? 'guardar' : 'dar de alta'} el producto?`,
+          title: `¿Está seguro que desea ${esEdicion ? 'editar' : 'dar de alta'} el producto?`,
           subText: 'Revise la información antes de confirmar:'
         }}
       >
@@ -268,8 +290,18 @@ const FormularioDeProducto: React.FC<Props> = ({
         </DialogFooter>
       </Dialog>
 
+      {exito && (
+        esEdicion && sonIguales(producto, productoPendiente) ? (
+          <div className={styles.redireccion}>
+            No hubo cambios. Redirigiendo...
+          </div>
+        ) : (
+          <div className={styles.exito}>
+            Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente. Redirigiendo...
+          </div>
+        )
+      )}
       {error && <div className={styles.error}>Por favor complete todos los campos obligatorios y verifique los valores ingresados.</div>}
-      {exito && <div className={styles.exito}>Producto {esEdicion ? 'editado' : 'dado de alta'} exitosamente. Redirigiendo...</div>}
     </div>
   );
 };

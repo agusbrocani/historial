@@ -46690,21 +46690,21 @@ const App: React.FC = () => {
     IdViejoFIE: null
   });
 
-  useEffect(() => {
-    // Producto simulado para edición, consistente con los datos cargados
-    setProducto({
-      Id: 101, // ID ficticio del producto existente
-      Titulo: 'Agua Mineral',
-      LineaNegocioId: 2, // Beta Solutions
-      AreaId: 4,          // Ventas
-      SeccionId: 7,       // Retail
-      EnCatalogo: true,
-      CantidadFDS: 20,
-      CantidadFIE: 15,
-      IdViejoFDS: 1234,
-      IdViejoFIE: 5678,
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Producto simulado para edición, consistente con los datos cargados
+  //   setProducto({
+  //     Id: 101, // ID ficticio del producto existente
+  //     Titulo: 'Agua Mineral',
+  //     LineaNegocioId: 2, // Beta Solutions
+  //     AreaId: 4,          // Ventas
+  //     SeccionId: 7,       // Retail
+  //     EnCatalogo: true,
+  //     CantidadFDS: 20,
+  //     CantidadFIE: 15,
+  //     IdViejoFDS: 1234,
+  //     IdViejoFIE: 5678,
+  //   });
+  // }, []);
 
   const lineasDeNegocio: ILineaDeNegocio[] = [
     { key: '1', text: 'Alpha Corp' },
