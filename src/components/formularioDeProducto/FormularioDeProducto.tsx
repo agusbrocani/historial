@@ -134,12 +134,6 @@ const FormularioDeProducto: React.FC<Props> = ({
 
           setProductoPendiente(p => ({ ...p, Titulo: limpio }));
         }}
-        onBlur={() => {
-          setProductoPendiente(p => ({
-            ...p,
-            Titulo: p.Titulo.trim() // remueve espacios iniciales/finales
-          }));
-        }}
       />
 
       <Dropdown
