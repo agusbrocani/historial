@@ -97,13 +97,27 @@ const FormularioDeProducto: React.FC<Props> = ({
     setExito(true);
     setConfirmado(true);
     setMostrarDialogo(false);
-    setProducto(productoFinal);
     onGuardar(productoFinal);
+    if (producto.Id) {
+      setProducto(productoFinal);
+    } else {
+      setProducto({
+        Id: null,
+        Titulo: '',
+        LineaNegocioId: null,
+        AreaId: null,
+        SeccionId: null,
+        EnCatalogo: null,
+        CantidadFDS: null,
+        CantidadFIE: null,
+        IdViejoFDS: null,
+        IdViejoFIE: null
+      });
+    }
     setTimeout(() => {
       navigate(-1);
     }, 1500);
   };
-
 
   const cancelarGuardar = () => {
     setMostrarDialogo(false);
@@ -113,6 +127,9 @@ const FormularioDeProducto: React.FC<Props> = ({
     setError(false);
     setExito(false);
     setConfirmado(true);
+    if (!esEdicion) {
+      setProductoPendiente(producto);
+    }
     navigate(-1);
   };
 
