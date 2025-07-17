@@ -26,10 +26,11 @@ import BarraProceso from './components/barraDeProcesos/BarraDeProcesos';
 import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/helpers/parsearItemsAFormatoHistorial';
 import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
-import { IProducto } from './components/gestionDeProductos/tipos';
+import { IArea, IProducto, ILineaDeNegocio, ISeccion, IProductoFormulario } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
 import { ProductoData } from './components/formularioDeProducto/constantesCampos';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { obtenerAreasPorLinea, obtenerSeccionesPorArea, transformarProducto } from './components/formularioDeProducto/utils';
 
 initializeIcons();
 
@@ -46670,244 +46671,22 @@ const App: React.FC = () => {
   //   setCompletado(true);
   // }
 
-  const [productos, setProductos] = useState<IProducto[] | null>(null);
-  const [cargando, setCargando] = useState(true);  
-
-  useEffect(() => {
-    setTimeout(() => {
-      const datos: IProducto[] = [
-        {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        }
-        ,        {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        },
-                {
-          producto: "Producto A",
-          lineaDeNegocio: "Negocio 1",
-          area: "Área 1",
-          seccion: "Sección A",
-          enCatalogo: "Sí",
-          cantidadDeFds: 10,
-          cantidadDeFie: 5,
-          idViejoFds: 1001,
-          idViejoFie: 2001,
-        },
-        {
-          producto: "Otro producto largo para truncar",
-          lineaDeNegocio: "Negocio largo",
-          area: "Área muy extensa",
-          seccion: "Sección B",
-          enCatalogo: "No",
-          cantidadDeFds: 8,
-          cantidadDeFie: 3,
-          idViejoFds: 1002,
-          idViejoFie: 2002,
-        }
-      ];
-      setProductos(datos);
-      setCargando(false);
-    }, 2000);
-  }, []);
-
-
-  const lineas = ['Tecnología', 'Alimentos'];
-  const areas = {
-    Tecnología: ['Hardware', 'Software'],
-    Alimentos: ['Bebidas', 'Snacks'],
-  };
-  const secciones = {
-    Hardware: ['Placas', 'Memorias'],
-    Software: ['Sistemas', 'Apps'],
-    Bebidas: ['Agua', 'Jugos'],
-    Snacks: ['Galletitas', 'Chocolates'],
-  };
 
   const guardarProducto = (data: any) => {
-    console.log('📝 Producto guardado:', data);
+    console.log('📝 Producto guardado:', transformarProducto(data));
     // alert('✅ Producto guardado correctamente.');
   };
 
-  const [producto, setProducto] = useState<ProductoData>({
+  const [producto, setProducto] = useState<IProductoFormulario>({
     producto: '',
-    lineaDeNegocio: '',
-    area: '',
-    seccion: '',
+    lineaDeNegocio: { key: '', text: '' },
+    area: { Id: 0, Titulo: '', LineaNegocioId: 0, ResponsableId: null },
+    seccion: { Id: 0, Titulo: '', AreaId: 0 },
     enCatalogo: null,
-    cantidadFDS: null,
-    cantidadFIE: null,
-    idViejoFDS: null,
-    idViejoFIE: null
+    cantidadDeFds: null,
+    cantidadDeFie: null,
+    idViejoFds: null,
+    idViejoFie: null
   });
 
     // useEffect(() => {
@@ -46924,6 +46703,54 @@ const App: React.FC = () => {
     //     idViejoFIE: 5678,
     //   });
     // }, []);
+
+  const lineasDeNegocio: ILineaDeNegocio[] = [
+    { key: '1', text: 'Alpha Corp' },
+    { key: '2', text: 'Beta Solutions' },
+    { key: '3', text: 'Gamma Ventures' },
+    { key: '4', text: 'Delta Global' },
+    { key: '5', text: 'Epsilon Ltd' },
+  ];
+
+ const areas: IArea[] = [
+    { Id: 1, Titulo: 'Investigacion y Desarrollo', LineaNegocioId: 1, ResponsableId: null },
+    { Id: 2, Titulo: 'Produccion', LineaNegocioId: 1, ResponsableId: null },
+    { Id: 3, Titulo: 'Marketing', LineaNegocioId: 2, ResponsableId: null },
+    { Id: 4, Titulo: 'Ventas', LineaNegocioId: 2, ResponsableId: null },
+    { Id: 5, Titulo: 'Logistica', LineaNegocioId: 3, ResponsableId: null },
+    { Id: 6, Titulo: 'Finanzas', LineaNegocioId: 3, ResponsableId: null },
+    { Id: 7, Titulo: 'Legal', LineaNegocioId: 4, ResponsableId: null },
+    { Id: 8, Titulo: 'RRHH', LineaNegocioId: 4, ResponsableId: null },
+    { Id: 9, Titulo: 'Atencion al Cliente', LineaNegocioId: 5, ResponsableId: null },
+  ]; 
+
+  const secciones: ISeccion[] = [
+    { Id: 1, Titulo: 'Laboratorio A', AreaId: 1 },
+    { Id: 2, Titulo: 'Laboratorio B', AreaId: 1 },
+    { Id: 3, Titulo: 'Linea 1', AreaId: 2 },
+    { Id: 4, Titulo: 'Linea 2', AreaId: 2 },
+    { Id: 5, Titulo: 'Digital', AreaId: 3 },
+    { Id: 6, Titulo: 'Eventos', AreaId: 3 },
+    { Id: 7, Titulo: 'Retail', AreaId: 4 },
+    { Id: 8, Titulo: 'Mayoristas', AreaId: 4 },
+    { Id: 9, Titulo: 'Almacen Central', AreaId: 5 },
+    { Id: 10, Titulo: 'Distribucion Sur', AreaId: 5 },
+    { Id: 11, Titulo: 'Presupuesto', AreaId: 6 },
+    { Id: 12, Titulo: 'Tesoreria', AreaId: 6 },
+    { Id: 13, Titulo: 'Contratos', AreaId: 7 },
+    { Id: 14, Titulo: 'Normativas', AreaId: 7 },
+    { Id: 15, Titulo: 'Capacitacion', AreaId: 8 },
+    { Id: 16, Titulo: 'Reclutamiento', AreaId: 8 },
+    { Id: 17, Titulo: 'Soporte Nivel 1', AreaId: 9 },
+    { Id: 18, Titulo: 'Soporte Nivel 2', AreaId: 9 },
+  ]; 
+
+  const lineaDeNegocioSeleccionada: ILineaDeNegocio = lineasDeNegocio[3];
+  const areaSeleccionada: IArea = obtenerAreasPorLinea(lineaDeNegocioSeleccionada, areas)[1];
+
+  console.log("lineaDeNegocio seleccionada: ", lineaDeNegocioSeleccionada);
+  console.log("area seleccionada: ", areaSeleccionada);
+  console.log("secciones disponibles: ", obtenerSeccionesPorArea(areaSeleccionada, secciones));
 
   return (
     // <div style={{ width: "100%" }}>
@@ -46950,12 +46777,12 @@ const App: React.FC = () => {
           element={
             <div style={{ padding: 40 }}>
               <FormularioDeProducto
-                lineasDeNegocio={lineas}
-                areasPorLinea={areas}
-                seccionesPorArea={secciones}
+                lineasDeNegocio={lineasDeNegocio}
+                areas={areas}
+                secciones={secciones}
                 producto={producto}
                 setProducto={() => {}}
-                onGuardar={(p) => console.log('Producto guardado', p)}
+                onGuardar={guardarProducto}
               />
             </div>
           }
