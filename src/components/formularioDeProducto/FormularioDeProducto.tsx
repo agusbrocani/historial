@@ -63,12 +63,16 @@ const FormularioDeProducto: React.FC<Props> = ({
   };
 
   const confirmarGuardar = () => {
+    const productoFinal = {
+      ...productoPendiente,
+      Titulo: productoPendiente.Titulo.trim()
+    };
     setError(false);
     setExito(true);
     setConfirmado(true);
     setMostrarDialogo(false);
     setProducto(productoPendiente);
-    onGuardar(productoPendiente);
+    onGuardar(productoFinal);
     setTimeout(() => {
       navigate(-1);
     }, 1500);
