@@ -71,7 +71,7 @@ const FormularioDeProducto: React.FC<Props> = ({
     setExito(true);
     setConfirmado(true);
     setMostrarDialogo(false);
-    setProducto(productoPendiente);
+    setProducto(productoFinal);
     onGuardar(productoFinal);
     setTimeout(() => {
       navigate(-1);
