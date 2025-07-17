@@ -98,23 +98,22 @@ const FormularioDeProducto: React.FC<Props> = ({
     setConfirmado(true);
     setMostrarDialogo(false);
     onGuardar(productoFinal);
-    if (producto.Id) {
-      setProducto(productoFinal);
-    } else {
-      setProducto({
-        Id: null,
-        Titulo: '',
-        LineaNegocioId: null,
-        AreaId: null,
-        SeccionId: null,
-        EnCatalogo: null,
-        CantidadFDS: null,
-        CantidadFIE: null,
-        IdViejoFDS: null,
-        IdViejoFIE: null
-      });
-    }
+    setProducto(productoFinal);
     setTimeout(() => {
+      if (!producto.Id) {
+        setProducto({
+          Id: null,
+          Titulo: '',
+          LineaNegocioId: null,
+          AreaId: null,
+          SeccionId: null,
+          EnCatalogo: null,
+          CantidadFDS: null,
+          CantidadFIE: null,
+          IdViejoFDS: null,
+          IdViejoFIE: null
+        });
+      }
       navigate(-1);
     }, 1500);
   };
