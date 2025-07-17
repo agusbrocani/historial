@@ -92,6 +92,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       ...productoPendiente,
       Titulo: productoPendiente.Titulo.trim()
     };
+
     setError(false);
     setExito(true);
     setConfirmado(true);
@@ -102,6 +103,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       navigate(-1);
     }, 1500);
   };
+
 
   const cancelarGuardar = () => {
     setMostrarDialogo(false);
@@ -214,7 +216,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         ]}
         selectedKey={
           productoPendiente.EnCatalogo === true ? 'true' :
-          productoPendiente.EnCatalogo === false ? 'false' : null
+            productoPendiente.EnCatalogo === false ? 'false' : null
         }
         disabled={confirmado}
         onChange={(_, o) => {
@@ -223,8 +225,8 @@ const FormularioDeProducto: React.FC<Props> = ({
             EnCatalogo: o?.key === 'true'
               ? true
               : o?.key === 'false'
-              ? false
-              : null
+                ? false
+                : null
           }));
         }}
       />
