@@ -205,16 +205,40 @@ const FormularioDeProducto: React.FC<Props> = ({
         }}
       />
 
-      {[['CantidadFDS', 'Cantidad FDS'], ['CantidadFIE', 'Cantidad FIE'], ['IdViejoFDS', 'ID Viejo FDS'], ['IdViejoFIE', 'ID Viejo FIE']].map(([key, label]) => (
+      {[
+        ['CantidadFDS', 'Cantidad FDS'],
+        ['CantidadFIE', 'Cantidad FIE'],
+        ['IdViejoFDS', 'ID Viejo FDS'],
+        ['IdViejoFIE', 'ID Viejo FIE']
+      ].map(([key, label]) => (
         <TextField
           key={key}
           label={label}
-          type="number"
+          type="text"
+          inputMode="numeric"
           value={productoPendiente[key as keyof IProducto]?.toString() ?? ''}
           disabled={confirmado}
           onChange={(_, v) => {
-            const numero = /^\d+$/.test(v ?? '') ? Number(v) : null;
-            setProductoPendiente(p => ({ ...p, [key]: numero }));
+            // Permitimos vacío (borra el campo) o número válido dentro del rango seguro
+            if (/^\d*$/.test(v ?? '') && (v === '' || Number(v) <= Number.MAX_SAFE_INTEGER)) {
+              const numero = v === '' ? null : Number(v);
+              setProductoPendiente(p => ({ ...p, [key]: numero }));
+            }
+            // Si no es válido, ignoramos el cambio (no seteamos el estado)
+          }}
+          onKeyDown={(e) => {
+            const tecla = e.key;
+            const esDigito = /^[0-9]$/.test(tecla);
+            const teclasPermitidas = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+            if (!esDigito && !teclasPermitidas.includes(tecla)) {
+              e.preventDefault();
+            }
+          }}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData('Text');
+            if (!/^\d+$/.test(pasted) || Number(pasted) > Number.MAX_SAFE_INTEGER) {
+              e.preventDefault();
+            }
           }}
         />
       ))}
