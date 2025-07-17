@@ -112,14 +112,28 @@ const FormularioDeProducto: React.FC<Props> = ({
   return (
     <div className={styles.contenedorFormulario}>
       <h2 className={styles.titulo}>{esEdicion ? 'Editar Producto' : 'Alta de Producto'}</h2>
-
+      
       <TextField
         label="Nombre del producto"
         required
         value={productoPendiente.Titulo}
         disabled={confirmado}
-        onChange={(_, v) => setProductoPendiente(p => ({ ...p, Titulo: (v ?? '').slice(0, 255) }))}
-        onBlur={() => setProductoPendiente(p => ({ ...p, Titulo: p.Titulo.trim().replace(/\s+/g, ' ') }))}
+        onChange={(_, v) => {
+          if (v === undefined) return;
+          const limpio = v
+            .replace(/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ ]+/g, '') // solo caracteres válidos
+            .replace(/\s+/g, ' ')                      // solo un espacio
+            .replace(/^\s+/, '')                       // remueve espacios al inicio
+            .slice(0, 255);
+
+          setProductoPendiente(p => ({ ...p, Titulo: limpio }));
+        }}
+        onBlur={() => {
+          setProductoPendiente(p => ({
+            ...p,
+            Titulo: p.Titulo.trim() // remueve espacios iniciales/finales
+          }));
+        }}
       />
 
       <Dropdown
