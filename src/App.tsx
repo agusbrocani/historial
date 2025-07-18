@@ -25,11 +25,11 @@ import {
 import BarraProceso from './components/barraDeProcesos/BarraDeProcesos';
 import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/helpers/parsearItemsAFormatoHistorial';
 import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
-import { BandejaDeGestionDeProductos } from './components/gestionDeProductos/BandejaDeGestionDeProductos';
 import { IArea, IProducto, ILineaDeNegocio, ISeccion } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { obtenerAreasPorLinea, obtenerSeccionesPorArea } from './components/formularioDeProducto/utils';
+import BandejaDeGestionDeProductos from './components/gestionDeProductos/BandejaDeGestionDeProductos';
 
 initializeIcons();
 
@@ -46671,11 +46671,6 @@ const App: React.FC = () => {
   // }
 
 
-  const guardarProducto = (data: IProducto) => {
-    console.log('📝 Producto guardado:', data);
-    // alert('✅ Producto guardado correctamente.');
-  };
-
   const [producto, setProducto] = useState<IProducto>({
     Id: null,
     Titulo: '',
@@ -46737,7 +46732,7 @@ const App: React.FC = () => {
   console.log("area seleccionada: ", areaSeleccionada);
   console.log("secciones disponibles: ", obtenerSeccionesPorArea(areaSeleccionada, secciones));
 
-  const productos: IProducto[] = [
+  const productosRaw: IProducto[] = [
     {
       Id: 1,
       Titulo: 'Bebida Energética',
@@ -46980,9 +46975,24 @@ const App: React.FC = () => {
     }
   ];
 
-  // useEffect(() => {
-  //   setProducto(productos[1]);
-  // }, []);
+  useEffect(() => {
+    setProducto(productos[1]);
+  }, []);
+  const [id, setID] = useState(21);
+  const [productos, setProductos] = useState(productosRaw);
+
+  const guardarProducto = (data: IProducto) => {
+    console.log('📝 Producto guardado:', data);
+    if (!data.Id) { // es un alta
+      setProductos(arrayAnterior => [...arrayAnterior, { ...data, Id: id }]);
+      setID(id+1);
+    }
+  };
+
+  const eliminarProducto = (idAEliminar: number) => {
+    setProductos(prev => prev.filter(p => p.Id !== idAEliminar));
+  };
+  const [cargando, setCargando] = useState(true);
 
   return (
     // <div style={{ width: "100%" }}>
@@ -47000,10 +47010,9 @@ const App: React.FC = () => {
           textoEncabezadoPanel={TITULO_PANEL_HISTORIAL}
           colorGeneral={COLOR_GENERAL_HISTORIAL}
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
-      />
-      <BandejaDeGestionDeProductos productos={productos} cargando={cargando} /> */}
+      />*/}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<BandejaDeGestionDeProductos productos={productos} onEditar={() => alert("Editando")} onEliminar={() => alert("Eliminando")} onAgregar={() => alert("Agregando")}/>} />
         <Route
           path="/formulario"
           element={
