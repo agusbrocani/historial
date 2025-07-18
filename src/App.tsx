@@ -46990,6 +46990,7 @@ const App: React.FC = () => {
   // useEffect(() => {
   //   setProducto(productos[1]);
   // }, []);
+
   const [id, setID] = useState(productosRaw.length + 1);
   const [productos, setProductos] = useState(productosRaw);
 
@@ -47028,6 +47029,7 @@ const App: React.FC = () => {
           colorGeneral={COLOR_GENERAL_HISTORIAL}
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />*/}
+
       <Routes>
         <Route path="/" element={
           <BandejaDeGestionDeProductos 

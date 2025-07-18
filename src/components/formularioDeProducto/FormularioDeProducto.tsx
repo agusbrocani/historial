@@ -125,9 +125,18 @@ const FormularioDeProducto: React.FC<Props> = ({
     setError(false);
     setExito(false);
     setConfirmado(true);
-    if (!esEdicion) {
-      setProductoPendiente(producto);
-    }
+    setProducto({
+      Id: null,
+      Titulo: '',
+      LineaNegocioId: null,
+      AreaId: null,
+      SeccionId: null,
+      EnCatalogo: null,
+      CantidadFDS: null,
+      CantidadFIE: null,
+      IdViejoFDS: null,
+      IdViejoFIE: null
+    });
     navigate(-1);
   };
 
