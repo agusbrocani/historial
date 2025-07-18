@@ -47024,7 +47024,16 @@ const App: React.FC = () => {
           colorAvatar={COLOR_AVATAR_CARD_HISTORIAL}
       />*/}
       <Routes>
-        <Route path="/" element={<BandejaDeGestionDeProductos productos={productos} onEditar={() => alert("Editando")} onEliminar={() => alert("Eliminando")} onAgregar={() => alert("Agregando")}/>} />
+        <Route path="/" element={
+          <BandejaDeGestionDeProductos 
+            productos={productos}
+            lineasDeNegocio={lineasDeNegocio}
+            areas={areas}
+            secciones={secciones}
+            onEditar={() => alert("Editando")} 
+            onEliminar={() => alert("Eliminando")} 
+            onAgregar={() => alert("Agregando")}
+          />} />
         <Route
           path="/formulario"
           element={

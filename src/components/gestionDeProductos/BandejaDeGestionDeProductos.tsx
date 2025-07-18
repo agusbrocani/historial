@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IProducto } from './tipos';
+import { IArea, ILineaDeNegocio, IProducto, ISeccion } from './tipos';
 import {
   IconButton,
   PrimaryButton,
@@ -10,6 +10,9 @@ import styles from './BandejaDeGestionDeProductos.module.scss';
 
 interface Props {
   productos: IProducto[];
+  lineasDeNegocio: ILineaDeNegocio[];
+  areas: IArea[];
+  secciones: ISeccion[];
   onEditar: (producto: IProducto) => void;
   onEliminar: (producto: IProducto) => void;
   onAgregar: () => void;
@@ -19,6 +22,9 @@ const ITEMS_POR_CARGA = 10;
 
 const BandejaDeGestionDeProductos: React.FC<Props> = ({
   productos,
+  lineasDeNegocio,
+  areas,
+  secciones,
   onEditar,
   onEliminar,
   onAgregar
@@ -51,6 +57,21 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
     return valor;
   };
 
+  const obtenerTextoLinea = (id: number) => {
+    const linea = lineasDeNegocio.find((l) => parseInt(l.key) === id);
+    return linea?.text ?? '-';
+  };
+
+  const obtenerTituloArea = (id: number) => {
+    const area = areas.find((a) => a.Id === id);
+    return area?.Titulo ?? '-';
+  };
+
+  const obtenerTituloSeccion = (id: number) => {
+    const seccion = secciones.find((s) => s.Id === id);
+    return seccion?.Titulo ?? '-';
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.barraSuperior}>
@@ -65,14 +86,14 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
         <div className={`${styles.fila} ${styles.encabezado}`}>
           <div>ID</div>
           <div>Producto</div>
-          <div>Línea De Negocio</div>
+          <div>Línea de Negocio</div>
           <div>Área</div>
           <div>Sección</div>
-          <div>En Catálogo</div>
-          <div>Cantidad De FDS</div>
-          <div>Cantidad De FIE</div>
-          <div>Id Viejo FDS</div>
-          <div>Id Viejo FIE</div>
+          <div>En catálogo</div>
+          <div>Cantidad de FDS</div>
+          <div>Cantidad de FIE</div>
+          <div>Id viejo FDS</div>
+          <div>Id viejo FIE</div>
           <div>Editar</div>
           <div>Eliminar</div>
         </div>
@@ -80,17 +101,20 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
         {productosVisibles.map((p) => (
           <div className={styles.fila} key={p.Id ?? Math.random()}>
             <div>{formatear(p.Id)}</div>
+
             <TooltipHost content={formatear(p.Titulo)} overflowMode={TooltipOverflowMode.Parent}>
               <div className={styles.truncado}>{formatear(p.Titulo)}</div>
             </TooltipHost>
-            <div>{formatear(p.LineaNegocioId)}</div>
-            <div>{formatear(p.AreaId)}</div>
-            <div>{formatear(p.SeccionId)}</div>
+
+            <div>{obtenerTextoLinea(p.LineaNegocioId)}</div>
+            <div>{obtenerTituloArea(p.AreaId)}</div>
+            <div>{obtenerTituloSeccion(p.SeccionId)}</div>
             <div>{formatear(p.EnCatalogo)}</div>
             <div>{formatear(p.CantidadFDS)}</div>
             <div>{formatear(p.CantidadFIE)}</div>
             <div>{formatear(p.IdViejoFDS)}</div>
             <div>{formatear(p.IdViejoFIE)}</div>
+
             <div className={styles.celdaCentrada}>
               <IconButton iconProps={{ iconName: 'Edit' }} title="Editar" onClick={() => onEditar(p)} />
             </div>
