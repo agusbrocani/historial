@@ -25,3 +25,16 @@ export interface IProducto {
   IdViejoFDS: number | null;
   IdViejoFIE: number | null;
 }
+
+export interface IProductoExtendido {
+  Id: number | null;
+  Titulo: string;
+  LineaNegocio: string | null;
+  Area: string | null;
+  Seccion: string | null;
+  EnCatalogoTexto: string | null;
+  CantidadFDS: number | null;
+  CantidadFIE: number | null;
+  IdViejoFDS: number | null;
+  IdViejoFIE: number | null;
+}

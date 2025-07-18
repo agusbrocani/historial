@@ -7,6 +7,8 @@ import {
   TooltipOverflowMode
 } from '@fluentui/react';
 import styles from './BandejaDeGestionDeProductos.module.scss';
+import Buscador from '../buscador/Buscador';
+import { contruirProductosBuscables } from './utils';
 
 interface Props {
   productos: IProducto[];
@@ -31,13 +33,16 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
 }) => {
   const [productosVisibles, setProductosVisibles] = useState<IProducto[]>([]);
   const contenedorRef = useRef<HTMLDivElement>(null);
-  const [claveRender, setClaveRender] = useState(Date.now());
+
+  // useEffect(() => {
+  //   if (Array.isArray(productos)) {
+  //     setProductosVisibles(productos.slice(0, ITEMS_POR_CARGA));
+  //   }
+  // }, [productos]);
 
   useEffect(() => {
-    if (Array.isArray(productos)) {
-      setProductosVisibles(productos.slice(0, ITEMS_POR_CARGA));
-    }
-  }, [productos]);
+    setProductosVisibles(productos);
+  }, []);
 
   const cargarMas = () => {
     const siguiente = productosVisibles.length + ITEMS_POR_CARGA;
@@ -76,11 +81,20 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.barraSuperior}>
-        <PrimaryButton
-          text="Nuevo"
-          iconProps={{ iconName: 'Add' }}
-          onClick={onAgregar}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <Buscador
+            productos={productos}
+            lineasDeNegocio={lineasDeNegocio} 
+            areas={areas}
+            secciones={secciones}
+            setProductosVisibles={setProductosVisibles}
+          />
+          <PrimaryButton
+            text="Nuevo"
+            iconProps={{ iconName: 'Add' }}
+            onClick={onAgregar}
+          />
+        </div>
       </div>
 
       <div className={styles.tabla} ref={contenedorRef} onScroll={manejarScroll}>
@@ -117,17 +131,17 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             <div>{formatear(p.IdViejoFIE)}</div>
 
             <div className={styles.celdaCentrada}>
-              <IconButton 
-                iconProps={{ iconName: 'Edit' }} 
-                title="Editar" 
-                onClick={() => onEditar(p)} 
+              <IconButton
+                iconProps={{ iconName: 'Edit' }}
+                title="Editar"
+                onClick={() => onEditar(p)}
               />
             </div>
             <div className={styles.celdaCentrada}>
-              <IconButton 
-                iconProps={{ iconName: 'Delete' }} 
-                title="Eliminar" 
-                onClick={() => onEliminar(p)} 
+              <IconButton
+                iconProps={{ iconName: 'Delete' }}
+                title="Eliminar"
+                onClick={() => onEliminar(p)}
               />
             </div>
           </div>
