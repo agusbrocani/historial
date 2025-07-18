@@ -25,12 +25,12 @@
   max-height: 500px;
 }
 
+/* FILAS GENERALES */
 .fila {
   display: grid;
   grid-template-columns: repeat(12, minmax(80px, 1fr));
-  padding: 10px 14px;
   border-bottom: 1px solid #eee;
-  align-items: center;
+  align-items: stretch;
   background-color: white;
   transition: background-color 0.2s ease;
 }
@@ -43,20 +43,43 @@
   background-color: #f1faff;
 }
 
+.fila > div {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-right: 1px solid #ddd;
+}
+
+.fila > div:last-child {
+  border-right: none;
+}
+
+/* ENCABEZADO */
 .encabezado {
   font-weight: 600;
   background-color: #f3f3f3;
   position: sticky;
   top: 0;
   z-index: 1;
-  padding-top: 12px;
-  padding-bottom: 12px;
   border-bottom: 2px solid #d0d0d0;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
+.encabezado > div {
+  display: flex;
+  align-items: center;
+  padding: 10px 8px;
+  border-right: 1px solid #ccc;
+}
+
+.encabezado > div:last-child {
+  border-right: none;
+}
+
+/* CONTENIDO TRUNCADO */
 .truncado {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
 }
