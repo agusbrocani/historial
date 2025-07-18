@@ -2,7 +2,6 @@
   margin: 16px;
   max-height: 550px;
   border: 1px solid #ccc;
-  border-radius: 0;
   font-family: 'Segoe UI', sans-serif;
   background-color: white;
   display: flex;
@@ -28,9 +27,21 @@
 
 .fila {
   display: grid;
-  grid-template-columns: repeat(12, minmax(80px, 1fr));
-  border-bottom: 1px solid #eee;
+  grid-template-columns:
+    minmax(40px, 0.5fr)  /* ID */
+    minmax(100px, 1.5fr) /* Producto */
+    minmax(120px, 1.5fr) /* Línea de Negocio */
+    minmax(120px, 1.5fr) /* Área */
+    minmax(100px, 1.5fr) /* Sección */
+    minmax(90px, 1fr)    /* En catálogo */
+    minmax(80px, 1fr)    /* Cantidad de FDS */
+    minmax(80px, 1fr)    /* Cantidad de FIE */
+    minmax(90px, 1fr)    /* Id viejo FDS */
+    minmax(90px, 1fr)    /* Id viejo FIE */
+    minmax(50px, 0.5fr)  /* Editar */
+    minmax(50px, 0.5fr); /* Eliminar */
   align-items: stretch;
+  border-bottom: 1px solid #eee;
   background-color: white;
   transition: background-color 0.2s ease;
 }
@@ -46,8 +57,11 @@
 .fila > div {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 6px 8px;
   border-right: 1px solid #ddd;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .fila > div:last-child {
@@ -79,6 +93,8 @@
   justify-content: center;
   padding: 10px 8px;
   border-right: 1px solid #ccc;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .encabezado > div:last-child {
@@ -90,4 +106,5 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  text-align: center;
 }
