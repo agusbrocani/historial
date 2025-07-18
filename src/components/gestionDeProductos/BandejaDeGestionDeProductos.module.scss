@@ -29,17 +29,17 @@
   display: grid;
   grid-template-columns:
     minmax(40px, 0.5fr)  /* ID */
-    minmax(100px, 1.5fr) /* Producto */
-    minmax(120px, 1.5fr) /* Línea de Negocio */
-    minmax(120px, 1.5fr) /* Área */
+    minmax(120px, 2fr) /* Producto */
+    minmax(100px, 1.5fr) /* Línea de Negocio */
+    minmax(100px, 1.5fr) /* Área */
     minmax(100px, 1.5fr) /* Sección */
-    minmax(90px, 1fr)    /* En catálogo */
+    minmax(20px, 1fr)    /* En catálogo */
     minmax(80px, 1fr)    /* Cantidad de FDS */
     minmax(80px, 1fr)    /* Cantidad de FIE */
     minmax(90px, 1fr)    /* Id viejo FDS */
     minmax(90px, 1fr)    /* Id viejo FIE */
-    minmax(50px, 0.5fr)  /* Editar */
-    minmax(50px, 0.5fr); /* Eliminar */
+    minmax(60px, 0.5fr)  /* Editar */
+    minmax(60px, 0.5fr); /* Eliminar */
   align-items: stretch;
   border-bottom: 1px solid #eee;
   background-color: white;
@@ -58,6 +58,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   padding: 6px 8px;
   border-right: 1px solid #ddd;
   min-width: 0;
