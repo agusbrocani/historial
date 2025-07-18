@@ -45,18 +45,6 @@ const FormularioDeProducto: React.FC<Props> = ({
 
   const esEdicion = producto.Id !== null;
 
-  const sonIguales = (a: IProducto, b: IProducto): boolean => {
-    const claves: (keyof IProducto)[] = [
-      'Titulo', 'LineaNegocioId', 'AreaId', 'SeccionId',
-      'EnCatalogo', 'CantidadFDS', 'CantidadFIE', 'IdViejoFDS', 'IdViejoFIE'
-    ];
-    return claves.every(k => {
-      const valorA = typeof a[k] === 'string' ? (a[k] as string).trim() : a[k];
-      const valorB = typeof b[k] === 'string' ? (b[k] as string).trim() : b[k];
-      return valorA === valorB;
-    });
-  };
-
   const validarCampos = (): boolean => {
     if (!esProductoValido(productoPendiente)) return false;
     const numerosValidos = ['CantidadFDS', 'CantidadFIE', 'IdViejoFDS', 'IdViejoFIE'] as const;
@@ -74,12 +62,24 @@ const FormularioDeProducto: React.FC<Props> = ({
       return;
     }
 
-    if (esEdicion && sonIguales(producto, productoPendiente)) {
+    if (esEdicion && !seRealizoCambio) {
       setError(false);
       setExito(true);
       setConfirmado(true);
       setMostrarDialogo(false);
       setTimeout(() => {
+        setProducto({
+          Id: null,
+          Titulo: '',
+          LineaNegocioId: null,
+          AreaId: null,
+          SeccionId: null,
+          EnCatalogo: null,
+          CantidadFDS: null,
+          CantidadFIE: null,
+          IdViejoFDS: null,
+          IdViejoFIE: null
+        });
         navigate(-1);
       }, 1500);
       return;

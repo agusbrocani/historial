@@ -46793,198 +46793,198 @@ const App: React.FC = () => {
       IdViejoFDS: 1005,
       IdViejoFIE: 2005
     },
-    // {
-    //   Id: 6,
-    //   Titulo: 'Evento Corporativo',
-    //   LineaNegocioId: 2,
-    //   AreaId: 3,
-    //   SeccionId: 6,
-    //   EnCatalogo: false,
-    //   CantidadFDS: 5,
-    //   CantidadFIE: 3,
-    //   IdViejoFDS: 1006,
-    //   IdViejoFIE: 2006
-    // },
-    // {
-    //   Id: 7,
-    //   Titulo: 'Promoción Retail',
-    //   LineaNegocioId: 2,
-    //   AreaId: 4,
-    //   SeccionId: 7,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 25,
-    //   CantidadFIE: 12,
-    //   IdViejoFDS: 1007,
-    //   IdViejoFIE: 2007
-    // },
-    // {
-    //   Id: 8,
-    //   Titulo: 'Plan Mayoristas',
-    //   LineaNegocioId: 2,
-    //   AreaId: 4,
-    //   SeccionId: 8,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 9,
-    //   CantidadFIE: 4,
-    //   IdViejoFDS: 1008,
-    //   IdViejoFIE: 2008
-    // },
-    // {
-    //   Id: 9,
-    //   Titulo: 'Inventario Sur',
-    //   LineaNegocioId: 3,
-    //   AreaId: 5,
-    //   SeccionId: 10,
-    //   EnCatalogo: false,
-    //   CantidadFDS: 11,
-    //   CantidadFIE: 6,
-    //   IdViejoFDS: 1009,
-    //   IdViejoFIE: 2009
-    // },
-    // {
-    //   Id: 10,
-    //   Titulo: 'Stock Central',
-    //   LineaNegocioId: 3,
-    //   AreaId: 5,
-    //   SeccionId: 9,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 18,
-    //   CantidadFIE: 8,
-    //   IdViejoFDS: 1010,
-    //   IdViejoFIE: 2010
-    // },
-    // {
-    //   Id: 11,
-    //   Titulo: 'Reporte Presupuestario',
-    //   LineaNegocioId: 3,
-    //   AreaId: 6,
-    //   SeccionId: 11,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 14,
-    //   CantidadFIE: 7,
-    //   IdViejoFDS: 1011,
-    //   IdViejoFIE: 2011
-    // },
-    // {
-    //   Id: 12,
-    //   Titulo: 'Gestión de Tesorería',
-    //   LineaNegocioId: 3,
-    //   AreaId: 6,
-    //   SeccionId: 12,
-    //   EnCatalogo: false,
-    //   CantidadFDS: 6,
-    //   CantidadFIE: 3,
-    //   IdViejoFDS: 1012,
-    //   IdViejoFIE: 2012
-    // },
-    // {
-    //   Id: 13,
-    //   Titulo: 'Control de Contratos',
-    //   LineaNegocioId: 4,
-    //   AreaId: 7,
-    //   SeccionId: 13,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 7,
-    //   CantidadFIE: 2,
-    //   IdViejoFDS: 1013,
-    //   IdViejoFIE: 2013
-    // },
-    // {
-    //   Id: 14,
-    //   Titulo: 'Normativas Legales',
-    //   LineaNegocioId: 4,
-    //   AreaId: 7,
-    //   SeccionId: 14,
-    //   EnCatalogo: false,
-    //   CantidadFDS: 5,
-    //   CantidadFIE: 2,
-    //   IdViejoFDS: 1014,
-    //   IdViejoFIE: 2014
-    // },
-    // {
-    //   Id: 15,
-    //   Titulo: 'Curso de Inducción',
-    //   LineaNegocioId: 4,
-    //   AreaId: 8,
-    //   SeccionId: 15,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 4,
-    //   CantidadFIE: 1,
-    //   IdViejoFDS: 1015,
-    //   IdViejoFIE: 2015
-    // },
-    // {
-    //   Id: 16,
-    //   Titulo: 'Proceso de Reclutamiento',
-    //   LineaNegocioId: 4,
-    //   AreaId: 8,
-    //   SeccionId: 16,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 6,
-    //   CantidadFIE: 2,
-    //   IdViejoFDS: 1016,
-    //   IdViejoFIE: 2016
-    // },
-    // {
-    //   Id: 17,
-    //   Titulo: 'Soporte Técnico Nivel 1',
-    //   LineaNegocioId: 5,
-    //   AreaId: 9,
-    //   SeccionId: 17,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 13,
-    //   CantidadFIE: 5,
-    //   IdViejoFDS: 1017,
-    //   IdViejoFIE: 2017
-    // },
-    // {
-    //   Id: 18,
-    //   Titulo: 'Soporte Técnico Nivel 2',
-    //   LineaNegocioId: 5,
-    //   AreaId: 9,
-    //   SeccionId: 18,
-    //   EnCatalogo: false,
-    //   CantidadFDS: 10,
-    //   CantidadFIE: 4,
-    //   IdViejoFDS: 1018,
-    //   IdViejoFIE: 2018
-    // },
-    // {
-    //   Id: 19,
-    //   Titulo: 'Kit de Bienvenida',
-    //   LineaNegocioId: 5,
-    //   AreaId: 9,
-    //   SeccionId: 17,
-    //   EnCatalogo: true,
-    //   CantidadFDS: 3,
-    //   CantidadFIE: 2,
-    //   IdViejoFDS: 1019,
-    //   IdViejoFIE: 2019
-    // },
-    // {
-    //   Id: 20,
-    //   Titulo: 'Formulario Legal',
-    //   LineaNegocioId: 4,
-    //   AreaId: 7,
-    //   SeccionId: 13,
-    //   EnCatalogo: false,
-    //   CantidadFDS: 1,
-    //   CantidadFIE: 1,
-    //   IdViejoFDS: 1020,
-    //   IdViejoFIE: 2020
-    // },
-    // {
-    //   Id: 21,
-    //   Titulo: null,
-    //   LineaNegocioId: null,
-    //   AreaId: null,
-    //   SeccionId: null,
-    //   EnCatalogo: null,
-    //   CantidadFDS: null,
-    //   CantidadFIE: null,
-    //   IdViejoFDS: null,
-    //   IdViejoFIE: null
-    // }
+    {
+      Id: 6,
+      Titulo: 'Evento Corporativo',
+      LineaNegocioId: 2,
+      AreaId: 3,
+      SeccionId: 6,
+      EnCatalogo: false,
+      CantidadFDS: 5,
+      CantidadFIE: 3,
+      IdViejoFDS: 1006,
+      IdViejoFIE: 2006
+    },
+    {
+      Id: 7,
+      Titulo: 'Promoción Retail',
+      LineaNegocioId: 2,
+      AreaId: 4,
+      SeccionId: 7,
+      EnCatalogo: true,
+      CantidadFDS: 25,
+      CantidadFIE: 12,
+      IdViejoFDS: 1007,
+      IdViejoFIE: 2007
+    },
+    {
+      Id: 8,
+      Titulo: 'Plan Mayoristas',
+      LineaNegocioId: 2,
+      AreaId: 4,
+      SeccionId: 8,
+      EnCatalogo: true,
+      CantidadFDS: 9,
+      CantidadFIE: 4,
+      IdViejoFDS: 1008,
+      IdViejoFIE: 2008
+    },
+    {
+      Id: 9,
+      Titulo: 'Inventario Sur',
+      LineaNegocioId: 3,
+      AreaId: 5,
+      SeccionId: 10,
+      EnCatalogo: false,
+      CantidadFDS: 11,
+      CantidadFIE: 6,
+      IdViejoFDS: 1009,
+      IdViejoFIE: 2009
+    },
+    {
+      Id: 10,
+      Titulo: 'Stock Central',
+      LineaNegocioId: 3,
+      AreaId: 5,
+      SeccionId: 9,
+      EnCatalogo: true,
+      CantidadFDS: 18,
+      CantidadFIE: 8,
+      IdViejoFDS: 1010,
+      IdViejoFIE: 2010
+    },
+    {
+      Id: 11,
+      Titulo: 'Reporte Presupuestario',
+      LineaNegocioId: 3,
+      AreaId: 6,
+      SeccionId: 11,
+      EnCatalogo: true,
+      CantidadFDS: 14,
+      CantidadFIE: 7,
+      IdViejoFDS: 1011,
+      IdViejoFIE: 2011
+    },
+    {
+      Id: 12,
+      Titulo: 'Gestión de Tesorería',
+      LineaNegocioId: 3,
+      AreaId: 6,
+      SeccionId: 12,
+      EnCatalogo: false,
+      CantidadFDS: 6,
+      CantidadFIE: 3,
+      IdViejoFDS: 1012,
+      IdViejoFIE: 2012
+    },
+    {
+      Id: 13,
+      Titulo: 'Control de Contratos',
+      LineaNegocioId: 4,
+      AreaId: 7,
+      SeccionId: 13,
+      EnCatalogo: true,
+      CantidadFDS: 7,
+      CantidadFIE: 2,
+      IdViejoFDS: 1013,
+      IdViejoFIE: 2013
+    },
+    {
+      Id: 14,
+      Titulo: 'Normativas Legales',
+      LineaNegocioId: 4,
+      AreaId: 7,
+      SeccionId: 14,
+      EnCatalogo: false,
+      CantidadFDS: 5,
+      CantidadFIE: 2,
+      IdViejoFDS: 1014,
+      IdViejoFIE: 2014
+    },
+    {
+      Id: 15,
+      Titulo: 'Curso de Inducción',
+      LineaNegocioId: 4,
+      AreaId: 8,
+      SeccionId: 15,
+      EnCatalogo: true,
+      CantidadFDS: 4,
+      CantidadFIE: 1,
+      IdViejoFDS: 1015,
+      IdViejoFIE: 2015
+    },
+    {
+      Id: 16,
+      Titulo: 'Proceso de Reclutamiento',
+      LineaNegocioId: 4,
+      AreaId: 8,
+      SeccionId: 16,
+      EnCatalogo: true,
+      CantidadFDS: 6,
+      CantidadFIE: 2,
+      IdViejoFDS: 1016,
+      IdViejoFIE: 2016
+    },
+    {
+      Id: 17,
+      Titulo: 'Soporte Técnico Nivel 1',
+      LineaNegocioId: 5,
+      AreaId: 9,
+      SeccionId: 17,
+      EnCatalogo: true,
+      CantidadFDS: 13,
+      CantidadFIE: 5,
+      IdViejoFDS: 1017,
+      IdViejoFIE: 2017
+    },
+    {
+      Id: 18,
+      Titulo: 'Soporte Técnico Nivel 2',
+      LineaNegocioId: 5,
+      AreaId: 9,
+      SeccionId: 18,
+      EnCatalogo: false,
+      CantidadFDS: 10,
+      CantidadFIE: 4,
+      IdViejoFDS: 1018,
+      IdViejoFIE: 2018
+    },
+    {
+      Id: 19,
+      Titulo: 'Kit de Bienvenida',
+      LineaNegocioId: 5,
+      AreaId: 9,
+      SeccionId: 17,
+      EnCatalogo: true,
+      CantidadFDS: 3,
+      CantidadFIE: 2,
+      IdViejoFDS: 1019,
+      IdViejoFIE: 2019
+    },
+    {
+      Id: 20,
+      Titulo: 'Formulario Legal',
+      LineaNegocioId: 4,
+      AreaId: 7,
+      SeccionId: 13,
+      EnCatalogo: false,
+      CantidadFDS: 1,
+      CantidadFIE: 1,
+      IdViejoFDS: 1020,
+      IdViejoFIE: 2020
+    },
+    {
+      Id: 21,
+      Titulo: null,
+      LineaNegocioId: null,
+      AreaId: null,
+      SeccionId: null,
+      EnCatalogo: null,
+      CantidadFDS: null,
+      CantidadFIE: null,
+      IdViejoFDS: null,
+      IdViejoFIE: null
+    }
   ];
 
   // useEffect(() => {
@@ -47036,8 +47036,8 @@ const App: React.FC = () => {
             areas={areas}
             secciones={secciones}
             onEditar={(producto) => {
-              setProducto(producto)
               navigate('/formulario')
+              setProducto(producto);
               // console.log('Editando producto:', producto);
               // alert(`Editando producto ID: ${producto.Id}, Título: ${producto.Titulo}`);
             }}
