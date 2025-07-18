@@ -34,6 +34,7 @@ const FormularioDeProducto: React.FC<Props> = ({
   const [exito, setExito] = useState(false);
   const [mostrarDialogo, setMostrarDialogo] = useState(false);
   const [confirmado, setConfirmado] = useState(false);
+  const [seRealizoCambio, setSeRealizoCambio] = useState(false);
   const navigate = useNavigate();
 
   const esProductoValido = (p: IProducto) =>
@@ -100,7 +101,6 @@ const FormularioDeProducto: React.FC<Props> = ({
     onGuardar(productoFinal);
     setProducto(productoFinal);
     setTimeout(() => {
-      if (!producto.Id) {
         setProducto({
           Id: null,
           Titulo: '',
@@ -113,7 +113,6 @@ const FormularioDeProducto: React.FC<Props> = ({
           IdViejoFDS: null,
           IdViejoFIE: null
         });
-      }
       navigate(-1);
     }, 1500);
   };
@@ -175,6 +174,7 @@ const FormularioDeProducto: React.FC<Props> = ({
             .replace(/^\s+/, '')
             .slice(0, 255);
           setProductoPendiente(p => ({ ...p, Titulo: limpio }));
+          setSeRealizoCambio(true);
         }}
       />
 
@@ -192,6 +192,7 @@ const FormularioDeProducto: React.FC<Props> = ({
             AreaId: null,
             SeccionId: null
           }));
+          setSeRealizoCambio(true);
         }}
       />
 
@@ -207,6 +208,7 @@ const FormularioDeProducto: React.FC<Props> = ({
             AreaId: option ? Number(option?.key) : null,
             SeccionId: null
           }));
+          setSeRealizoCambio(true);
         }}
       />
 
@@ -221,6 +223,7 @@ const FormularioDeProducto: React.FC<Props> = ({
             ...p,
             SeccionId: option ? Number(option.key) : null
           }));
+          setSeRealizoCambio(true);
         }}
       />
 
@@ -244,6 +247,7 @@ const FormularioDeProducto: React.FC<Props> = ({
                 ? false
                 : null
           }));
+          setSeRealizoCambio(true);
         }}
       />
 
@@ -264,6 +268,7 @@ const FormularioDeProducto: React.FC<Props> = ({
             if (/^\d*$/.test(v ?? '') && (v === '' || Number(v) <= Number.MAX_SAFE_INTEGER)) {
               const numero = v === '' ? null : Number(v);
               setProductoPendiente(p => ({ ...p, [key]: numero }));
+              setSeRealizoCambio(true);
             }
           }}
           onKeyDown={(e) => {
@@ -309,9 +314,10 @@ const FormularioDeProducto: React.FC<Props> = ({
       </Dialog>
 
       {exito && (
-        esEdicion && sonIguales(producto, productoPendiente) ? (
+        esEdicion && !seRealizoCambio ? (
           <div className={styles.redireccion}>
             No hubo cambios. Redirigiendo...
+            {console.log("PRODUCTO", producto, "ProductoPendiente", productoPendiente)}
           </div>
         ) : (
           <div className={styles.exito}>

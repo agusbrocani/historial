@@ -27,7 +27,7 @@ import { parsearItemsSolicitudAFormatoHistorial } from './components/historial/h
 import BarraDeProcesos from './components/barraDeProcesos/BarraDeProcesos';
 import { IArea, IProducto, ILineaDeNegocio, ISeccion } from './components/gestionDeProductos/tipos';
 import FormularioDeProducto from './components/formularioDeProducto/FormularioDeProducto';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { obtenerAreasPorLinea, obtenerSeccionesPorArea } from './components/formularioDeProducto/utils';
 import BandejaDeGestionDeProductos from './components/gestionDeProductos/BandejaDeGestionDeProductos';
 
@@ -46728,9 +46728,9 @@ const App: React.FC = () => {
   const lineaDeNegocioSeleccionada: ILineaDeNegocio = lineasDeNegocio[3];
   const areaSeleccionada: IArea = obtenerAreasPorLinea(lineaDeNegocioSeleccionada, areas)[1];
 
-  console.log("lineaDeNegocio seleccionada: ", lineaDeNegocioSeleccionada);
-  console.log("area seleccionada: ", areaSeleccionada);
-  console.log("secciones disponibles: ", obtenerSeccionesPorArea(areaSeleccionada, secciones));
+  // console.log("lineaDeNegocio seleccionada: ", lineaDeNegocioSeleccionada);
+  // console.log("area seleccionada: ", areaSeleccionada);
+  // console.log("secciones disponibles: ", obtenerSeccionesPorArea(areaSeleccionada, secciones));
 
   const productosRaw: IProducto[] = [
     {
@@ -46793,204 +46793,204 @@ const App: React.FC = () => {
       IdViejoFDS: 1005,
       IdViejoFIE: 2005
     },
-    {
-      Id: 6,
-      Titulo: 'Evento Corporativo',
-      LineaNegocioId: 2,
-      AreaId: 3,
-      SeccionId: 6,
-      EnCatalogo: false,
-      CantidadFDS: 5,
-      CantidadFIE: 3,
-      IdViejoFDS: 1006,
-      IdViejoFIE: 2006
-    },
-    {
-      Id: 7,
-      Titulo: 'Promoción Retail',
-      LineaNegocioId: 2,
-      AreaId: 4,
-      SeccionId: 7,
-      EnCatalogo: true,
-      CantidadFDS: 25,
-      CantidadFIE: 12,
-      IdViejoFDS: 1007,
-      IdViejoFIE: 2007
-    },
-    {
-      Id: 8,
-      Titulo: 'Plan Mayoristas',
-      LineaNegocioId: 2,
-      AreaId: 4,
-      SeccionId: 8,
-      EnCatalogo: true,
-      CantidadFDS: 9,
-      CantidadFIE: 4,
-      IdViejoFDS: 1008,
-      IdViejoFIE: 2008
-    },
-    {
-      Id: 9,
-      Titulo: 'Inventario Sur',
-      LineaNegocioId: 3,
-      AreaId: 5,
-      SeccionId: 10,
-      EnCatalogo: false,
-      CantidadFDS: 11,
-      CantidadFIE: 6,
-      IdViejoFDS: 1009,
-      IdViejoFIE: 2009
-    },
-    {
-      Id: 10,
-      Titulo: 'Stock Central',
-      LineaNegocioId: 3,
-      AreaId: 5,
-      SeccionId: 9,
-      EnCatalogo: true,
-      CantidadFDS: 18,
-      CantidadFIE: 8,
-      IdViejoFDS: 1010,
-      IdViejoFIE: 2010
-    },
-    {
-      Id: 11,
-      Titulo: 'Reporte Presupuestario',
-      LineaNegocioId: 3,
-      AreaId: 6,
-      SeccionId: 11,
-      EnCatalogo: true,
-      CantidadFDS: 14,
-      CantidadFIE: 7,
-      IdViejoFDS: 1011,
-      IdViejoFIE: 2011
-    },
-    {
-      Id: 12,
-      Titulo: 'Gestión de Tesorería',
-      LineaNegocioId: 3,
-      AreaId: 6,
-      SeccionId: 12,
-      EnCatalogo: false,
-      CantidadFDS: 6,
-      CantidadFIE: 3,
-      IdViejoFDS: 1012,
-      IdViejoFIE: 2012
-    },
-    {
-      Id: 13,
-      Titulo: 'Control de Contratos',
-      LineaNegocioId: 4,
-      AreaId: 7,
-      SeccionId: 13,
-      EnCatalogo: true,
-      CantidadFDS: 7,
-      CantidadFIE: 2,
-      IdViejoFDS: 1013,
-      IdViejoFIE: 2013
-    },
-    {
-      Id: 14,
-      Titulo: 'Normativas Legales',
-      LineaNegocioId: 4,
-      AreaId: 7,
-      SeccionId: 14,
-      EnCatalogo: false,
-      CantidadFDS: 5,
-      CantidadFIE: 2,
-      IdViejoFDS: 1014,
-      IdViejoFIE: 2014
-    },
-    {
-      Id: 15,
-      Titulo: 'Curso de Inducción',
-      LineaNegocioId: 4,
-      AreaId: 8,
-      SeccionId: 15,
-      EnCatalogo: true,
-      CantidadFDS: 4,
-      CantidadFIE: 1,
-      IdViejoFDS: 1015,
-      IdViejoFIE: 2015
-    },
-    {
-      Id: 16,
-      Titulo: 'Proceso de Reclutamiento',
-      LineaNegocioId: 4,
-      AreaId: 8,
-      SeccionId: 16,
-      EnCatalogo: true,
-      CantidadFDS: 6,
-      CantidadFIE: 2,
-      IdViejoFDS: 1016,
-      IdViejoFIE: 2016
-    },
-    {
-      Id: 17,
-      Titulo: 'Soporte Técnico Nivel 1',
-      LineaNegocioId: 5,
-      AreaId: 9,
-      SeccionId: 17,
-      EnCatalogo: true,
-      CantidadFDS: 13,
-      CantidadFIE: 5,
-      IdViejoFDS: 1017,
-      IdViejoFIE: 2017
-    },
-    {
-      Id: 18,
-      Titulo: 'Soporte Técnico Nivel 2',
-      LineaNegocioId: 5,
-      AreaId: 9,
-      SeccionId: 18,
-      EnCatalogo: false,
-      CantidadFDS: 10,
-      CantidadFIE: 4,
-      IdViejoFDS: 1018,
-      IdViejoFIE: 2018
-    },
-    {
-      Id: 19,
-      Titulo: 'Kit de Bienvenida',
-      LineaNegocioId: 5,
-      AreaId: 9,
-      SeccionId: 17,
-      EnCatalogo: true,
-      CantidadFDS: 3,
-      CantidadFIE: 2,
-      IdViejoFDS: 1019,
-      IdViejoFIE: 2019
-    },
-    {
-      Id: 20,
-      Titulo: 'Formulario Legal',
-      LineaNegocioId: 4,
-      AreaId: 7,
-      SeccionId: 13,
-      EnCatalogo: false,
-      CantidadFDS: 1,
-      CantidadFIE: 1,
-      IdViejoFDS: 1020,
-      IdViejoFIE: 2020
-    },
-    {
-      Id: 21,
-      Titulo: null,
-      LineaNegocioId: null,
-      AreaId: null,
-      SeccionId: null,
-      EnCatalogo: null,
-      CantidadFDS: null,
-      CantidadFIE: null,
-      IdViejoFDS: null,
-      IdViejoFIE: null
-    }
+    // {
+    //   Id: 6,
+    //   Titulo: 'Evento Corporativo',
+    //   LineaNegocioId: 2,
+    //   AreaId: 3,
+    //   SeccionId: 6,
+    //   EnCatalogo: false,
+    //   CantidadFDS: 5,
+    //   CantidadFIE: 3,
+    //   IdViejoFDS: 1006,
+    //   IdViejoFIE: 2006
+    // },
+    // {
+    //   Id: 7,
+    //   Titulo: 'Promoción Retail',
+    //   LineaNegocioId: 2,
+    //   AreaId: 4,
+    //   SeccionId: 7,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 25,
+    //   CantidadFIE: 12,
+    //   IdViejoFDS: 1007,
+    //   IdViejoFIE: 2007
+    // },
+    // {
+    //   Id: 8,
+    //   Titulo: 'Plan Mayoristas',
+    //   LineaNegocioId: 2,
+    //   AreaId: 4,
+    //   SeccionId: 8,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 9,
+    //   CantidadFIE: 4,
+    //   IdViejoFDS: 1008,
+    //   IdViejoFIE: 2008
+    // },
+    // {
+    //   Id: 9,
+    //   Titulo: 'Inventario Sur',
+    //   LineaNegocioId: 3,
+    //   AreaId: 5,
+    //   SeccionId: 10,
+    //   EnCatalogo: false,
+    //   CantidadFDS: 11,
+    //   CantidadFIE: 6,
+    //   IdViejoFDS: 1009,
+    //   IdViejoFIE: 2009
+    // },
+    // {
+    //   Id: 10,
+    //   Titulo: 'Stock Central',
+    //   LineaNegocioId: 3,
+    //   AreaId: 5,
+    //   SeccionId: 9,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 18,
+    //   CantidadFIE: 8,
+    //   IdViejoFDS: 1010,
+    //   IdViejoFIE: 2010
+    // },
+    // {
+    //   Id: 11,
+    //   Titulo: 'Reporte Presupuestario',
+    //   LineaNegocioId: 3,
+    //   AreaId: 6,
+    //   SeccionId: 11,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 14,
+    //   CantidadFIE: 7,
+    //   IdViejoFDS: 1011,
+    //   IdViejoFIE: 2011
+    // },
+    // {
+    //   Id: 12,
+    //   Titulo: 'Gestión de Tesorería',
+    //   LineaNegocioId: 3,
+    //   AreaId: 6,
+    //   SeccionId: 12,
+    //   EnCatalogo: false,
+    //   CantidadFDS: 6,
+    //   CantidadFIE: 3,
+    //   IdViejoFDS: 1012,
+    //   IdViejoFIE: 2012
+    // },
+    // {
+    //   Id: 13,
+    //   Titulo: 'Control de Contratos',
+    //   LineaNegocioId: 4,
+    //   AreaId: 7,
+    //   SeccionId: 13,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 7,
+    //   CantidadFIE: 2,
+    //   IdViejoFDS: 1013,
+    //   IdViejoFIE: 2013
+    // },
+    // {
+    //   Id: 14,
+    //   Titulo: 'Normativas Legales',
+    //   LineaNegocioId: 4,
+    //   AreaId: 7,
+    //   SeccionId: 14,
+    //   EnCatalogo: false,
+    //   CantidadFDS: 5,
+    //   CantidadFIE: 2,
+    //   IdViejoFDS: 1014,
+    //   IdViejoFIE: 2014
+    // },
+    // {
+    //   Id: 15,
+    //   Titulo: 'Curso de Inducción',
+    //   LineaNegocioId: 4,
+    //   AreaId: 8,
+    //   SeccionId: 15,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 4,
+    //   CantidadFIE: 1,
+    //   IdViejoFDS: 1015,
+    //   IdViejoFIE: 2015
+    // },
+    // {
+    //   Id: 16,
+    //   Titulo: 'Proceso de Reclutamiento',
+    //   LineaNegocioId: 4,
+    //   AreaId: 8,
+    //   SeccionId: 16,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 6,
+    //   CantidadFIE: 2,
+    //   IdViejoFDS: 1016,
+    //   IdViejoFIE: 2016
+    // },
+    // {
+    //   Id: 17,
+    //   Titulo: 'Soporte Técnico Nivel 1',
+    //   LineaNegocioId: 5,
+    //   AreaId: 9,
+    //   SeccionId: 17,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 13,
+    //   CantidadFIE: 5,
+    //   IdViejoFDS: 1017,
+    //   IdViejoFIE: 2017
+    // },
+    // {
+    //   Id: 18,
+    //   Titulo: 'Soporte Técnico Nivel 2',
+    //   LineaNegocioId: 5,
+    //   AreaId: 9,
+    //   SeccionId: 18,
+    //   EnCatalogo: false,
+    //   CantidadFDS: 10,
+    //   CantidadFIE: 4,
+    //   IdViejoFDS: 1018,
+    //   IdViejoFIE: 2018
+    // },
+    // {
+    //   Id: 19,
+    //   Titulo: 'Kit de Bienvenida',
+    //   LineaNegocioId: 5,
+    //   AreaId: 9,
+    //   SeccionId: 17,
+    //   EnCatalogo: true,
+    //   CantidadFDS: 3,
+    //   CantidadFIE: 2,
+    //   IdViejoFDS: 1019,
+    //   IdViejoFIE: 2019
+    // },
+    // {
+    //   Id: 20,
+    //   Titulo: 'Formulario Legal',
+    //   LineaNegocioId: 4,
+    //   AreaId: 7,
+    //   SeccionId: 13,
+    //   EnCatalogo: false,
+    //   CantidadFDS: 1,
+    //   CantidadFIE: 1,
+    //   IdViejoFDS: 1020,
+    //   IdViejoFIE: 2020
+    // },
+    // {
+    //   Id: 21,
+    //   Titulo: null,
+    //   LineaNegocioId: null,
+    //   AreaId: null,
+    //   SeccionId: null,
+    //   EnCatalogo: null,
+    //   CantidadFDS: null,
+    //   CantidadFIE: null,
+    //   IdViejoFDS: null,
+    //   IdViejoFIE: null
+    // }
   ];
 
-  useEffect(() => {
-    setProducto(productos[1]);
-  }, []);
-  const [id, setID] = useState(productosRaw.length);
+  // useEffect(() => {
+  //   setProducto(productos[1]);
+  // }, []);
+  const [id, setID] = useState(productosRaw.length + 1);
   const [productos, setProductos] = useState(productosRaw);
 
   const guardarProducto = (data: IProducto) => {
@@ -46998,6 +46998,10 @@ const App: React.FC = () => {
     if (!data.Id) { // es un alta
       setProductos(arrayAnterior => [...arrayAnterior, { ...data, Id: id }]);
       setID(id+1);
+    } else {  // es una edicion
+      setProductos(arrayAnterior =>
+        arrayAnterior.map(prod => prod.Id === data.Id ? { ...data } : prod)
+      );
     }
   };
 
@@ -47005,6 +47009,7 @@ const App: React.FC = () => {
     setProductos(prev => prev.filter(p => p.Id !== idAEliminar));
   };
   const [cargando, setCargando] = useState(true);
+  const navigate = useNavigate();
 
   return (
     // <div style={{ width: "100%" }}>
@@ -47030,10 +47035,23 @@ const App: React.FC = () => {
             lineasDeNegocio={lineasDeNegocio}
             areas={areas}
             secciones={secciones}
-            onEditar={() => alert("Editando")} 
-            onEliminar={() => alert("Eliminando")} 
-            onAgregar={() => alert("Agregando")}
-          />} />
+            onEditar={(producto) => {
+              setProducto(producto)
+              navigate('/formulario')
+              // console.log('Editando producto:', producto);
+              // alert(`Editando producto ID: ${producto.Id}, Título: ${producto.Titulo}`);
+            }}
+            onEliminar={(producto) => {
+              console.log('Eliminando producto:', producto);
+              eliminarProducto(producto.Id);
+              alert(`Eliminando producto ID: ${producto.Id}, Título: ${producto.Titulo}`);
+            }}
+            onAgregar={() => {
+              navigate('/formulario')
+              // console.log('Agregando producto:', producto);
+              // alert(`Agregando producto ID: ${producto.Id}, Título: ${producto.Titulo}`);
+            }}
+        />} />
         <Route
           path="/formulario"
           element={

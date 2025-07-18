@@ -31,9 +31,10 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
 }) => {
   const [productosVisibles, setProductosVisibles] = useState<IProducto[]>([]);
   const contenedorRef = useRef<HTMLDivElement>(null);
+  const [claveRender, setClaveRender] = useState(Date.now());
 
   useEffect(() => {
-    if (Array.isArray(productos) && productos.length > 0) {
+    if (Array.isArray(productos)) {
       setProductosVisibles(productos.slice(0, ITEMS_POR_CARGA));
     }
   }, [productos]);
@@ -116,10 +117,18 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             <div>{formatear(p.IdViejoFIE)}</div>
 
             <div className={styles.celdaCentrada}>
-              <IconButton iconProps={{ iconName: 'Edit' }} title="Editar" onClick={() => onEditar(p)} />
+              <IconButton 
+                iconProps={{ iconName: 'Edit' }} 
+                title="Editar" 
+                onClick={() => onEditar(p)} 
+              />
             </div>
             <div className={styles.celdaCentrada}>
-              <IconButton iconProps={{ iconName: 'Delete' }} title="Eliminar" onClick={() => onEliminar(p)} />
+              <IconButton 
+                iconProps={{ iconName: 'Delete' }} 
+                title="Eliminar" 
+                onClick={() => onEliminar(p)} 
+              />
             </div>
           </div>
         ))}
