@@ -25,7 +25,6 @@
   max-height: 500px;
 }
 
-/* FILAS GENERALES */
 .fila {
   display: grid;
   grid-template-columns: repeat(12, minmax(80px, 1fr));
@@ -54,7 +53,14 @@
   border-right: none;
 }
 
-/* ENCABEZADO */
+.celdaCentrada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  border-right: 1px solid #ddd;
+}
+
 .encabezado {
   font-weight: 600;
   background-color: #f3f3f3;
@@ -68,6 +74,8 @@
 .encabezado > div {
   display: flex;
   align-items: center;
+  text-align: center;
+  justify-content: center;
   padding: 10px 8px;
   border-right: 1px solid #ccc;
 }
@@ -76,7 +84,6 @@
   border-right: none;
 }
 
-/* CONTENIDO TRUNCADO */
 .truncado {
   overflow: hidden;
   text-overflow: ellipsis;

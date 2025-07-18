@@ -91,10 +91,10 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             <div>{formatear(p.CantidadFIE)}</div>
             <div>{formatear(p.IdViejoFDS)}</div>
             <div>{formatear(p.IdViejoFIE)}</div>
-            <div>
+            <div className={styles.celdaCentrada}>
               <IconButton iconProps={{ iconName: 'Edit' }} title="Editar" onClick={() => onEditar(p)} />
             </div>
-            <div>
+            <div className={styles.celdaCentrada}>
               <IconButton iconProps={{ iconName: 'Delete' }} title="Eliminar" onClick={() => onEliminar(p)} />
             </div>
           </div>

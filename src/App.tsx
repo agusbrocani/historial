@@ -46972,13 +46972,25 @@ const App: React.FC = () => {
       CantidadFIE: 1,
       IdViejoFDS: 1020,
       IdViejoFIE: 2020
+    },
+    {
+      Id: 21,
+      Titulo: null,
+      LineaNegocioId: null,
+      AreaId: null,
+      SeccionId: null,
+      EnCatalogo: null,
+      CantidadFDS: null,
+      CantidadFIE: null,
+      IdViejoFDS: null,
+      IdViejoFIE: null
     }
   ];
 
   useEffect(() => {
     setProducto(productos[1]);
   }, []);
-  const [id, setID] = useState(21);
+  const [id, setID] = useState(productosRaw.length);
   const [productos, setProductos] = useState(productosRaw);
 
   const guardarProducto = (data: IProducto) => {
