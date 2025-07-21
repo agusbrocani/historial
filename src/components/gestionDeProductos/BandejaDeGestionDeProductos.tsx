@@ -4,6 +4,8 @@ import {
   IconButton,
   PrimaryButton,
   TooltipHost,
+  DirectionalHint,
+  TooltipDelay
 } from '@fluentui/react';
 import styles from './BandejaDeGestionDeProductos.module.scss';
 import Buscador from '../buscador/Buscador';
@@ -29,16 +31,23 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
   onEliminar,
   onAgregar
 }) => {
+  const [productosFiltrados, setProductosFiltrados] = useState<IProducto[]>(productos);
   const [productosVisibles, setProductosVisibles] = useState<IProducto[]>([]);
   const contenedorRef = useRef<HTMLDivElement>(null);
 
+  // sincroniza cuando cambia el array completo
   useEffect(() => {
-    setProductosVisibles(productos);
-  }, []);
+    setProductosFiltrados(productos);
+  }, [productos]);
+
+  // sincroniza cuando cambia el filtrado
+  useEffect(() => {
+    setProductosVisibles(productosFiltrados.slice(0, ITEMS_POR_CARGA));
+  }, [productosFiltrados]);
 
   const cargarMas = () => {
     const siguiente = productosVisibles.length + ITEMS_POR_CARGA;
-    setProductosVisibles(productos.slice(0, siguiente));
+    setProductosVisibles(productosFiltrados.slice(0, siguiente));
   };
 
   const manejarScroll = () => {
@@ -86,7 +95,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             lineasDeNegocio={lineasDeNegocio}
             areas={areas}
             secciones={secciones}
-            setProductosVisibles={setProductosVisibles}
+            setProductosVisibles={setProductosFiltrados} // clave: usar productosFiltrados
           />
           <PrimaryButton
             text="Nuevo"
@@ -104,26 +113,71 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>Área</div>
           <div>Sección</div>
           {anchoPantalla < 1040 ? (
-            // Mostrar tooltip con "..."
-            <TooltipHost content="En catálogo">
-              <div style={{
-                width: '100%',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                lineHeight: '1.2',
-                fontSize: '14px'
-              }}>
+            <TooltipHost
+              content="En catálogo"
+              directionalHint={DirectionalHint.topCenter}
+              delay={TooltipDelay.zero}
+              calloutProps={{
+                isBeakVisible: false,
+                gapSpace: 0,
+                layerProps: {
+                  styles: {
+                    root: {
+                      background: 'transparent',
+                      boxShadow: 'none',
+                      border: 'none',
+                      padding: 0,
+                      margin: 0
+                    }
+                  }
+                },
+                styles: {
+                  root: {
+                    background: 'transparent',
+                    boxShadow: 'none',
+                    border: 'none',
+                    padding: 0,
+                    margin: 0
+                  },
+                  calloutMain: {
+                    backgroundColor: '#fff',
+                    border: '1px solid #edebe9',
+                    borderRadius: 4,
+                    padding: 6,
+                    fontFamily: 'Segoe UI',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    color: '#323130',
+                    textAlign: 'center',
+                    maxWidth: 140,
+                    boxShadow: 'none'
+                  }
+                }
+              }}
+            >
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  fontSize: 14
+                }}
+              >
                 ...
               </div>
             </TooltipHost>
           ) : (
-            // Mostrar "En catálogo" (1 línea o 2 líneas según resolución)
-            <div >
-              {anchoPantalla < 1389
-                ? <>En<br />catálogo</>
-                : 'En catálogo'}
+            <div>
+              {anchoPantalla < 1389 ? (
+                <>
+                  En<br />
+                  catálogo
+                </>
+              ) : (
+                'En catálogo'
+              )}
             </div>
           )}
           <div>Cantidad de FDS</div>
@@ -135,17 +189,17 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
         </div>
 
         {productosVisibles.map((p) => (
-          <div className={styles.fila} key={p.Id ?? Math.random()}>
+          <div className={styles.fila} key={p.Id}>
             <div>{formatear(p.Id)}</div>
             <div>{formatear(p.Titulo)}</div>
             <div>{obtenerTextoLinea(p.LineaNegocioId)}</div>
             <div>{obtenerTituloArea(p.AreaId)}</div>
             <div>{obtenerTituloSeccion(p.SeccionId)}</div>
             <div>{formatear(p.EnCatalogo)}</div>
-            <div>{formatear(p.CantidadFDS)}</div>
-            <div>{formatear(p.CantidadFIE)}</div>
-            <div>{formatear(p.IdViejoFDS)}</div>
-            <div>{formatear(p.IdViejoFIE)}</div>
+            <div className={styles.cellBreakable}>{formatear(p.CantidadFDS)}</div>
+            <div className={styles.cellBreakable}>{formatear(p.CantidadFIE)}</div>
+            <div className={styles.cellBreakable}>{formatear(p.IdViejoFDS)}</div>
+            <div className={styles.cellBreakable}>{formatear(p.IdViejoFIE)}</div>
 
             <div className={styles.celdaCentrada}>
               <IconButton

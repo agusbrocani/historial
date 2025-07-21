@@ -101,3 +101,9 @@
 .encabezado > div:last-child {
   border-right: none;
 }
+
+.cellBreakable {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
