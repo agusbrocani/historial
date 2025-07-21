@@ -1,9 +1,16 @@
 const obtenerPalabras = (cadena: string): string[] => {
-    return cadena.match(/\b\d{2}\/\d{2}\/\d{4}\b|[\wáéíóúÁÉÍÓÚñÑüÜ]+(?:\.\d+)?/g) ?? [];
+    return cadena.match(/\S+/g) ?? [];
 };
 
 const normalizar = (cadena: string): string => {
-    return cadena.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return cadena
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')       // quita tildes
+    .replace(/\u00A0/g, ' ')               // reemplaza espacio no separable por espacio común
+    .replace(/[“”‘’]/g, '"')               // reemplaza comillas Unicode por comillas normales
+    .replace(/\s+/g, ' ')                  // normaliza múltiples espacios
+    .trim()                                // elimina espacios al principio y al final
+    .toLowerCase();
 };
 
 function agregarIndiceInvertido(indiceInvertido: Map<string, Set<number>>, clave: string, valor: number): void {
@@ -54,7 +61,7 @@ export function definirIndicesResultadoPorPalabraEncontrada(indiceInvertido: Map
     if (0 === cantidadDeSets) {
         return new Set();
     }
-
+    console.log(indiceInvertido)
     const resultado: Set<number> = new Set(sets[0]);
     for (let i = 1; i < cantidadDeSets; i++) {
         for (const valor of Array.from(resultado)) {

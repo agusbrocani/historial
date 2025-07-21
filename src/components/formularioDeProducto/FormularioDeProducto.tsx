@@ -178,10 +178,19 @@ const FormularioDeProducto: React.FC<Props> = ({
         onChange={(_, v) => {
           if (v === undefined) return;
           const limpio = v
-            .replace(/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ ]+/g, '')
+            // 1. Solo eliminar los caracteres que NO están permitidos explícitamente
+            .replace(
+              /[^A-Za-z0-9 áéíóúÁÉÍÓÚñÑüÜàÀâÂæÆçÇèÈêÊëËîÎïÏôÔœŒùÙûÛäÄöÖßãÃõÕº°*\/\\|,.\-()']/g,
+              ''
+            )
+            // 2. Reemplazar múltiples espacios por uno solo
             .replace(/\s+/g, ' ')
+            // 3. Eliminar espacios iniciales
             .replace(/^\s+/, '')
-            .slice(0, 255);
+            // 4. Limitar longitud
+            .slice(0, 255)
+            // 5. Eliminar si empieza con un separador
+            .replace(/^[^A-Za-z0-9áéíóúÁÉÍÓÚñÑüÜàÀâÂæÆçÇèÈêÊëËîÎïÏôÔœŒùÙûÛäÄöÖßãÃõÕ]+/, '');
           setProductoPendiente(p => ({ ...p, Titulo: limpio }));
           setSeRealizoCambio(true);
         }}

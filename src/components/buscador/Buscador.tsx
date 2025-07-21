@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
-import { 
-    SearchBox, 
-    DefaultButton, 
-    ISearchBoxStyles 
+import {
+  SearchBox,
+  DefaultButton,
+  ISearchBoxStyles
 } from '@fluentui/react';
 import {
   buscar,
   definirIndicesResultadoPorPalabraEncontrada
 } from './buscadorUtils';
-import { 
-    IArea, 
-    ILineaDeNegocio, 
-    IProducto, 
-    ISeccion 
+import {
+  IArea,
+  ILineaDeNegocio,
+  IProducto,
+  ISeccion
 } from '../gestionDeProductos/tipos';
-import { 
-    contruirProductosBuscables, 
-    filtrarProductosPorIds 
+import {
+  contruirProductosBuscables,
+  filtrarProductosPorIds
 } from '../gestionDeProductos/utils';
 
 interface Props {
-    productos: IProducto[];
-    lineasDeNegocio: ILineaDeNegocio[];
-    areas: IArea[];
-    secciones: ISeccion[];
-    setProductosVisibles: (productos: IProducto[]) => void;
+  productos: IProducto[];
+  lineasDeNegocio: ILineaDeNegocio[];
+  areas: IArea[];
+  secciones: ISeccion[];
+  setProductosVisibles: (productos: IProducto[]) => void;
 }
 
 const Buscador: React.FC<Props> = ({
-    productos,
-    lineasDeNegocio,
-    areas,
-    secciones,
-    setProductosVisibles,
+  productos,
+  lineasDeNegocio,
+  areas,
+  secciones,
+  setProductosVisibles,
 }) => {
   const [termino, setTermino] = useState('');
 
@@ -40,20 +40,24 @@ const Buscador: React.FC<Props> = ({
     root: { width: 250, height: 32 },
   };
 
-  const ejecutarBusqueda = () => {
-    console.log("Termino: ", termino);
-    if (termino.trim() === '') {
-        return;
+  const ejecutarBusqueda = (texto: string) => {
+    const valor = texto.trim();
+    console.log("Termino: ", valor);
+
+    if (valor === '') {
+      setProductosVisibles(productos);
+      return;
     }
 
     const resultado = buscar(
       contruirProductosBuscables(productos, lineasDeNegocio, areas, secciones),
-      termino,
+      valor,
       definirIndicesResultadoPorPalabraEncontrada
     );
-    console.log("Productos", productos);
-    console.log("Resultado ", filtrarProductosPorIds(productos, resultado));
-    setProductosVisibles(filtrarProductosPorIds(productos, resultado));
+
+    const productosFiltrados = filtrarProductosPorIds(productos, resultado);
+    console.log("Resultado ", productosFiltrados);
+    setProductosVisibles(productosFiltrados);
   };
 
   const limpiarBusqueda = () => {
@@ -74,12 +78,13 @@ const Buscador: React.FC<Props> = ({
           }
         }}
         onClear={limpiarBusqueda}
+        onSearch={(valor) => ejecutarBusqueda(valor || '')}
         underlined
         styles={estilosSearchBox}
       />
       <DefaultButton
         text="Buscar"
-        onClick={ejecutarBusqueda}
+        onClick={() => ejecutarBusqueda(termino)}
         styles={{ root: { height: 32 } }}
       />
     </div>
