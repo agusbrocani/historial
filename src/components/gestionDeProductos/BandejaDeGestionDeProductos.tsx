@@ -5,7 +5,11 @@ import {
   PrimaryButton,
   TooltipHost,
   DirectionalHint,
-  TooltipDelay
+  TooltipDelay,
+  Dialog,
+  DialogType,
+  DialogFooter,
+  DefaultButton
 } from '@fluentui/react';
 import styles from './BandejaDeGestionDeProductos.module.scss';
 import Buscador from '../buscador/Buscador';
@@ -33,14 +37,13 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
 }) => {
   const [productosFiltrados, setProductosFiltrados] = useState<IProducto[]>(productos);
   const [productosVisibles, setProductosVisibles] = useState<IProducto[]>([]);
+  const [productoAEliminar, setProductoAEliminar] = useState<IProducto | null>(null);
   const contenedorRef = useRef<HTMLDivElement>(null);
 
-  // sincroniza cuando cambia el array completo
   useEffect(() => {
     setProductosFiltrados(productos);
   }, [productos]);
 
-  // sincroniza cuando cambia el filtrado
   useEffect(() => {
     setProductosVisibles(productosFiltrados.slice(0, ITEMS_POR_CARGA));
   }, [productosFiltrados]);
@@ -95,7 +98,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             lineasDeNegocio={lineasDeNegocio}
             areas={areas}
             secciones={secciones}
-            setProductosVisibles={setProductosFiltrados} // clave: usar productosFiltrados
+            setProductosVisibles={setProductosFiltrados}
           />
           <PrimaryButton
             text="Nuevo"
@@ -212,12 +215,39 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
               <IconButton
                 iconProps={{ iconName: 'Delete' }}
                 title="Eliminar"
-                onClick={() => onEliminar(p)}
+                onClick={() => setProductoAEliminar(p)}
               />
             </div>
           </div>
         ))}
       </div>
+
+      {/* Confirmación de eliminación */}
+      <Dialog
+        hidden={!productoAEliminar}
+        onDismiss={() => setProductoAEliminar(null)}
+        dialogContentProps={{
+          type: DialogType.normal,
+          title: 'Confirmar eliminación',
+          subText: productoAEliminar
+            ? `¿Está seguro que desea eliminar "${productoAEliminar.Titulo}"?`
+            : ''
+        }}
+        modalProps={{ isBlocking: true }}
+      >
+        <DialogFooter>
+          <DefaultButton onClick={() => setProductoAEliminar(null)} text="Cancelar" />
+          <PrimaryButton
+            onClick={() => {
+              if (productoAEliminar) {
+                onEliminar(productoAEliminar);
+              }
+              setProductoAEliminar(null);
+            }}
+            text="Eliminar"
+          />
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 };

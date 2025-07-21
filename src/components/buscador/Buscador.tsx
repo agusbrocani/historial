@@ -58,6 +58,8 @@ const Buscador: React.FC<Props> = ({
     const productosFiltrados = filtrarProductosPorIds(productos, resultado);
     console.log("Resultado ", productosFiltrados);
     setProductosVisibles(productosFiltrados);
+
+    setTermino(''); // Limpiar el input después de la búsqueda
   };
 
   const limpiarBusqueda = () => {
