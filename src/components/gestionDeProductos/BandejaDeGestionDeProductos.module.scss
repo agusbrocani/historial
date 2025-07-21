@@ -7,7 +7,7 @@ html, body {
 
 .wrapper {
   margin: 16px;
-  max-height: 550px;
+  height: 100%;
   border: 1px solid #ccc;
   font-family: 'Segoe UI', sans-serif;
   background-color: white;
@@ -18,15 +18,48 @@ html, body {
 }
 
 .barraSuperior {
-  padding: 16px 16px 12px 16px;
   background-color: #f3f3f3;
   border-bottom: 1px solid #ddd;
+  padding: 14px;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .barraSuperior :global(.ms-Button) {
   font-weight: 600;
+}
+
+.filaSuperior {
+  display: flex;
+}
+
+.filaAcciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.titulo {
+  font-size: 24px;
+  font-weight: 600;
+  color: #323130;
+  letter-spacing: -0.3px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 4px;
+  text-transform: none;
+}
+
+.buscador {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  min-width: 300px;
+  flex-grow: 1;
 }
 
 .tabla {
@@ -37,18 +70,18 @@ html, body {
 .fila {
   display: grid;
   grid-template-columns:
-    minmax(40px, 0.5fr)  /* ID */
-    minmax(120px, 2fr) /* Producto */
-    minmax(100px, 1.5fr) /* Línea de Negocio */
-    minmax(100px, 1.5fr) /* Área */
-    minmax(100px, 1.5fr) /* Sección */
-    minmax(20px, 1fr)    /* En catálogo */
-    minmax(80px, 1fr)    /* Cantidad de FDS */
-    minmax(80px, 1fr)    /* Cantidad de FIE */
-    minmax(90px, 1fr)    /* Id viejo FDS */
-    minmax(90px, 1fr)    /* Id viejo FIE */
-    minmax(60px, 0.5fr)  /* Editar */
-    minmax(60px, 0.5fr); /* Eliminar */
+    minmax(40px, 0.5fr)   /* ID */
+    minmax(120px, 2fr)    /* Producto */
+    minmax(100px, 1.5fr)  /* Línea de Negocio */
+    minmax(100px, 1.5fr)  /* Área */
+    minmax(100px, 1.5fr)  /* Sección */
+    minmax(30px, 1fr)     /* En catálogo */
+    minmax(80px, 1fr)     /* Cantidad de FDS */
+    minmax(80px, 1fr)     /* Cantidad de FIE */
+    minmax(90px, 1fr)     /* Id viejo FDS */
+    minmax(90px, 1fr)     /* Id viejo FIE */
+    minmax(60px, 0.5fr)   /* Editar */
+    minmax(60px, 0.5fr);  /* Eliminar */
   align-items: stretch;
   border-bottom: 1px solid #eee;
   background-color: white;
@@ -94,21 +127,24 @@ html, body {
   z-index: 1;
   border-bottom: 2px solid #d0d0d0;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.1);
-}
+  text-transform: uppercase;
+  color: #605e5c;
+  font-size: 14.5px;
 
-.encabezado > div {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  padding: 10px 8px;
-  border-right: 1px solid #ccc;
-  min-width: 0;
-  overflow: hidden;
-}
+  > div {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 10px 8px;
+    border-right: 1px solid #ccc;
+    min-width: 0;
+    overflow: hidden;
+  }
 
-.encabezado > div:last-child {
-  border-right: none;
+  > div:last-child {
+    border-right: none;
+  }
 }
 
 .cellBreakable {
@@ -116,41 +152,3 @@ html, body {
   word-break: break-word;
   white-space: normal;
 }
-
-.barraSuperior {
-  background-color: #f3f3f3;
-  border-bottom: 1px solid #ddd;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.filaSuperior {
-  display: flex;
-}
-
-.filaAcciones {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.titulo {
-  font-size: 22px;
-  font-weight: 600;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.buscador {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-  min-width: 300px;
-  flex-grow: 1;
-}
-
