@@ -91,22 +91,29 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.barraSuperior}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Buscador
-            productos={productos}
-            lineasDeNegocio={lineasDeNegocio}
-            areas={areas}
-            secciones={secciones}
-            setProductosVisibles={setProductosFiltrados}
-          />
-          <PrimaryButton
-            text='Nuevo'
-            iconProps={{ iconName: 'Add' }}
-            onClick={onAgregar}
-          />
-        </div>
-      </div>
+<div className={styles.barraSuperior}>
+  <div className={styles.filaSuperior}>
+    <div className={styles.titulo}>Gestión de productos</div>
+  </div>
+
+  <div className={styles.filaAcciones}>
+    <PrimaryButton
+      text='Nuevo'
+      iconProps={{ iconName: 'Add' }}
+      onClick={onAgregar}
+    />
+
+    <div className={styles.buscador}>
+      <Buscador
+        productos={productos}
+        lineasDeNegocio={lineasDeNegocio}
+        areas={areas}
+        secciones={secciones}
+        setProductosVisibles={setProductosFiltrados}
+      />
+    </div>
+  </div>
+</div>
 
       <div className={styles.tabla} ref={contenedorRef} onScroll={manejarScroll}>
         <div className={`${styles.fila} ${styles.encabezado}`}>

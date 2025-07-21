@@ -68,9 +68,9 @@ const Buscador: React.FC<Props> = ({
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
       <SearchBox
-        placeholder='Buscar producto…'
+        placeholder="Buscar producto…"
         value={termino}
         onChange={(_, nuevoValor) => {
           const valor = nuevoValor || '';
@@ -84,11 +84,19 @@ const Buscador: React.FC<Props> = ({
         underlined
         styles={estilosSearchBox}
       />
-      <DefaultButton
-        text='Buscar'
-        onClick={() => ejecutarBusqueda(termino)}
-        styles={{ root: { height: 32 } }}
-      />
+
+      <div style={{ display: 'flex', gap: 6 }}>
+        <DefaultButton
+          text="Buscar"
+          onClick={() => ejecutarBusqueda(termino)}
+          styles={{ root: { height: 32 } }}
+        />
+        <DefaultButton
+          text="Ver todos"
+          onClick={limpiarBusqueda}
+          styles={{ root: { height: 32 } }}
+        />
+      </div>
     </div>
   );
 };
