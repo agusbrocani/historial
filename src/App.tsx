@@ -46720,7 +46720,7 @@ const App: React.FC = () => {
     { Id: 13, Titulo: 'Contratos', AreaId: 7 },
     { Id: 14, Titulo: 'Normativas', AreaId: 7 },
     { Id: 15, Titulo: 'Capacitacion', AreaId: 8 },
-    { Id: 16, Titulo: 'Reclutamiento', AreaId: 8 },
+    { Id: 16, Titulo: 'Reclutamiento MÁS LARGO PARA QUE ROMPA TODA LA TABLA', AreaId: 8 },
     { Id: 17, Titulo: 'Soporte Nivel 1', AreaId: 9 },
     { Id: 18, Titulo: 'Soporte Nivel 2', AreaId: 9 },
   ]; 
@@ -46915,7 +46915,7 @@ const App: React.FC = () => {
     },
     {
       Id: 16,
-      Titulo: 'Proceso de Reclutamiento',
+      Titulo: 'Proceso de Reclutamiento MÁS LARGO DE LO ESPERADO PARA QUE ROMPA',
       LineaNegocioId: 4,
       AreaId: 8,
       SeccionId: 16,

@@ -101,11 +101,3 @@
 .encabezado > div:last-child {
   border-right: none;
 }
-
-.truncado {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-  text-align: center;
-}

@@ -4,11 +4,9 @@ import {
   IconButton,
   PrimaryButton,
   TooltipHost,
-  TooltipOverflowMode
 } from '@fluentui/react';
 import styles from './BandejaDeGestionDeProductos.module.scss';
 import Buscador from '../buscador/Buscador';
-import { contruirProductosBuscables } from './utils';
 
 interface Props {
   productos: IProducto[];
@@ -33,12 +31,6 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
 }) => {
   const [productosVisibles, setProductosVisibles] = useState<IProducto[]>([]);
   const contenedorRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   if (Array.isArray(productos)) {
-  //     setProductosVisibles(productos.slice(0, ITEMS_POR_CARGA));
-  //   }
-  // }, [productos]);
 
   useEffect(() => {
     setProductosVisibles(productos);
@@ -78,13 +70,20 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
     return seccion?.Titulo ?? '-';
   };
 
+  const [anchoPantalla, setAnchoPantalla] = useState(window.innerWidth);
+  useEffect(() => {
+    const manejarResize = () => setAnchoPantalla(window.innerWidth);
+    window.addEventListener('resize', manejarResize);
+    return () => window.removeEventListener('resize', manejarResize);
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.barraSuperior}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Buscador
             productos={productos}
-            lineasDeNegocio={lineasDeNegocio} 
+            lineasDeNegocio={lineasDeNegocio}
             areas={areas}
             secciones={secciones}
             setProductosVisibles={setProductosVisibles}
@@ -104,7 +103,29 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>Línea de Negocio</div>
           <div>Área</div>
           <div>Sección</div>
-          <div>En catálogo</div>
+          {anchoPantalla < 1040 ? (
+            // Mostrar tooltip con "..."
+            <TooltipHost content="En catálogo">
+              <div style={{
+                width: '100%',
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                lineHeight: '1.2',
+                fontSize: '14px'
+              }}>
+                ...
+              </div>
+            </TooltipHost>
+          ) : (
+            // Mostrar "En catálogo" (1 línea o 2 líneas según resolución)
+            <div >
+              {anchoPantalla < 1389
+                ? <>En<br />catálogo</>
+                : 'En catálogo'}
+            </div>
+          )}
           <div>Cantidad de FDS</div>
           <div>Cantidad de FIE</div>
           <div>Id viejo FDS</div>
@@ -116,11 +137,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
         {productosVisibles.map((p) => (
           <div className={styles.fila} key={p.Id ?? Math.random()}>
             <div>{formatear(p.Id)}</div>
-
-            <TooltipHost content={formatear(p.Titulo)} overflowMode={TooltipOverflowMode.Parent}>
-              <div className={styles.truncado}>{formatear(p.Titulo)}</div>
-            </TooltipHost>
-
+            <div>{formatear(p.Titulo)}</div>
             <div>{obtenerTextoLinea(p.LineaNegocioId)}</div>
             <div>{obtenerTituloArea(p.AreaId)}</div>
             <div>{obtenerTituloSeccion(p.SeccionId)}</div>
