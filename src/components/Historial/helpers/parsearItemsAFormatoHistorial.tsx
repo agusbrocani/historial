@@ -1,5 +1,5 @@
 import * as React from 'react'
-import TextoExpandible from "../utils/components/TextoExpandible/TextoExpandible";
+import TextoExpandible from '../utils/components/TextoExpandible/TextoExpandible';
 
 // coloco any ya que no implemento el tipo especifico del cual es el helper, pero existe
 export const parsearItemsSolicitudAFormatoHistorial = (items: any[], colorBotonVerMas: string): any[] => {

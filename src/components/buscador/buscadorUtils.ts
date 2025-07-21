@@ -61,7 +61,7 @@ export function definirIndicesResultadoPorPalabraEncontrada(indiceInvertido: Map
     if (0 === cantidadDeSets) {
         return new Set();
     }
-    console.log(indiceInvertido)
+    
     const resultado: Set<number> = new Set(sets[0]);
     for (let i = 1; i < cantidadDeSets; i++) {
         for (const valor of Array.from(resultado)) {

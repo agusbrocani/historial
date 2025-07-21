@@ -82,6 +82,9 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
     return seccion?.Titulo ?? '-';
   };
 
+
+  const primerQuiebreParaCatalogo = 1389;
+  const segundoQuiebreParaCatalogo = 1040;
   const [anchoPantalla, setAnchoPantalla] = useState(window.innerWidth);
   useEffect(() => {
     const manejarResize = () => setAnchoPantalla(window.innerWidth);
@@ -122,7 +125,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>Línea de Negocio</div>
           <div>Área</div>
           <div>Sección</div>
-          {anchoPantalla < 1040 ? (
+          {anchoPantalla < segundoQuiebreParaCatalogo ? (
             <TooltipHost
               content='En catálogo'
               directionalHint={DirectionalHint.topCenter}
@@ -180,7 +183,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             </TooltipHost>
           ) : (
             <div>
-              {anchoPantalla < 1389 ? (
+              {anchoPantalla < primerQuiebreParaCatalogo ? (
                 <>
                   En<br />
                   catálogo
@@ -197,7 +200,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>
             <IconButton
               iconProps={{ iconName: 'Edit' }}
-              title="Editar"
+              title='Editar'
               disabled
               styles={{ root: { pointerEvents: 'none', cursor: 'default' } }}
             />
@@ -205,7 +208,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>
             <IconButton
               iconProps={{ iconName: 'Delete' }}
-              title="Eliminar"
+              title='Eliminar'
               disabled
               styles={{ root: { pointerEvents: 'none', cursor: 'default' } }}
             />
