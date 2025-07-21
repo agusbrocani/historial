@@ -9,7 +9,7 @@ html, body {
   margin: 16px;
   height: 100%;
   border: 1px solid #ccc;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@ html, body {
   font-weight: 600;
   color: #323130;
   letter-spacing: -0.3px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
   margin-bottom: 4px;
   text-transform: none;
 }
@@ -65,6 +65,13 @@ html, body {
 .tabla {
   overflow-y: auto;
   max-height: 500px;
+  scroll-padding-bottom: 8px;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 8px;
+  }
 }
 
 .fila {
@@ -86,6 +93,8 @@ html, body {
   border-bottom: 1px solid #eee;
   background-color: white;
   transition: background-color 0.2s ease;
+  font-size: 14px;
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
 }
 
 .fila:nth-child(even):not(.encabezado) {
@@ -105,6 +114,8 @@ html, body {
   border-right: 1px solid #ddd;
   min-width: 0;
   overflow: hidden;
+  font-size: 14px;
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
 }
 
 .fila > div:last-child {
@@ -140,6 +151,7 @@ html, body {
     border-right: 1px solid #ccc;
     min-width: 0;
     overflow: hidden;
+    font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
   }
 
   > div:last-child {
