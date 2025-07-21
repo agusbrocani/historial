@@ -171,7 +171,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       <h2 className={styles.titulo}>{esEdicion ? 'Editar Producto' : 'Alta de Producto'}</h2>
 
       <TextField
-        label="Nombre del producto"
+        label='Nombre del producto'
         required
         value={productoPendiente.Titulo}
         disabled={confirmado}
@@ -197,7 +197,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       />
 
       <Dropdown
-        label="Línea de Negocio"
+        label='Línea de Negocio'
         required
         options={lineasDeNegocio.map(l => ({ key: l.key, text: l.text }))}
         selectedKey={productoPendiente.LineaNegocioId?.toString()}
@@ -215,7 +215,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       />
 
       <Dropdown
-        label="Área"
+        label='Área'
         required
         options={areasDisponibles.map(a => ({ key: a.Id, text: a.Titulo }))}
         selectedKey={productoPendiente.AreaId}
@@ -231,7 +231,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       />
 
       <Dropdown
-        label="Sección"
+        label='Sección'
         required
         options={seccionesDisponibles.map(s => ({ key: s.Id, text: s.Titulo }))}
         selectedKey={productoPendiente.SeccionId}
@@ -246,7 +246,7 @@ const FormularioDeProducto: React.FC<Props> = ({
       />
 
       <Dropdown
-        label="En Catálogo"
+        label='En Catálogo'
         options={[
           { key: 'true', text: 'Sí' },
           { key: 'false', text: 'No' }
@@ -278,8 +278,8 @@ const FormularioDeProducto: React.FC<Props> = ({
         <TextField
           key={key}
           label={label}
-          type="text"
-          inputMode="numeric"
+          type='text'
+          inputMode='numeric'
           value={productoPendiente[key as keyof IProducto]?.toString() ?? ''}
           disabled={confirmado}
           onChange={(_, v) => {
@@ -326,8 +326,8 @@ const FormularioDeProducto: React.FC<Props> = ({
       >
         {renderResumenProducto()}
         <DialogFooter>
-          <PrimaryButton onClick={confirmarGuardar} text="Sí" />
-          <DefaultButton onClick={cancelarGuardar} text="No" />
+          <PrimaryButton onClick={confirmarGuardar} text='Sí' />
+          <DefaultButton onClick={cancelarGuardar} text='No' />
         </DialogFooter>
       </Dialog>
 
@@ -335,7 +335,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         esEdicion && !seRealizoCambio ? (
           <div className={styles.redireccion}>
             No hubo cambios. Redirigiendo...
-            {console.log("PRODUCTO", producto, "ProductoPendiente", productoPendiente)}
+            {console.log('PRODUCTO', producto, 'ProductoPendiente', productoPendiente)}
           </div>
         ) : (
           <div className={styles.exito}>

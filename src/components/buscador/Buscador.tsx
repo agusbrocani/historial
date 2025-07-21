@@ -42,7 +42,7 @@ const Buscador: React.FC<Props> = ({
 
   const ejecutarBusqueda = (texto: string) => {
     const valor = texto.trim();
-    console.log("Termino: ", valor);
+    console.log('Termino: ', valor);
 
     if (valor === '') {
       setProductosVisibles(productos);
@@ -56,7 +56,7 @@ const Buscador: React.FC<Props> = ({
     );
 
     const productosFiltrados = filtrarProductosPorIds(productos, resultado);
-    console.log("Resultado ", productosFiltrados);
+    console.log('Resultado ', productosFiltrados);
     setProductosVisibles(productosFiltrados);
 
     setTermino(''); // Limpiar el input después de la búsqueda
@@ -70,7 +70,7 @@ const Buscador: React.FC<Props> = ({
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <SearchBox
-        placeholder="Buscar producto…"
+        placeholder='Buscar producto…'
         value={termino}
         onChange={(_, nuevoValor) => {
           const valor = nuevoValor || '';
@@ -85,7 +85,7 @@ const Buscador: React.FC<Props> = ({
         styles={estilosSearchBox}
       />
       <DefaultButton
-        text="Buscar"
+        text='Buscar'
         onClick={() => ejecutarBusqueda(termino)}
         styles={{ root: { height: 32 } }}
       />

@@ -101,7 +101,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             setProductosVisibles={setProductosFiltrados}
           />
           <PrimaryButton
-            text="Nuevo"
+            text='Nuevo'
             iconProps={{ iconName: 'Add' }}
             onClick={onAgregar}
           />
@@ -117,7 +117,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>Sección</div>
           {anchoPantalla < 1040 ? (
             <TooltipHost
-              content="En catálogo"
+              content='En catálogo'
               directionalHint={DirectionalHint.topCenter}
               delay={TooltipDelay.zero}
               calloutProps={{
@@ -207,14 +207,14 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
             <div className={styles.celdaCentrada}>
               <IconButton
                 iconProps={{ iconName: 'Edit' }}
-                title="Editar"
+                title='Editar'
                 onClick={() => onEditar(p)}
               />
             </div>
             <div className={styles.celdaCentrada}>
               <IconButton
                 iconProps={{ iconName: 'Delete' }}
-                title="Eliminar"
+                title='Eliminar'
                 onClick={() => setProductoAEliminar(p)}
               />
             </div>
@@ -230,13 +230,13 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           type: DialogType.normal,
           title: 'Confirmar eliminación',
           subText: productoAEliminar
-            ? `¿Está seguro que desea eliminar "${productoAEliminar.Titulo}"?`
+            ? `¿Está seguro que desea eliminar '${productoAEliminar.Titulo}'?`
             : ''
         }}
         modalProps={{ isBlocking: true }}
       >
         <DialogFooter>
-          <DefaultButton onClick={() => setProductoAEliminar(null)} text="Cancelar" />
+          <DefaultButton onClick={() => setProductoAEliminar(null)} text='Cancelar' />
           <PrimaryButton
             onClick={() => {
               if (productoAEliminar) {
@@ -244,7 +244,7 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
               }
               setProductoAEliminar(null);
             }}
-            text="Eliminar"
+            text='Eliminar'
           />
         </DialogFooter>
       </Dialog>
