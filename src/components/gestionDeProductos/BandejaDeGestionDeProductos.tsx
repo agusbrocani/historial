@@ -91,29 +91,29 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
 
   return (
     <div className={styles.wrapper}>
-<div className={styles.barraSuperior}>
-  <div className={styles.filaSuperior}>
-    <div className={styles.titulo}>Gestión de productos</div>
-  </div>
+      <div className={styles.barraSuperior}>
+        <div className={styles.filaSuperior}>
+          <div className={styles.titulo}>Gestión de productos</div>
+        </div>
 
-  <div className={styles.filaAcciones}>
-    <PrimaryButton
-      text='Nuevo'
-      iconProps={{ iconName: 'Add' }}
-      onClick={onAgregar}
-    />
+        <div className={styles.filaAcciones}>
+          <PrimaryButton
+            text='Nuevo'
+            iconProps={{ iconName: 'Add' }}
+            onClick={onAgregar}
+          />
 
-    <div className={styles.buscador}>
-      <Buscador
-        productos={productos}
-        lineasDeNegocio={lineasDeNegocio}
-        areas={areas}
-        secciones={secciones}
-        setProductosVisibles={setProductosFiltrados}
-      />
-    </div>
-  </div>
-</div>
+          <div className={styles.buscador}>
+            <Buscador
+              productos={productos}
+              lineasDeNegocio={lineasDeNegocio}
+              areas={areas}
+              secciones={secciones}
+              setProductosVisibles={setProductosFiltrados}
+            />
+          </div>
+        </div>
+      </div>
 
       <div className={styles.tabla} ref={contenedorRef} onScroll={manejarScroll}>
         <div className={`${styles.fila} ${styles.encabezado}`}>
@@ -194,8 +194,22 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
           <div>Cantidad de FIE</div>
           <div>Id viejo FDS</div>
           <div>Id viejo FIE</div>
-          <div>Editar</div>
-          <div>Eliminar</div>
+          <div>
+            <IconButton
+              iconProps={{ iconName: 'Edit' }}
+              title="Editar"
+              disabled
+              styles={{ root: { pointerEvents: 'none', cursor: 'default' } }}
+            />
+          </div>
+          <div>
+            <IconButton
+              iconProps={{ iconName: 'Delete' }}
+              title="Eliminar"
+              disabled
+              styles={{ root: { pointerEvents: 'none', cursor: 'default' } }}
+            />
+          </div>
         </div>
 
         {productosVisibles.map((p) => (
@@ -229,7 +243,6 @@ const BandejaDeGestionDeProductos: React.FC<Props> = ({
         ))}
       </div>
 
-      {/* Confirmación de eliminación */}
       <Dialog
         hidden={!productoAEliminar}
         onDismiss={() => setProductoAEliminar(null)}
