@@ -335,6 +335,7 @@ const FormularioDeProducto: React.FC<Props> = ({
         esEdicion && !seRealizoCambio ? (
           <div className={styles.redireccion}>
             No hubo cambios. Redirigiendo...
+            {console.log('PRODUCTO', producto, 'ProductoPendiente', productoPendiente)}
           </div>
         ) : (
           <div className={styles.exito}>
